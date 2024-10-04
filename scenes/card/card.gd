@@ -4,6 +4,8 @@ class_name Card extends Node2D
 @export var _angle: float = 0.0
 @export var is_highlight: bool = false
 @export var height_offset: float = 0.0
+@export var is_drag = false
+@export var was_drag = false
 
 @onready var CardNameLabel: Label = $CardNameLabel
 @onready var CardFrame: Sprite2D = $CardFrame
@@ -25,7 +27,7 @@ func _ready() -> void:
 func highlight():
 	is_highlight = true
 	self.set_scale(Vector2(0.5,0.5))
-	self.global_position.y -= 150 + height_offset
+	#self.global_position.y -= 150 + height_offset
 	_angle = self.rotation
 	self.set_rotation(0)
 
@@ -33,7 +35,7 @@ func highlight():
 func unhighlight():
 	is_highlight = false
 	self.set_scale(Vector2(0.4,0.4))
-	self.global_position.y += 150 + height_offset
+	#self.global_position.y += 150 + height_offset
 	self.set_rotation(_angle)
 	
 
@@ -43,3 +45,15 @@ func _on_card_area_mouse_entered() -> void:
 
 func _on_card_area_mouse_exited() -> void:
 	mouse_exited.emit(self)
+
+
+func _on_card_area_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			if event.pressed:
+				is_drag = true
+				was_drag = false
+			else :
+				if is_drag:
+					was_drag = true
+				is_drag = false

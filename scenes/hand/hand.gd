@@ -9,24 +9,6 @@ class_name Hand extends Node2D
 @export var selected_card : Card = null
 var del = 0
 
-var start_pos
-var is_drag = false 
-var on_table = false
-
-
-func _get_card_pos():
-	var card_imdex = card_collection.find(selected_card)
-	var current_card_count = len(card_collection)
-	if current_card_count == 0:
-		return
-	var coords = hand_circle.distribute_points_with_max_distance(current_card_count)
-	var card_pos = hand_circle.get_card_position(coords[card_imdex])
-	selected_card.set_position(Vector2(card_pos[0], card_pos[1]))
-	selected_card.set_rotation_degrees(card_pos[2])
-	selected_card.height_offset = hand_circle.circle.shape.radius + card_pos[1]
-	selected_card.set_scale(Vector2(0.4, 0.4))
-
-
 
 """
 Функция пересчета (переустановки) позиций карт в руке
@@ -50,21 +32,34 @@ func recalculate_cards_positions():
 		card.height_offset = hand_circle.circle.shape.radius + card_pos[1]
 		card.set_scale(Vector2(0.4, 0.4))
 
-func _input(event: InputEvent) -> void:
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT:
-			if event.pressed:
-				is_drag = true
-			else :
-				is_drag = false
+
+func _del():
+	var current_card_count = len(card_collection)
+	if current_card_count == 0:
+		return
+	
+	# Определение точек 
+	var coords = hand_circle.distribute_points_with_max_distance(current_card_count)
+	var selected_card_index = card_collection.find(selected_card)
+	return hand_circle.get_card_position(coords[selected_card_index])
+
 
 func _process(delta: float) -> void:
 
-	print_debug(start_pos)
-	if is_drag and selected_card != null:
+	if selected_card:
+		for c in card_collection:
+			if selected_card != c:
+				c.is_drag = false
+				c.was_drag = false
+	
+	if selected_card != null and selected_card.is_drag:
 		selected_card.global_position = get_global_mouse_position()
-	if !is_drag and !on_table and selected_card != null:
-		_get_card_pos()
+		
+	if selected_card != null and selected_card.was_drag:
+		var coords = _del()
+		selected_card.set_position(Vector2(coords[0], coords[1]))
+		selected_card.set_rotation_degrees(coords[2])
+
 
 func add_card():
 	var new_card = card1.instantiate()
@@ -84,19 +79,14 @@ func remove_card():
 	recalculate_cards_positions()
 
 
-
 func card_selected(card: Card):
 	var card_index = card_collection.find(card)
-	selected_card = card
 	selected_index_card_collection.append(card_index)
 	recalculate_highlight_cards()
-	
-
 	
 	
 func card_unselected(card: Card):
 	var card_index = card_collection.find(card)
-	selected_card = null
 	selected_index_card_collection.remove_at(selected_index_card_collection.find(card_index))
 	recalculate_highlight_cards()
 
@@ -105,15 +95,23 @@ func card_unselected(card: Card):
 func recalculate_highlight_cards():
 	var max_card_index = selected_index_card_collection.max()
 	
+	if max_card_index == null:
+		selected_card = null
+	
 	for index in range(len(card_collection)):
+		
 		if index == max_card_index:
 			var max_card = card_collection[max_card_index]
+			selected_card = max_card
+			
+			
 			if max_card.is_highlight == false:
 				max_card.highlight()
 				hand_cards.move_child(max_card, -1)
+				
 		else:
 			var other_card = card_collection[index]
-			if other_card.is_highlight == true:
+			if other_card.is_highlight == true and !other_card.is_drag:
 				other_card.unhighlight()
 				
 			var old_index = card_collection.find(other_card)

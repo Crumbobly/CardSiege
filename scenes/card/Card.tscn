@@ -30,5 +30,6 @@ label_settings = SubResource("LabelSettings_5cdqt")
 position = Vector2(-2, 0.5)
 shape = SubResource("RectangleShape2D_27t2f")
 
+[connection signal="input_event" from="CardArea" to="." method="_on_card_area_input_event"]
 [connection signal="mouse_entered" from="CardArea" to="." method="_on_card_area_mouse_entered"]
 [connection signal="mouse_exited" from="CardArea" to="." method="_on_card_area_mouse_exited"]
