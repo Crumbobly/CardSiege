@@ -10,55 +10,56 @@ class_name Hand extends Node2D
 var del = 0
 
 
+func _process(delta: float) -> void:
+
+	if selected_card != null and selected_card.is_drag:
+		selected_card.global_position = get_global_mouse_position()
+		
+	
+
+func dropped_card(card: Card):	
+	
+	card.unhighlight()
+	############
+	print("dropped_card")
+
+	card.is_highlight_moved = false
+	recalculate_all_card_position()
+	
+
 """
 Функция пересчета (переустановки) позиций карт в руке
 set_scale - заменить на глобальную переменную или ...
 """
-func recalculate_cards_positions():
+func _get_cards_positions():
 	
 	var current_card_count = len(card_collection)
 	if current_card_count == 0:
-		return
+		return null
 	
 	# Определение точек 
 	var coords = hand_circle.distribute_points_with_max_distance(current_card_count)
+	return coords
+
+
+func recalculate_all_card_position():
+	var coords = _get_cards_positions()
 	
-	# Установка карты в каждую точку и поворот карты на необходимый угол
-	for i in range(len(coords)):
-		var card = card_collection[i]
-		var card_pos = hand_circle.get_card_position(coords[i])
-		card.set_position(Vector2(card_pos[0], card_pos[1]))
-		card.set_rotation_degrees(card_pos[2])
-		card.height_offset = hand_circle.circle.shape.radius + card_pos[1]
-		card.set_scale(Vector2(0.4, 0.4))
-
-
-func _del():
-	var current_card_count = len(card_collection)
-	if current_card_count == 0:
+	if coords == null:
 		return
-	
-	# Определение точек 
-	var coords = hand_circle.distribute_points_with_max_distance(current_card_count)
-	var selected_card_index = card_collection.find(selected_card)
-	return hand_circle.get_card_position(coords[selected_card_index])
-
-
-func _process(delta: float) -> void:
-
-	if selected_card:
-		for c in card_collection:
-			if selected_card != c:
-				c.is_drag = false
-				c.was_drag = false
-	
-	if selected_card != null and selected_card.is_drag:
-		selected_card.global_position = get_global_mouse_position()
 		
-	if selected_card != null and selected_card.was_drag:
-		var coords = _del()
-		selected_card.set_position(Vector2(coords[0], coords[1]))
-		selected_card.set_rotation_degrees(coords[2])
+	for i in range(len(coords)):
+		recalculate_one_card_position(i, coords)
+
+
+func recalculate_one_card_position(i: int, coords, only_pos: bool = false):
+	var card = card_collection[i]
+	var card_pos = hand_circle.get_card_position(coords[i])
+	card.position.x = card_pos[0]
+	card.position.y = card_pos[1]
+	if !only_pos:
+		card.set_rotation_degrees(card_pos[2])
+	card.height_offset = hand_circle.circle.shape.radius + card_pos[1]
 
 
 func add_card():
@@ -67,25 +68,28 @@ func add_card():
 	del += 1
 	new_card.mouse_entered.connect(card_selected)
 	new_card.mouse_exited.connect(card_unselected)
+	new_card.dropped.connect(dropped_card)
+	
 	card_collection.append(new_card)
 	hand_cards.add_child(new_card)
-	recalculate_cards_positions()
-	
-	
+	recalculate_all_card_position()
+
+
 """Пока удаляет последнюю карту"""
 func remove_card():
 	var removed_card = card_collection.pop_back()
 	hand_cards.remove_child(removed_card)
-	recalculate_cards_positions()
+	recalculate_all_card_position()
 
 
 func card_selected(card: Card):
 	var card_index = card_collection.find(card)
 	selected_index_card_collection.append(card_index)
 	recalculate_highlight_cards()
-	
-	
+
+
 func card_unselected(card: Card):
+	print("card_unselected")
 	var card_index = card_collection.find(card)
 	selected_index_card_collection.remove_at(selected_index_card_collection.find(card_index))
 	recalculate_highlight_cards()
@@ -93,25 +97,32 @@ func card_unselected(card: Card):
 
 # TODO("Переписать")
 func recalculate_highlight_cards():
+	
+	if selected_card and selected_card.is_drag:
+		return
+	
 	var max_card_index = selected_index_card_collection.max()
+	var max_card 
 	
 	if max_card_index == null:
-		selected_card = null
+		max_card = null
+	else:
+		max_card = card_collection[max_card_index]
+	selected_card = max_card
 	
 	for index in range(len(card_collection)):
 		
 		if index == max_card_index:
-			var max_card = card_collection[max_card_index]
-			selected_card = max_card
-			
-			
 			if max_card.is_highlight == false:
 				max_card.highlight()
 				hand_cards.move_child(max_card, -1)
 				
 		else:
 			var other_card = card_collection[index]
-			if other_card.is_highlight == true and !other_card.is_drag:
+			other_card.is_drag = false
+			other_card.was_drag = false
+			
+			if other_card.is_highlight == true:
 				other_card.unhighlight()
 				
 			var old_index = card_collection.find(other_card)
