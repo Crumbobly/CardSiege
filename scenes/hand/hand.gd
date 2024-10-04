@@ -18,13 +18,11 @@ func _process(delta: float) -> void:
 	
 
 func dropped_card(card: Card):	
-	
+	selected_card = null
 	card.unhighlight()
-	############
-	print("dropped_card")
-
-	card.is_highlight_moved = false
+	highlight_selected_card()
 	recalculate_all_card_position()
+
 	
 
 """
@@ -52,13 +50,12 @@ func recalculate_all_card_position():
 		recalculate_one_card_position(i, coords)
 
 
-func recalculate_one_card_position(i: int, coords, only_pos: bool = false):
+func recalculate_one_card_position(i: int, coords):
 	var card = card_collection[i]
 	var card_pos = hand_circle.get_card_position(coords[i])
 	card.position.x = card_pos[0]
 	card.position.y = card_pos[1]
-	if !only_pos:
-		card.set_rotation_degrees(card_pos[2])
+	card.set_rotation_degrees(card_pos[2])
 	card.height_offset = hand_circle.circle.shape.radius + card_pos[1]
 
 
@@ -85,19 +82,18 @@ func remove_card():
 func card_selected(card: Card):
 	var card_index = card_collection.find(card)
 	selected_index_card_collection.append(card_index)
-	recalculate_highlight_cards()
+	recalculate_selected_card()
+	highlight_selected_card()
 
 
 func card_unselected(card: Card):
-	print("card_unselected")
 	var card_index = card_collection.find(card)
 	selected_index_card_collection.remove_at(selected_index_card_collection.find(card_index))
-	recalculate_highlight_cards()
+	recalculate_selected_card()
+	highlight_selected_card()
 
 
-# TODO("Переписать")
-func recalculate_highlight_cards():
-	
+func recalculate_selected_card():
 	if selected_card and selected_card.is_drag:
 		return
 	
@@ -108,29 +104,38 @@ func recalculate_highlight_cards():
 		max_card = null
 	else:
 		max_card = card_collection[max_card_index]
+		
 	selected_card = max_card
+
+
+func highlight_selected_card():
+	var selected_card_index
+
+	if selected_card:
+		selected_card_index = card_collection.find(selected_card)
+	else:
+		selected_card_index = null
 	
 	for index in range(len(card_collection)):
 		
-		if index == max_card_index:
-			if max_card.is_highlight == false:
-				max_card.highlight()
-				hand_cards.move_child(max_card, -1)
+		if index == selected_card_index:
+			if selected_card.is_highlight == false:
+				selected_card.highlight()
+				hand_cards.move_child(selected_card, -1)
 				
 		else:
 			var other_card = card_collection[index]
 			other_card.is_drag = false
-			other_card.was_drag = false
 			
 			if other_card.is_highlight == true:
 				other_card.unhighlight()
 				
-			var old_index = card_collection.find(other_card)
-			if max_card_index != null and old_index < max_card_index:
-				hand_cards.move_child(other_card, old_index)
-			elif max_card_index != null and old_index > max_card_index:
-				hand_cards.move_child(other_card, old_index - 1)
-			if max_card_index == null:
+			var other_card_index = card_collection.find(other_card)
+			if selected_card_index != null and other_card_index < selected_card_index:
+				hand_cards.move_child(other_card, other_card_index)
+			elif selected_card_index != null and other_card_index > selected_card_index:
+				hand_cards.move_child(other_card, other_card_index - 1)
+			if selected_card_index == null:
 				hand_cards.move_child(other_card, index)
 
 
