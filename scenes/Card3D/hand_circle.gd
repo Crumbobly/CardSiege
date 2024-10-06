@@ -1,23 +1,23 @@
-extends StaticBody2D
+extends StaticBody3D
 
-@onready var circle = $CollisionCircle
+@onready var circle = $CollisionShape
 
 """
-Функция нахождения позиции на круге.
+Функция нахождения позиции на сфере (оси X и Y - круг).
 Вход: Угол как для обычного координатного круга
 Выход: координаты точки, угол (в градусах) между 0углом и точкой.
 """
-func get_card_position(angle: float):
-	# -90 т.к. для "руки" 0угол это верх круга.
-	angle -= 90
+func get_card_position(angle_xy: float):
+	# 90 т.к. для "руки" 0угол это верх круга.
+	angle_xy = abs(angle_xy - 90)
 	var radius: float = circle.shape.radius
-	var x: float = radius * cos(deg_to_rad(angle))
-	var y: float = radius * sin(deg_to_rad(angle))
-	var k: float = get_vector_angle(x, y, 0, -1)
+	var x: float = radius * cos(deg_to_rad(angle_xy))
+	var y: float = radius * sin(deg_to_rad(angle_xy))
+	var k: float = get_vector_angle(x, y, 0, 1)
 	return [x, y, k]
 
 """
-Функция нахождения угла между векторами
+Функция нахождения угла между векторами (оси X и Y - круг)
 Вход: Две точки
 Выход: Угол в градусах
 """
@@ -52,19 +52,51 @@ Output: [-12, -6, 0, 6, 12]
 func distribute_points_with_max_distance(n: int, left: float = -15.0, right: float = 15.0, step: float = 6.0):
 	var max_n: int = (right - left ) / step
 	var points = []
+	var start = (left + right) / 2
 	
 	if n > max_n:
 		step = (right - left ) / n
 	
 	if n % 2 == 0:
 		for i in range(n / 2):
-			points.append(step * i + step / 2)
-			points.append(- step * i - step / 2)
+			points.append(start + step * i + step / 2)
+			points.append(start - step * i - step / 2)
 	else:
-		points.append(0)
+		points.append(start)
 		for i in range((n - 1) / 2):
-			points.append(step * i + step)
-			points.append(- step * i - step)
+			points.append(start + step * i + step)
+			points.append(start - step * i - step)
 	
 	points.sort()
 	return points
+
+
+func move_apart(n: int, selected_card_index: int, left: float = -15.0, right: float = 15.0, step: float = 6.0):
+	var coords = distribute_points_with_max_distance(n)
+	
+	if n < 3:
+		return coords
+		
+	var select = []
+	var before = selected_card_index - 1
+	if before < 0:
+		before = 0
+	var after = n - selected_card_index - 2
+	
+	if selected_card_index > 0:
+		select.append(coords[selected_card_index - 1] - step * 2)
+	select.append(coords[selected_card_index])
+	if selected_card_index < n - 1:
+		select.append(coords[selected_card_index + 1] + step * 2)
+	
+	var coords_before = []
+	var coords_after = []
+	if before > 0:
+		coords_before = distribute_points_with_max_distance(before, -30, coords[selected_card_index] - step * 2.5)
+	if after > 0:
+		coords_after = distribute_points_with_max_distance(after, coords[selected_card_index] + step * 2.5, 30)
+
+	return coords_before + select + coords_after
+	
+	
+	

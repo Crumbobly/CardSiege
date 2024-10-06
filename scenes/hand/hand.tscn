@@ -1,18 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://banlq843qtex8"]
+[gd_scene load_steps=4 format=3 uid="uid://cibohmqty0itj"]
 
-[ext_resource type="Script" path="res://scenes/hand/hand.gd" id="1_343y3"]
-[ext_resource type="Script" path="res://scenes/hand/hand_circle.gd" id="2_d8ks1"]
+[ext_resource type="Script" path="res://scenes/Hand/hand.gd" id="1_1mi4f"]
+[ext_resource type="Script" path="res://scenes/Card3D/hand_circle.gd" id="2_jwndh"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_pojux"]
-radius = 1265.0
+[sub_resource type="SphereShape3D" id="SphereShape3D_yje06"]
+radius = 11.6396
 
-[node name="Hand" type="Node2D"]
-script = ExtResource("1_343y3")
+[node name="Hand" type="Node3D"]
+script = ExtResource("1_1mi4f")
 
-[node name="Cards" type="Node2D" parent="."]
+[node name="HandCircle" type="StaticBody3D" parent="."]
+script = ExtResource("2_jwndh")
 
-[node name="HandCircle" type="StaticBody2D" parent="."]
-script = ExtResource("2_d8ks1")
+[node name="CollisionShape" type="CollisionShape3D" parent="HandCircle"]
+shape = SubResource("SphereShape3D_yje06")
+disabled = true
 
-[node name="CollisionCircle" type="CollisionShape2D" parent="HandCircle"]
-shape = SubResource("CircleShape2D_pojux")
+[node name="Cards" type="Node3D" parent="."]
