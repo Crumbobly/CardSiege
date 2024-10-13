@@ -71,6 +71,7 @@ func distribute_points_with_max_distance(n: int, left: float = -15.0, right: flo
 	return points
 
 
+# TODO (Сделать лучше)
 func move_apart(n: int, selected_card_index: int, left: float = -15.0, right: float = 15.0, step: float = 6.0):
 	var coords = distribute_points_with_max_distance(n)
 	

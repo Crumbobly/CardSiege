@@ -3,20 +3,22 @@ class_name Card3D extends Node3D
 @onready var highligh_collision = $StaticBody3D/HighllightCollision
 @onready var card_name_lbl = $CardNameLbl
 
-@export var is_highlight: bool = false
-@export var height_offset: float = 0.0
-@export var is_drag = false
-@export var pos_in_hand = null
-@export var angle_in_hand = null
-@export var last_pos = null
+@export var is_highlight: bool = false  # подсвечена ли карта
+@export var height_offset: float = 0.0  # велечина на которую нужно дополнительно поднять картуучитывая её позицию на "круге" руки. (Карты расположенные правее будут ниже)
+@export var is_drag = false  # перетаскивается ли карта
+@export var angle_in_hand = Vector3(0, 0, 0)  # угол карты в руке в момент её добавления. Нужен чтобы мы смогли вернуть карту в исходную позицию.
+@export var pos_in_hand_y: float   # координаты карты в руке в момент её добавления. Нужены чтобы мы смогли вернуть карту в исходную позицию.
+const hightlight_height = 1.5  # высота подьёма выбранной карты (можно сделать глобальной)
 
-@export var pos_duration : float = 0.5
-@export var rotate_daration : float = .5
-@export var highlight_duration : float = .5
-@export var scale_duration : float = .5
+var my_tween_list: MyTweenList = MyTweenList.new() # Список активных твинов. Нужен для оставноки всех активных анимаций карты.
+
+var pos_duration : float = .2
+var rotate_duration : float = .2
+var hightlight_daration : float = .2
+
 signal mouse_entered(card: Card3D)
 signal mouse_exited(card: Card3D)
-signal left_click(card: Card3D)
+signal dragging(card: Card3D)
 signal dropped(card: Card3D)
 
 
@@ -24,57 +26,65 @@ func set_card_name(name):
 	card_name_lbl.set_text(name)
 
 
+# Функция "следования за мышкой".
+# Принимает на вход координаты мышки и устанавливает меняет позицию карты
+func follow(pos):  
+	
+	var my_tween_list_lenght = len(my_tween_list.get_list())
+	my_tween_list.kill_all() # Останавливаем все анимации которые проиходят в данный момент
+
+	if my_tween_list_lenght > 0: # Если такие анимации есть, то после их прерывания необходимо привести их в конечное состояние. Перетаскиваемая карта - selected. А значит hightlight.
+		self.set_scale(Vector3(1.2, 1.2, 1.2)) # Делаем карту подсвеченной
+		self.set_rotation_degrees(Vector3(0, 0, 0))
+		self.set_position(Vector3(self.position[0], pos_in_hand_y + hightlight_height + height_offset, self.position[2]))
+	
+	self.global_position.x = pos[0] # Меняем позицию карты. 
+	self.global_position.y = pos[1]
+
+
+# TODO("Подумать о переносе в класс руки на основании того, что карта может быть hightlight только в руке")
 func highlight():
+	if is_drag:
+		return
+		
+	self.is_highlight = true
+	
 	var tween = create_tween().set_parallel(true)
-	is_highlight = true
-	highligh_collision.position.y -= Global.HIGHLIGHT_OFFSET_HEIHT + height_offset
+	my_tween_list.add_tween(tween)
+	tween.set_ease(Tween.EASE_OUT)
+	tween.tween_property(self, "scale", Vector3(1.2, 1.2, 1.2) , hightlight_daration)
+	tween.tween_property(self, "rotation_degrees", Vector3(0, 0, 0) , rotate_duration)
+	tween.tween_property(self, "position:y", pos_in_hand_y + hightlight_height + height_offset, pos_duration)
 	
-	if self.position.x != pos_in_hand[0] and self.position.y != pos_in_hand[1]:
-		self.position.x = pos_in_hand[0]
-		self.position.y = pos_in_hand[1]
-	
-	tween.set_ease(Tween.EASE_IN)
-	tween.set_parallel(true)
-	tween.tween_property(self, "scale", Vector3(1.2, 1.2, 1.2) , scale_duration)
-	tween.tween_property(self, "rotation", Vector3(0, 0, 0) , pos_duration)
-	tween.tween_property(self, "position:y", pos_in_hand[1] + Global.HIGHLIGHT_OFFSET_HEIHT + height_offset, pos_duration)
-	last_pos = [pos_in_hand[0], pos_in_hand[1] + Global.HIGHLIGHT_OFFSET_HEIHT + height_offset]
 
-
-# Когда много карт как переключать???
-
+# TODO("Подумать о переносе в класс руки на основании того, что карта может быть unhightlight только в руке")
 func unhighlight():
-	if is_highlight:
-		var tween = create_tween().set_parallel(true)
-		is_highlight = false
-		highligh_collision.position.y += Global.HIGHLIGHT_OFFSET_HEIHT + height_offset
+	if is_drag:
+		return
 		
-		tween.set_ease(Tween.EASE_IN)
-		tween.set_parallel(true)
-		tween.tween_property(self, "scale", Vector3(1, 1, 1) , scale_duration)
-		tween.tween_property(self, "rotation_degrees", angle_in_hand , rotate_daration)
-		tween.tween_property(self, "position:y", pos_in_hand[1], pos_duration)
-		last_pos = pos_in_hand
-		
-
-func anim_set_pos_x(x):
-	var tween = create_tween()
+	self.is_highlight = false
+	
+	var tween = create_tween().set_parallel(true)
+	my_tween_list.add_tween(tween)
 	tween.set_ease(Tween.EASE_OUT)
-	tween.set_trans(Tween.TRANS_SPRING)
+	tween.tween_property(self, "scale", Vector3(1, 1, 1) , hightlight_daration)
+	tween.tween_property(self, "rotation_degrees", angle_in_hand , rotate_duration)
+	tween.tween_property(self, "position:y", pos_in_hand_y , pos_duration)
+
+
+func set_anim_pos(x, y):
+	var tween = create_tween().set_parallel(true)
+	my_tween_list.add_tween(tween)
+	tween.set_ease(Tween.EASE_OUT)
 	tween.tween_property(self, "position:x", x, pos_duration)
-
-
-func anim_set_pos_y(y):
-	var tween = create_tween()
-	tween.set_ease(Tween.EASE_OUT)
-	tween.set_trans(Tween.TRANS_SPRING)
 	tween.tween_property(self, "position:y", y, pos_duration)
 
 
 func set_anim_rotation_degrees(angle):
 	var tween = create_tween()
+	my_tween_list.add_tween(tween)
 	tween.set_ease(Tween.EASE_IN)
-	tween.tween_property(self, "rotation_degrees", angle, rotate_daration)
+	tween.tween_property(self, "rotation_degrees", angle, rotate_duration)
 
 
 func _on_static_body_3d_input_event(camera: Node, event: InputEvent, event_position: Vector3, normal: Vector3, shape_idx: int) -> void:
@@ -84,9 +94,9 @@ func _on_static_body_3d_input_event(camera: Node, event: InputEvent, event_posit
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			
 			if event.pressed:
-				left_click.emit(self)
+				dragging.emit(self)
 				is_drag = true
-				
+
 			else:
 				if is_drag:
 					dropped.emit(self)
