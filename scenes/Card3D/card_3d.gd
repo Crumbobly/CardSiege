@@ -1,13 +1,16 @@
 class_name Card3D extends Node3D
 
+
 @onready var highligh_collision = $StaticBody3D/HighllightCollision
 @onready var card_name_lbl = $CardNameLbl
 
-@export var is_highlight: bool = false  # подсвечена ли карта
-@export var height_offset: float = 0.0  # велечина на которую нужно дополнительно поднять картуучитывая её позицию на "круге" руки. (Карты расположенные правее будут ниже)
-@export var is_drag = false  # перетаскивается ли карта
-@export var angle_in_hand = Vector3(0, 0, 0)  # угол карты в руке в момент её добавления. Нужен чтобы мы смогли вернуть карту в исходную позицию.
-@export var pos_in_hand_y: float   # координаты карты в руке в момент её добавления. Нужены чтобы мы смогли вернуть карту в исходную позицию.
+@export var card_data: CardData = Spell.new()
+
+var is_highlight: bool = false  # подсвечена ли карта 
+var height_offset: float = 0.0 # велечина на которую нужно дополнительно поднять картуучитывая её позицию на "круге" руки. (Карты расположенные правее будут ниже)
+var is_drag = false  # перетаскивается ли карта
+var angle_in_hand = Vector3(0, 0, 0)  # угол карты в руке в момент её добавления. Нужен чтобы мы смогли вернуть карту в исходную позицию.
+var pos_in_hand_y: float   # координаты карты в руке в момент её добавления. Нужены чтобы мы смогли вернуть карту в исходную позицию.
 const hightlight_height = 1.5  # высота подьёма выбранной карты (можно сделать глобальной)
 
 var my_tween_list: MyTweenList = MyTweenList.new() # Список активных твинов. Нужен для оставноки всех активных анимаций карты.
@@ -15,6 +18,7 @@ var my_tween_list: MyTweenList = MyTweenList.new() # Список активны
 var pos_duration : float = .2
 var rotate_duration : float = .2
 var hightlight_daration : float = .2
+
 
 signal mouse_entered(card: Card3D)
 signal mouse_exited(card: Card3D)

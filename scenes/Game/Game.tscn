@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://cniph4cpvwp1l"]
 
-[ext_resource type="Script" path="res://scenes/Game/game.gd" id="1_80nip"]
-[ext_resource type="Script" path="res://scenes/Camera/camera_3d.gd" id="2_j6ls0"]
-[ext_resource type="Texture2D" uid="uid://b2tqo0h7q2iss" path="res://images/table/table.jpeg" id="3_vlvvu"]
-[ext_resource type="PackedScene" uid="uid://cibohmqty0itj" path="res://scenes/hand/Hand.tscn" id="4_li3pq"]
+[ext_resource type="Script" path="res://Scenes/Game/game.gd" id="1_80nip"]
+[ext_resource type="Script" path="res://Scenes/Camera/camera_3d.gd" id="2_j6ls0"]
+[ext_resource type="Texture2D" uid="uid://b2tqo0h7q2iss" path="res://Assets/images/table/table.jpeg" id="3_vlvvu"]
+[ext_resource type="PackedScene" uid="uid://cibohmqty0itj" path="res://Scenes/Hand/Hand.tscn" id="4_li3pq"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_snble"]
 

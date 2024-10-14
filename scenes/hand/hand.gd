@@ -5,10 +5,10 @@ extends Node3D
 @onready var hand_circle = $HandCircle  # Класс круга "руки"
 @onready var card3d_scene: PackedScene = preload("res://scenes/Card3D/Card3D.tscn") #  Запакованная сцена карты
 
-@export var card_collection: Array[Card3D] = []  # Коллекция карт
-@export var selected_card: Card3D = null  # Выбранная в данный момент карта
+var card_collection: Array[Card3D] = []  # Коллекция карт
+var selected_card: Card3D = null  # Выбранная в данный момент карта
 var selected_card_z: float = 0  # Смещение по z выбранной карты
-@export var card_count: int = 0  # Кол-во карт в руке (перетаскиваемая в данный момент карта считается)
+var card_count: int = 0  # Кол-во карт в руке (перетаскиваемая в данный момент карта считается)
 
 
 func dragged_card(card: Card3D):

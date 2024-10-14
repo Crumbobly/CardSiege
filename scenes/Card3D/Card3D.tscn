@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://bde3kvvn2c8yn"]
 
-[ext_resource type="Script" path="res://scenes/Card3D/card_3d.gd" id="1_jno23"]
-[ext_resource type="Texture2D" uid="uid://dqskvmwkk5d1c" path="res://images/card/card_frame_back.jpg" id="1_o5j6f"]
-[ext_resource type="Texture2D" uid="uid://cquawarjqw2lw" path="res://images/card/card_frame.png" id="2_0tqki"]
+[ext_resource type="Script" path="res://Scenes/Card3D/card_3d.gd" id="1_jno23"]
+[ext_resource type="Texture2D" uid="uid://dqskvmwkk5d1c" path="res://Assets/images/card/card_frame_back.jpg" id="1_o5j6f"]
+[ext_resource type="Texture2D" uid="uid://cquawarjqw2lw" path="res://Assets/images/card/card_frame.png" id="2_0tqki"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_xkd2x"]
 
@@ -39,7 +39,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_aj02o")
 shape = SubResource("BoxShape3D_7o6e7")
 
 [node name="CardNameLbl" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.616206, 1.28157, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.616206, 1.28157, 0.00219674)
 text = "text"
 
 [connection signal="input_event" from="StaticBody3D" to="." method="_on_static_body_3d_input_event"]
