@@ -1,5 +1,7 @@
-class_name Hand
+class_name Hand 
 extends Node3D
+
+# TODO(CardLAyout)
 
 @onready var hand_cards = $Cards  # Место под карты в руке
 @onready var hand_circle = $HandCircle  # Класс круга "руки"
@@ -98,6 +100,15 @@ func add_card():
 	card_collection.append(new_card3d)
 	new_card3d.set_card_name(str(card_count))
 	card_count += 1
+	
+	var coords = _get_cards_distribution()
+	recalculate_all_card_position(coords)
+
+
+func remove_card():
+	var card = card_collection.pop_back()
+	hand_cards.remove_child(card)
+	card_count -= 1
 	
 	var coords = _get_cards_distribution()
 	recalculate_all_card_position(coords)

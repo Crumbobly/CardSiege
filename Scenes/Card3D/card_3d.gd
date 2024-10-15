@@ -1,7 +1,5 @@
 class_name Card3D extends Node3D
 
-
-@onready var highligh_collision = $StaticBody3D/HighllightCollision
 @onready var card_name_lbl = $CardNameLbl
 
 @export var card_data: CardData = Spell.new()
@@ -11,6 +9,7 @@ var height_offset: float = 0.0 # велечина на которую нужно
 var is_drag = false  # перетаскивается ли карта
 var angle_in_hand = Vector3(0, 0, 0)  # угол карты в руке в момент её добавления. Нужен чтобы мы смогли вернуть карту в исходную позицию.
 var pos_in_hand_y: float   # координаты карты в руке в момент её добавления. Нужены чтобы мы смогли вернуть карту в исходную позицию.
+var is_over_field = false
 const hightlight_height = 1.5  # высота подьёма выбранной карты (можно сделать глобальной)
 
 var my_tween_list: MyTweenList = MyTweenList.new() # Список активных твинов. Нужен для оставноки всех активных анимаций карты.
@@ -113,3 +112,19 @@ func _on_static_body_3d_mouse_entered() -> void:
 
 func _on_static_body_3d_mouse_exited() -> void:
 	mouse_exited.emit(self)
+
+
+
+func _on_area_3d_area_entered(area: Area3D) -> void:
+	var parent = area.get_parent_node_3d()
+	if parent is Field:
+		is_over_field = true
+		print("Card is now over the field area.")
+
+
+
+func _on_area_3d_area_exited(area: Area3D) -> void:
+	var parent = area.get_parent_node_3d()
+	if parent is Field:
+		is_over_field = false
+		print("Card left the field area.")
