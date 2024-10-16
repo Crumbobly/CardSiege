@@ -9,7 +9,7 @@ var height_offset: float = 0.0 # велечина на которую нужно
 var is_drag = false  # перетаскивается ли карта
 var angle_in_hand = Vector3(0, 0, 0)  # угол карты в руке в момент её добавления. Нужен чтобы мы смогли вернуть карту в исходную позицию.
 var pos_in_hand_y: float   # координаты карты в руке в момент её добавления. Нужены чтобы мы смогли вернуть карту в исходную позицию.
-var is_over_field = false
+var over_field: Field
 const hightlight_height = 1.5  # высота подьёма выбранной карты (можно сделать глобальной)
 
 var my_tween_list: MyTweenList = MyTweenList.new() # Список активных твинов. Нужен для оставноки всех активных анимаций карты.
@@ -58,9 +58,22 @@ func highlight():
 	tween.tween_property(self, "scale", Vector3(1.2, 1.2, 1.2) , hightlight_daration)
 	tween.tween_property(self, "rotation_degrees", Vector3(0, 0, 0) , rotate_duration)
 	tween.tween_property(self, "position:y", pos_in_hand_y + hightlight_height + height_offset, pos_duration)
-	
 
-# TODO("Подумать о переносе в класс руки на основании того, что карта может быть unhightlight только в руке")
+
+func hi():
+	var mesh_instance = $CardMesh/FrontMesh
+	var material = StandardMaterial3D.new()
+	material.albedo_color = Color(1, 0, 0)  # Устанавливаем красный цвет
+	mesh_instance.material_override = material
+
+
+func unhi():
+	var mesh_instance = $CardMesh/FrontMesh
+	var material = StandardMaterial3D.new()
+	material.albedo_color = Color(1, 1, 1)  # Устанавливаем красный цвет
+	mesh_instance.material_override = material
+
+
 func unhighlight():
 	if is_drag:
 		return
@@ -90,21 +103,6 @@ func set_anim_rotation_degrees(angle):
 	tween.tween_property(self, "rotation_degrees", angle, rotate_duration)
 
 
-func _on_static_body_3d_input_event(camera: Node, event: InputEvent, event_position: Vector3, normal: Vector3, shape_idx: int) -> void:
-	
-	if event is InputEventMouseButton:
-
-		if event.button_index == MOUSE_BUTTON_LEFT:
-			
-			if event.pressed:
-				dragging.emit(self)
-				is_drag = true
-
-			else:
-				if is_drag:
-					dropped.emit(self)
-				is_drag = false
-
 
 func _on_static_body_3d_mouse_entered() -> void:
 	mouse_entered.emit(self)
@@ -118,7 +116,7 @@ func _on_static_body_3d_mouse_exited() -> void:
 func _on_area_3d_area_entered(area: Area3D) -> void:
 	var parent = area.get_parent_node_3d()
 	if parent is Field:
-		is_over_field = true
+		over_field = parent
 		print("Card is now over the field area.")
 
 
@@ -126,5 +124,20 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
 func _on_area_3d_area_exited(area: Area3D) -> void:
 	var parent = area.get_parent_node_3d()
 	if parent is Field:
-		is_over_field = false
+		over_field = null
 		print("Card left the field area.")
+
+
+func _on_area_3d_input_event(camera: Node, event: InputEvent, event_position: Vector3, normal: Vector3, shape_idx: int) -> void:
+	if event is InputEventMouseButton:
+
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			
+			if event.pressed:
+				dragging.emit(self)
+				is_drag = true
+
+			else:
+				if is_drag:
+					dropped.emit(self)
+				is_drag = false

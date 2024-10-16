@@ -1,10 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://drpdagfyti14n"]
+[gd_scene load_steps=4 format=3 uid="uid://drpdagfyti14n"]
 
-[ext_resource type="Script" path="res://Scenes/Field/area_3d.gd" id="1_cnvfj"]
 [ext_resource type="Script" path="res://Scenes/Field/field.gd" id="1_nd15h"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_u6kqj"]
-size = Vector3(8.00643, 2.5011, 2.06589)
+size = Vector3(8.06227, 0.0147061, 2.02269)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_w2v67"]
 
@@ -12,18 +11,14 @@ size = Vector3(8.00643, 2.5011, 2.06589)
 script = ExtResource("1_nd15h")
 
 [node name="Area3D" type="Area3D" parent="."]
-script = ExtResource("1_cnvfj")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0258317, 1.22335, -0.0393829)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.001, 0)
 shape = SubResource("BoxShape3D_u6kqj")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(4.00051, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(4.00051, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 mesh = SubResource("PlaneMesh_w2v67")
 skeleton = NodePath("../Area3D")
 
-[connection signal="area_entered" from="Area3D" to="Area3D" method="_on_area_entered"]
-[connection signal="area_exited" from="Area3D" to="Area3D" method="_on_area_exited"]
 [connection signal="body_exited" from="Area3D" to="Area3D" method="_on_body_exited"]
-[connection signal="card_entered" from="Area3D" to="Area3D" method="_on_card_entered"]

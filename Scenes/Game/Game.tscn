@@ -4,13 +4,15 @@
 [ext_resource type="Script" path="res://Scenes/Camera/camera_3d.gd" id="2_j6ls0"]
 [ext_resource type="Texture2D" uid="uid://b2tqo0h7q2iss" path="res://Assets/images/table/table.jpeg" id="3_vlvvu"]
 [ext_resource type="PackedScene" uid="uid://cibohmqty0itj" path="res://Scenes/Hand/Hand.tscn" id="4_li3pq"]
-[ext_resource type="PackedScene" uid="uid://blto6n3ra6a46" path="res://Scenes/Library/Library.tscn" id="5_02wkq"]
 [ext_resource type="PackedScene" uid="uid://drpdagfyti14n" path="res://Scenes/Field/Field.tscn" id="6_7xakm"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_snble"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c3t0a"]
 albedo_texture = ExtResource("3_vlvvu")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4bymm"]
+size = Vector3(2.00105, 2.0343, 8.05257)
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_80nip")
@@ -28,6 +30,12 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 
 mesh = SubResource("PlaneMesh_snble")
 surface_material_override/0 = SubResource("StandardMaterial3D_c3t0a")
 
+[node name="Area3D" type="Area3D" parent="Table"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Table/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.07891)
+shape = SubResource("BoxShape3D_4bymm")
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.977666, 0.210165, 0, -0.210165, 0.977666, 0, 15.6818, 31.9317)
 shadow_enabled = true
@@ -35,19 +43,23 @@ shadow_opacity = 0.4
 shadow_blur = 5.0
 
 [node name="Hand" parent="." instance=ExtResource("4_li3pq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10.2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
 
 [node name="2D" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.4168, 10.1407, -0.983258)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.43892, 10.1407, -0.983258)
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="2D"]
-offset_left = 1.0
-offset_top = 1.0
-offset_right = 513.0
-offset_bottom = 513.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1288.0
+offset_bottom = -468.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="SubViewport" type="SubViewport" parent="2D/SubViewportContainer"]
 handle_input_locally = false
+size = Vector2i(100, 100)
 render_target_update_mode = 4
 
 [node name="BoxContainer" type="BoxContainer" parent="2D/SubViewportContainer/SubViewport"]
@@ -62,11 +74,8 @@ text = "add"
 layout_mode = 2
 text = "del"
 
-[node name="Library" parent="." instance=ExtResource("5_02wkq")]
-transform = Transform3D(0.199793, -0.000542134, -0.00908482, -0.00908505, -7.32305e-05, -0.199794, 0.000538248, 0.199999, -9.77824e-05, 9.2923, 1.62496, -0.992014)
-
 [node name="Field" parent="." instance=ExtResource("6_7xakm")]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 8, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, -0.999)
 
 [connection signal="pressed" from="2D/SubViewportContainer/SubViewport/BoxContainer/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="2D/SubViewportContainer/SubViewport/BoxContainer/Button2" to="." method="_on_button_2_pressed"]

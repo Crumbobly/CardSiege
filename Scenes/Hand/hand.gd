@@ -1,16 +1,11 @@
 class_name Hand 
-extends Node3D
+extends CardLayout
 
 # TODO(CardLAyout)
+var hand_radius = 11.5
 
-@onready var hand_cards = $Cards  # Место под карты в руке
-@onready var hand_circle = $HandCircle  # Класс круга "руки"
-@onready var card3d_scene: PackedScene = preload("res://scenes/Card3D/Card3D.tscn") #  Запакованная сцена карты
-
-var card_collection: Array[Card3D] = []  # Коллекция карт
-var selected_card: Card3D = null  # Выбранная в данный момент карта
-var selected_card_z: float = 0  # Смещение по z выбранной карты
-var card_count: int = 0  # Кол-во карт в руке (перетаскиваемая в данный момент карта считается)
+var hand_circle = CircleLayoutLogic.new(hand_radius)  # Класс круга "руки"
+var card3d_scene: PackedScene = preload("res://scenes/Card3D/Card3D.tscn") #  Запакованная сцена карты
 
 
 func dragged_card(card: Card3D):
@@ -26,9 +21,16 @@ func _card_follow():
 		
 
 func dropped_card(card: Card3D):
+	
+	if card.over_field:
+		var field = card.over_field
+		remove_card(card)
+		field.add_card(card)
+		return
+	
 	if selected_card:
 		var selected_card_index = card_collection.find(selected_card)
-		var coords = hand_circle.move_apart(card_count, selected_card_index)
+		var coords = hand_line.move_apart(card_count, selected_card_index)
 		recalculate_all_card_position(coords)
 	
 	else:
@@ -43,7 +45,7 @@ func _get_cards_distribution():
 		return null
 	
 	# Определение точек на отезке
-	var coords = hand_circle.distribute_points_with_max_distance(current_card_count)
+	var coords = hand_line.distribute_points_with_max_distance(current_card_count)
 	return coords
 
 
@@ -63,6 +65,8 @@ func recalculate_all_card_position(coords):
 	if coords == null:
 		return
 		
+	super.recalculate_all_card_position(coords)	
+
 	for index in range(len(coords)):
 		var card: Card3D = card_collection[index]
 		var card_pos = hand_circle.get_card_position(coords[index]) # Определяем координаты карты на "круге" руки
@@ -78,74 +82,39 @@ func recalculate_all_card_position(coords):
 			card.set_anim_rotation_degrees(angle)
 			
 		card.angle_in_hand = angle
-		card.height_offset = hand_circle.circle.shape.radius - card_pos[1]
+		card.height_offset = hand_circle.circle_radius - card_pos[1]
 	
 	
-func add_card():
-
-	var new_card3d = card3d_scene.instantiate()
-	new_card3d.position.z = card_count * 0.001  # Нужно чтобы карты "накладывалсь" друг на друга
+func add_card(new_card3d: Card3D):
+	
+	super.add_card(new_card3d)
 	
 	new_card3d.dragging.connect(dragged_card)
-	
-	new_card3d.mouse_entered.connect(card_selected)
-	new_card3d.mouse_exited.connect(card_unselected)
-	
-	new_card3d.mouse_entered.connect(card_highlight)
-	new_card3d.mouse_exited.connect(card_unhighlight)
-	
 	new_card3d.dropped.connect(dropped_card)
-	
-	hand_cards.add_child(new_card3d)
-	card_collection.append(new_card3d)
-	new_card3d.set_card_name(str(card_count))
-	card_count += 1
-	
-	var coords = _get_cards_distribution()
-	recalculate_all_card_position(coords)
 
 
-func remove_card():
-	var card = card_collection.pop_back()
-	hand_cards.remove_child(card)
-	card_count -= 1
+func remove_card(card: Card3D):
 	
-	var coords = _get_cards_distribution()
-	recalculate_all_card_position(coords)
+	card.dragging.disconnect(dragged_card)
+	card.dropped.disconnect(dropped_card)
 	
+	super.remove_card(card)
+
 	
 func card_selected(card: Card3D):
-	# При перетаскивании карты она selected пока не будет отпущена игроком. Значит мы не можем сделать новой select
-	if selected_card and selected_card.is_drag:
-		return
 	
-	selected_card_z = card.position.z  
-	card.position.z = 0.1  # Выносим карту на передний план
-	selected_card = card  # переопределяем selected_card
-	
-	# Располагаем карты по определённому порядку
+	super.card_selected(card)
+
 	var selected_card_index = card_collection.find(selected_card)
-	var coords = hand_circle.move_apart(card_count, selected_card_index)
-	recalculate_all_card_position(coords)
-
-
-func card_unselected(card: Card3D):
-	# При перетаскивании карты она selected пока не будет отпущена игроком. Значит мы не можем сделать unselect
-	if selected_card and selected_card.is_drag:
-		return
-	
-	card.position.z = selected_card_z  # Возвращаем карту на своё место в руке (по оси Z)
-	selected_card_z = 0 
-	selected_card = null
-	
-	# Располагаем карты по определённому порядку
-	var coords = _get_cards_distribution()
+	var coords = hand_line.move_apart(card_count, selected_card_index)
 	recalculate_all_card_position(coords)
 
 
 func card_highlight(card: Card3D):
+	super.card_highlight(card)
 	card.highlight()
 
 
 func card_unhighlight(card: Card3D):
+	super.card_unhighlight(card)
 	card.unhighlight()
