@@ -3,7 +3,6 @@ class_name CardLayout
 
 @export var hand_cards: Node3D # Узел, куда будут помещаться карты
 
-var hand_line = LineLayoutLogic.new()
 var card_collection: Array[Card3D] = []  # Коллекция карт
 var selected_card: Card3D = null  # Выбранная в данный момент карта
 var selected_card_z: float = 0  # Смещение по z выбранной карты
@@ -16,15 +15,9 @@ func _ready():
 	add_child(hand_cards)
 
 
-
 func _get_cards_distribution():
-	var current_card_count = len(card_collection)
-	if current_card_count == 0:
-		return null
-	
-	# Определение точек на отезке
-	var coords = hand_line.distribute_points_with_max_distance(current_card_count)
-	return coords
+	assert(false, "Not Implemented")
+	pass
 
 
 func recalculate_all_card_position(coords):
@@ -33,9 +26,10 @@ func recalculate_all_card_position(coords):
 		return
 		
 	for index in range(len(card_collection)):
+		if card_collection[index] == selected_card:
+			continue
 		card_collection[index].position.z = (index + 1) * 0.001
-		print(card_collection[index].global_position)
-		print(card_collection[index].rotation)
+
 
 func add_card(new_card3d: Card3D):
 	
@@ -67,10 +61,7 @@ func remove_card(card: Card3D):
 	
 	
 func card_selected(card: Card3D):
-	# При перетаскивании карты она selected пока не будет отпущена игроком. Значит мы не можем сделать новой select
-	if selected_card and selected_card.is_drag:
-		return
-		
+
 	selected_card_z = card.position.z  
 	card.position.z = 0.1  # Выносим карту на передний план
 	selected_card = card  # переопределяем selected_card
@@ -78,10 +69,6 @@ func card_selected(card: Card3D):
 
 
 func card_unselected(card: Card3D):
-	# При перетаскивании карты она selected пока не будет отпущена игроком. Значит мы не можем сделать unselect
-	if selected_card and selected_card.is_drag:
-		return
-	
 	
 	card.position.z = selected_card_z  # Возвращаем карту на своё место в руке (по оси Z)
 	selected_card_z = 0 

@@ -1,7 +1,6 @@
 class_name Hand 
 extends CardLayout
 
-# TODO(CardLAyout)
 var hand_radius = 11.5
 
 var hand_circle = CircleLayoutLogic.new(hand_radius)  # Класс круга "руки"
@@ -30,7 +29,7 @@ func dropped_card(card: Card3D):
 	
 	if selected_card:
 		var selected_card_index = card_collection.find(selected_card)
-		var coords = hand_line.move_apart(card_count, selected_card_index)
+		var coords = hand_circle.move_apart(card_count, selected_card_index)
 		recalculate_all_card_position(coords)
 	
 	else:
@@ -45,7 +44,7 @@ func _get_cards_distribution():
 		return null
 	
 	# Определение точек на отезке
-	var coords = hand_line.distribute_points_with_max_distance(current_card_count)
+	var coords = hand_circle.distribute_points_with_max_distance(current_card_count)
 	return coords
 
 
@@ -86,28 +85,36 @@ func recalculate_all_card_position(coords):
 	
 	
 func add_card(new_card3d: Card3D):
-	
 	super.add_card(new_card3d)
-	
 	new_card3d.dragging.connect(dragged_card)
 	new_card3d.dropped.connect(dropped_card)
 
 
 func remove_card(card: Card3D):
-	
 	card.dragging.disconnect(dragged_card)
 	card.dropped.disconnect(dropped_card)
-	
 	super.remove_card(card)
 
 	
 func card_selected(card: Card3D):
-	
+	# При перетаскивании карты она selected пока не будет отпущена игроком. Значит мы не можем сделать новой select
+	if selected_card and selected_card.is_drag:
+		return
+		
 	super.card_selected(card)
 
 	var selected_card_index = card_collection.find(selected_card)
-	var coords = hand_line.move_apart(card_count, selected_card_index)
+	var coords = hand_circle.move_apart(card_count, selected_card_index)
 	recalculate_all_card_position(coords)
+
+
+func card_unselected(card: Card3D):
+	# При перетаскивании карты она selected пока не будет отпущена игроком. Значит мы не можем сделать unselect
+	if selected_card and selected_card.is_drag:
+		return
+	
+	super.card_unselected(card)
+
 
 
 func card_highlight(card: Card3D):

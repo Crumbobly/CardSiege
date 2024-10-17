@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://cniph4cpvwp1l"]
+[gd_scene load_steps=10 format=3 uid="uid://cniph4cpvwp1l"]
 
 [ext_resource type="Script" path="res://Scenes/Game/game.gd" id="1_80nip"]
 [ext_resource type="Script" path="res://Scenes/Camera/camera_3d.gd" id="2_j6ls0"]
 [ext_resource type="Texture2D" uid="uid://b2tqo0h7q2iss" path="res://Assets/images/table/table.jpeg" id="3_vlvvu"]
 [ext_resource type="PackedScene" uid="uid://cibohmqty0itj" path="res://Scenes/Hand/Hand.tscn" id="4_li3pq"]
 [ext_resource type="PackedScene" uid="uid://drpdagfyti14n" path="res://Scenes/Field/Field.tscn" id="6_7xakm"]
+[ext_resource type="PackedScene" uid="uid://cuas81b84wajc" path="res://Scenes/CardPreview/CardPreview.tscn" id="6_c3nlu"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_snble"]
 
@@ -46,14 +47,15 @@ shadow_blur = 5.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
 
 [node name="2D" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.43892, 10.1407, -0.983258)
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="2D"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -1288.0
-offset_bottom = -468.0
+offset_left = 1715.0
+offset_top = 930.0
+offset_right = 427.0
+offset_bottom = 462.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -76,6 +78,12 @@ text = "del"
 
 [node name="Field" parent="." instance=ExtResource("6_7xakm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, -0.999)
+
+[node name="CardPreview" parent="." instance=ExtResource("6_c3nlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.25978, 9.068, -0.500688)
+
+[node name="Field2" parent="." instance=ExtResource("6_7xakm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.022, 5.764, -0.999)
 
 [connection signal="pressed" from="2D/SubViewportContainer/SubViewport/BoxContainer/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="2D/SubViewportContainer/SubViewport/BoxContainer/Button2" to="." method="_on_button_2_pressed"]

@@ -117,15 +117,12 @@ func _on_area_3d_area_entered(area: Area3D) -> void:
 	var parent = area.get_parent_node_3d()
 	if parent is Field:
 		over_field = parent
-		print("Card is now over the field area.")
-
 
 
 func _on_area_3d_area_exited(area: Area3D) -> void:
 	var parent = area.get_parent_node_3d()
 	if parent is Field:
 		over_field = null
-		print("Card left the field area.")
 
 
 func _on_area_3d_input_event(camera: Node, event: InputEvent, event_position: Vector3, normal: Vector3, shape_idx: int) -> void:
@@ -141,3 +138,6 @@ func _on_area_3d_input_event(camera: Node, event: InputEvent, event_position: Ve
 				if is_drag:
 					dropped.emit(self)
 				is_drag = false
+		
+		elif event.button_index == MOUSE_BUTTON_RIGHT:
+			Global.CARD_PREVIEW.add_card_preview(self)
