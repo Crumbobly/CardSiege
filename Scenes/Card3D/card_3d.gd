@@ -115,6 +115,7 @@ func _on_static_body_3d_mouse_exited() -> void:
 
 func _on_area_3d_area_entered(area: Area3D) -> void:
 	var parent = area.get_parent_node_3d()
+	
 	if parent is Field:
 		over_field = parent
 
