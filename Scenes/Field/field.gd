@@ -1,6 +1,8 @@
 extends CardLayout
 class_name Field
 
+
+@onready var shape: BoxShape3D = $Area3D/CollisionShape3D.shape
 var circle_layut = CircleLayoutLogic.new(11.5)
 var line_layoyt = LineLayoutLogic.new()
 

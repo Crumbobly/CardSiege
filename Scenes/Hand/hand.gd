@@ -4,20 +4,22 @@ extends CardLayout
 var hand_radius = 11.5
 
 var hand_circle = CircleLayoutLogic.new(hand_radius)  # Класс круга "руки"
-var card3d_scene: PackedScene = preload("res://scenes/Card3D/Card3D.tscn") #  Запакованная сцена карты
+var card3d_scene: PackedScene = preload("res://scenes/card3d/Card3D.tscn") #  Запакованная сцена карты
+
+
+
+func _process(delta: float) -> void:
+	if selected_card != null and selected_card.is_drag:
+		var pos: Vector3 = Global.CAMERA.get_look_cords()
+		selected_card.follow(pos)
+	else:
+		set_process(false)
 
 
 func dragged_card(card: Card3D):
-	var thead = Thread.new()
-	thead.start(_card_follow)
+	card.stop_all_tween_animations()
+	set_process(true)  # Включаем _process для следования карты
 
-
-func _card_follow():
-	while selected_card != null and selected_card.is_drag:
-		var pos: Vector3 = Global.CAMERA.get_look_cords()
-		selected_card.follow(pos)
-		await get_tree().create_timer(0.01).timeout
-		
 
 func dropped_card(card: Card3D):
 	
@@ -100,7 +102,6 @@ func card_selected(card: Card3D):
 	# При перетаскивании карты она selected пока не будет отпущена игроком. Значит мы не можем сделать новой select
 	if selected_card and selected_card.is_drag:
 		return
-		
 	super.card_selected(card)
 
 	var selected_card_index = card_collection.find(selected_card)
@@ -112,16 +113,14 @@ func card_unselected(card: Card3D):
 	# При перетаскивании карты она selected пока не будет отпущена игроком. Значит мы не можем сделать unselect
 	if selected_card and selected_card.is_drag:
 		return
-	
 	super.card_unselected(card)
-
 
 
 func card_highlight(card: Card3D):
 	super.card_highlight(card)
-	card.highlight()
+	card.highlight_with_up()
 
 
 func card_unhighlight(card: Card3D):
 	super.card_unhighlight(card)
-	card.unhighlight()
+	card.unhighlight_with_up()

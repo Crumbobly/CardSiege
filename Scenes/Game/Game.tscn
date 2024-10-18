@@ -1,19 +1,16 @@
-[gd_scene load_steps=10 format=3 uid="uid://cniph4cpvwp1l"]
+[gd_scene load_steps=9 format=3 uid="uid://cniph4cpvwp1l"]
 
-[ext_resource type="Script" path="res://Scenes/Game/game.gd" id="1_80nip"]
-[ext_resource type="Script" path="res://Scenes/Camera/camera_3d.gd" id="2_j6ls0"]
-[ext_resource type="Texture2D" uid="uid://b2tqo0h7q2iss" path="res://Assets/images/table/table.jpeg" id="3_vlvvu"]
-[ext_resource type="PackedScene" uid="uid://cibohmqty0itj" path="res://Scenes/Hand/Hand.tscn" id="4_li3pq"]
-[ext_resource type="PackedScene" uid="uid://drpdagfyti14n" path="res://Scenes/Field/Field.tscn" id="6_7xakm"]
-[ext_resource type="PackedScene" uid="uid://cuas81b84wajc" path="res://Scenes/CardPreview/CardPreview.tscn" id="6_c3nlu"]
+[ext_resource type="Script" path="res://scenes/game/game.gd" id="1_80nip"]
+[ext_resource type="Script" path="res://scenes/camera/camera_3d.gd" id="2_j6ls0"]
+[ext_resource type="Texture2D" uid="uid://b2tqo0h7q2iss" path="res://assets/images/table/table.jpeg" id="3_vlvvu"]
+[ext_resource type="PackedScene" uid="uid://cibohmqty0itj" path="res://scenes/hand/Hand.tscn" id="4_li3pq"]
+[ext_resource type="PackedScene" uid="uid://drpdagfyti14n" path="res://scenes/field/Field.tscn" id="6_7xakm"]
+[ext_resource type="PackedScene" uid="uid://cuas81b84wajc" path="res://scenes/card_preview/CardPreview.tscn" id="6_c3nlu"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_snble"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c3t0a"]
 albedo_texture = ExtResource("3_vlvvu")
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_4bymm"]
-size = Vector3(2.00105, 2.0343, 8.05257)
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_80nip")
@@ -30,12 +27,6 @@ transform = Transform3D(11, 0, 0, 0, 6, 0, 0, 0, 1, 0, 6, 0)
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -1)
 mesh = SubResource("PlaneMesh_snble")
 surface_material_override/0 = SubResource("StandardMaterial3D_c3t0a")
-
-[node name="Area3D" type="Area3D" parent="Table"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Table/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5.07891)
-shape = SubResource("BoxShape3D_4bymm")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.977666, 0.210165, 0, -0.210165, 0.977666, 0, 15.6818, 31.9317)
@@ -76,14 +67,29 @@ text = "add"
 layout_mode = 2
 text = "del"
 
-[node name="Field" parent="." instance=ExtResource("6_7xakm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, -0.999)
-
 [node name="CardPreview" parent="." instance=ExtResource("6_c3nlu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.25978, 9.068, -0.500688)
 
-[node name="Field2" parent="." instance=ExtResource("6_7xakm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.022, 5.764, -0.999)
+[node name="Node3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.999)
+
+[node name="Field" parent="Node3D" instance=ExtResource("6_7xakm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.3554, 0)
+
+[node name="Field2" parent="Node3D" instance=ExtResource("6_7xakm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.97466, 0)
+
+[node name="Field3" parent="Node3D" instance=ExtResource("6_7xakm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.59531, 0)
+
+[node name="Field4" parent="Node3D" instance=ExtResource("6_7xakm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.22562, 0)
+
+[node name="Field5" parent="Node3D" instance=ExtResource("6_7xakm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.79416, 0)
+
+[node name="Field6" parent="Node3D" instance=ExtResource("6_7xakm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.38012, 0)
 
 [connection signal="pressed" from="2D/SubViewportContainer/SubViewport/BoxContainer/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="2D/SubViewportContainer/SubViewport/BoxContainer/Button2" to="." method="_on_button_2_pressed"]

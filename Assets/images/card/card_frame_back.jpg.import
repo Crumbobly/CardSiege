@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dqskvmwkk5d1c"
-path.s3tc="res://.godot/imported/card_frame_back.jpg-e01389e4e3b14a8057ccd19bff8422f7.s3tc.ctex"
+path.s3tc="res://.godot/imported/card_frame_back.jpg-acccb987af65f6ef8eb97cc8f50dbff5.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Assets/images/card/card_frame_back.jpg"
-dest_files=["res://.godot/imported/card_frame_back.jpg-e01389e4e3b14a8057ccd19bff8422f7.s3tc.ctex"]
+source_file="res://assets/images/card/card_frame_back.jpg"
+dest_files=["res://.godot/imported/card_frame_back.jpg-acccb987af65f6ef8eb97cc8f50dbff5.s3tc.ctex"]
 
 [params]
 

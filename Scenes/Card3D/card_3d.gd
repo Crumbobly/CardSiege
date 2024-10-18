@@ -1,6 +1,7 @@
 class_name Card3D extends Node3D
 
 @onready var card_name_lbl = $CardNameLbl
+@onready var raycast: RayCast3D = $RayCast3D
 
 @export var card_data: CardData = Spell.new()
 
@@ -25,14 +26,26 @@ signal dragging(card: Card3D)
 signal dropped(card: Card3D)
 
 
-func set_card_name(name):
+# Устанавливает текст Label
+func set_card_name(name) -> void:
 	card_name_lbl.set_text(name)
 
 
-# Функция "следования за мышкой".
-# Принимает на вход координаты мышки и устанавливает меняет позицию карты
-func follow(pos):  
-	
+# Возвращает объект Field если карта над ним находиться, иначе null
+func get_card_overfield() -> Field:
+	if raycast.is_colliding():
+		var collider = raycast.get_collider()
+		var collider_parent = collider.get_parent_node_3d()
+		
+		if collider_parent is Field:
+			return collider_parent
+			
+	return null
+
+
+# Прерывает все анимации, делает карту hightlight.
+# Необходимо для корректного отображения карты в случае если пользователь хватает её (начинает новые анимации) до завершения текущих.
+func stop_all_tween_animations():
 	var my_tween_list_lenght = len(my_tween_list.get_list())
 	my_tween_list.kill_all() # Останавливаем все анимации которые проиходят в данный момент
 
@@ -41,12 +54,17 @@ func follow(pos):
 		self.set_rotation_degrees(Vector3(0, 0, 0))
 		self.set_position(Vector3(self.position[0], pos_in_hand_y + hightlight_height + height_offset, self.position[2]))
 	
-	self.global_position.x = pos[0] # Меняем позицию карты. 
+
+# Функция "следования за мышкой".
+# Принимает на вход координаты мышки и устанавливает меняет позицию карты, перезапысывает overfield
+func follow(pos):  
+	over_field = get_card_overfield()
+	self.global_position.x = pos[0]
 	self.global_position.y = pos[1]
 
 
 # TODO("Подумать о переносе в класс руки на основании того, что карта может быть hightlight только в руке")
-func highlight():
+func highlight_with_up():
 	if is_drag:
 		return
 		
@@ -60,21 +78,21 @@ func highlight():
 	tween.tween_property(self, "position:y", pos_in_hand_y + hightlight_height + height_offset, pos_duration)
 
 
-func hi():
+func highlight():
 	var mesh_instance = $CardMesh/FrontMesh
 	var material = StandardMaterial3D.new()
 	material.albedo_color = Color(1, 0, 0)  # Устанавливаем красный цвет
 	mesh_instance.material_override = material
 
 
-func unhi():
+func unhighlight():
 	var mesh_instance = $CardMesh/FrontMesh
 	var material = StandardMaterial3D.new()
 	material.albedo_color = Color(1, 1, 1)  # Устанавливаем красный цвет
 	mesh_instance.material_override = material
 
 
-func unhighlight():
+func unhighlight_with_up():
 	if is_drag:
 		return
 		
@@ -103,27 +121,12 @@ func set_anim_rotation_degrees(angle):
 	tween.tween_property(self, "rotation_degrees", angle, rotate_duration)
 
 
-
 func _on_static_body_3d_mouse_entered() -> void:
 	mouse_entered.emit(self)
 
 
 func _on_static_body_3d_mouse_exited() -> void:
 	mouse_exited.emit(self)
-
-
-
-func _on_area_3d_area_entered(area: Area3D) -> void:
-	var parent = area.get_parent_node_3d()
-	
-	if parent is Field:
-		over_field = parent
-
-
-func _on_area_3d_area_exited(area: Area3D) -> void:
-	var parent = area.get_parent_node_3d()
-	if parent is Field:
-		over_field = null
 
 
 func _on_area_3d_input_event(camera: Node, event: InputEvent, event_position: Vector3, normal: Vector3, shape_idx: int) -> void:
