@@ -46,9 +46,9 @@ func move_for_fall():
 					var card : Card3D = card_collection[i]
 					card.my_tween_list.add_tween(_move_tween)
 					if(on_selected_card.over_field == card.over_field):
-						if(coords[i] < on_selected_card.over_field_coord_x):
+						if(coords[i] <= on_selected_card.over_field_coord_x):
 							coords[i] -= 2	
-						if(coords[i] > on_selected_card.over_field_coord_x):
+						if(coords[i] >= on_selected_card.over_field_coord_x):
 							coords[i] += 2
 						_move_tween.tween_property(card, "position:x", coords[i], 0.2)
 	
