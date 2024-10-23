@@ -45,6 +45,7 @@ func set_card_overfield() -> void:
 		var collider_parent = collider.get_parent_node_3d()
 		
 		if collider_parent is Field:
+			Events.emit_signal("card_on_field")
 			over_field = collider_parent
 			var collision_point = raycast.get_collision_point()
 			over_field_coord_x = over_field.to_local(collision_point).x
@@ -52,6 +53,7 @@ func set_card_overfield() -> void:
 			
 	over_field = null
 	over_field_coord_x = INF
+	Events.emit_signal("card_off_field")
 
 
 # Прерывает все анимации, делает карту hightlight.

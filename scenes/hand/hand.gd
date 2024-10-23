@@ -8,21 +8,18 @@ var card3d_scene: PackedScene = preload("res://scenes/card3d/Card3D.tscn") #  З
 
 signal _on_card_selected_for_field(card : Card3D)
 signal _on_card_deselected_for_field()
-signal on_drop_state_field()
 	
 func _process(delta: float) -> void:
 	if selected_card != null and selected_card.is_drag:
 		var pos: Vector3 = Global.CAMERA.get_look_cords()
 		selected_card.follow(pos)
-		if(selected_card.over_field != null):
-			emit_signal("on_drop_state_field")
-		else:
-			pass
+
 	else:
 		set_process(false)
 
 
 func dragged_card(card: Card3D):
+	Events.emit_signal("card_on_drag")
 	card.stop_all_tween_animations()
 	set_process(true)  # Включаем _process для следования карты
 

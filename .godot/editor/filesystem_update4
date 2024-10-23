@@ -1,9 +1,7 @@
 res://scenes/game/Game.tscn
 res://scenes/field/Field.tscn
 res://scenes/card3d/Card3D.tscn
+res://scenes/field/field.gd
+res://scenes/hand/hand.gd
 res://Events.gd
 res://scenes/card3d/card_3d.gd
-res://scenes/field/field.gd
-res://scenes/game/game.gd
-res://scenes/hand/hand.gd
-res://scenes/card_layout/card_layout.gd
