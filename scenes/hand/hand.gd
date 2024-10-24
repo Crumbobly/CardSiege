@@ -6,8 +6,6 @@ var hand_radius = 11.5
 var hand_circle = CircleLayoutLogic.new(hand_radius)  # Класс круга "руки"
 var card3d_scene: PackedScene = preload("res://scenes/card3d/Card3D.tscn") #  Запакованная сцена карты
 
-signal _on_card_selected_for_field(card : Card3D)
-signal _on_card_deselected_for_field()
 	
 func _process(delta: float) -> void:
 	if selected_card != null and selected_card.is_drag:
@@ -19,7 +17,6 @@ func _process(delta: float) -> void:
 
 
 func dragged_card(card: Card3D):
-	Events.emit_signal("card_on_drag")
 	card.stop_all_tween_animations()
 	set_process(true)  # Включаем _process для следования карты
 
@@ -92,8 +89,7 @@ func recalculate_all_card_position(coords):
 func add_card(new_card3d: Card3D):
 	super.add_card(new_card3d)
 	
-	randomize()
-	new_card3d.card_id = generate_id()
+	new_card3d.card_id = Global.RANDOM.generate_id()
 	new_card3d.set_card_name(str(new_card3d.card_id))
 	
 	new_card3d.dragging.connect(dragged_card)
@@ -114,7 +110,6 @@ func card_selected(card: Card3D):
 	selected_card_z = card.position.z  
 	card.position.z = 0.1  # Выносим карту на передний план
 	selected_card = card  # переопределяем selected_card
-	emit_signal("_on_card_selected_for_field", selected_card)
 	super.card_selected(card)
 
 	var selected_card_index = card_collection.find(selected_card)
@@ -127,17 +122,38 @@ func card_unselected(card: Card3D):
 	if selected_card and selected_card.is_drag:
 		return
 	
-	emit_signal("_on_card_deselected_for_field")
 	card.position.z = selected_card_z  # Возвращаем карту на своё место в руке (по оси Z)
 	selected_card_z = 0 
 	super.card_unselected(card)
 
 
 func card_highlight(card: Card3D):
+	
+	#if card.is_drag:
+		#return
+		
 	super.card_highlight(card)
-	card.highlight_with_up()
+	card.is_highlight = true
+	
+	var tween = create_tween().set_parallel(true)
+	card.my_tween_list.add_tween(tween)
+	tween.set_ease(Tween.EASE_OUT)
+	tween.tween_property(card, "scale", Vector3(1.2, 1.2, 1.2) , card.hightlight_daration)
+	tween.tween_property(card, "rotation_degrees", Vector3(0, 0, 0) , card.rotate_duration)
+	tween.tween_property(card, "position:y", card.pos_in_hand_y + card.hightlight_height + card.height_offset, card.pos_duration)
 
 
 func card_unhighlight(card: Card3D):
+	
+	#if card.is_drag:
+		#return
+	
 	super.card_unhighlight(card)
-	card.unhighlight_with_up()
+	card.is_highlight = false
+	
+	var tween = create_tween().set_parallel(true)
+	card.my_tween_list.add_tween(tween)
+	tween.set_ease(Tween.EASE_OUT)
+	tween.tween_property(card, "scale", Vector3(1, 1, 1) , card.hightlight_daration)
+	tween.tween_property(card, "rotation_degrees", card.angle_in_hand , card.rotate_duration)
+	tween.tween_property(card, "position:y", card.pos_in_hand_y , card.pos_duration)
