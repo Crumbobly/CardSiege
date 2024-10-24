@@ -1,39 +1,13 @@
 extends Node3D
 class_name CardLayout
 
-var hand_cards: Node3D # Узел, куда будут помещаться карты
+@export var hand_cards: Node3D # Узел, куда будут помещаться карты
 
 var card_collection: Array[Card3D] = []  # Коллекция карт
 var selected_card: Card3D = null  # Выбранная в данный момент карта
 var selected_card_z: float = 0  # Смещение по z выбранной карты
 var card_count: int = 0  # Кол-во карт в руке (перетаскиваемая в данный момент карта считается)
 
-
-var existing_ids = [] 
-var char_pool = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-@export var current_lenght = 5
-var mouse_pos : Vector3
-
-
-
-
-
-func generate_random_string(lenght : int) -> String:
-	var result = ""
-	for i in lenght:
-		result += char_pool[randi() % char_pool.length()]
-	return result
-
-
-func generate_id() -> String:
-	while true:
-		var new_id = generate_random_string(current_lenght)
-		if new_id not in existing_ids:
-			existing_ids.append(new_id)
-			return new_id
-		if len(existing_ids) >= pow(char_pool.length(), current_lenght):
-			current_lenght +=1
-	return ""
 
 
 func _ready():
@@ -101,7 +75,7 @@ func get_l_neightboor(old_coords, card: Card3D):
 func remove_card(card: Card3D):
 	card.mouse_entered.disconnect(card_selected)
 	card.mouse_exited.disconnect(card_unselected)
-	card_unselected(card)
+	# card_unselected(card)
 	
 	card_collection.erase(card)
 	hand_cards.remove_child(card)
@@ -113,18 +87,14 @@ func remove_card(card: Card3D):
 	
 func card_selected(card: Card3D):	
 	card_highlight(card)
-	emit_signal("_on_card_selected_for_field", card)
 	selected_card = card
-
 
 
 func card_unselected(card: Card3D):
 	card_unhighlight(card)
-	emit_signal("_on_card_deselected_for_field")
 	card.is_drag = false
 	selected_card = null
 	
-	# Располагаем карты по определённому порядку
 	var coords = _get_cards_distribution()
 	recalculate_all_card_position(coords)
 
