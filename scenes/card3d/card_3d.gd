@@ -4,9 +4,18 @@ class_name Card3D extends Node3D
 @onready var raycast: RayCast3D = $RayCast3D
 
 
-var card_ready : bool = false #Доступна ли карта для хода
+var card_ready = card_state.NULL #состояние карты в данный момент
 var card_identity = Identity.Identity.NULL #Однозначная индификация карты
 
+enum card_state {
+	ON_HAND,
+	ON_BOARD,
+	REFRESHING,
+	READY,
+	NULL,
+	SELECTED,
+	DRAGGED,
+}
 
 var is_highlight: bool = false  # подсвечена ли карта 
 var is_drag = false  # перетаскивается ли карта
@@ -27,17 +36,45 @@ var pos_in_hand_y: float   # координаты карты в руке в мо
 var over_field: Field = null
 var over_field_coord_x: float = INF
 
-
 # tmp
 var card_id : String = ""
 
+var _card_DIC_id : String = ""
 
+@export var health : int = 0:
+	set(h):
+		health = h
+		$CardMesh/HP.text = str(health)
+@export var damage : int = 0:
+	set(d):
+		damage = d
+		$CardMesh/Attack.text = str(damage)
+@export var description : String = "":
+	set(s):
+		description = s
+		$CardMesh/Description.text = str(description)
 signal mouse_entered(card: Card3D)
 signal mouse_exited(card: Card3D)
 signal dragging(card: Card3D)
 signal dropped(card: Card3D)
 
 
+func _set_random_card_from_dic():
+	randomize()
+	var card_dic = CardData.new()
+	var dic_size = card_dic.database.size()
+	var i = randi_range(0, dic_size)	
+	for data in card_dic.database:
+		var card_data : Dictionary = card_dic.database[data]
+		if(i > 0):
+			if(i == dic_size):
+				i -= 1
+			i -= 1
+		else:
+			health = card_data["hp"]
+			damage = card_data["damage"]
+			description = card_data["description"]
+			break
 
 # Устанавливает текст Label
 func set_card_name(name) -> void:
@@ -54,16 +91,16 @@ func follow(pos):
 
 func highlight():
 	var mesh_instance = $CardMesh/FrontMesh
-	var material = StandardMaterial3D.new()
-	material.albedo_color = Color(1, 0, 0)  # Устанавливаем красный цвет
-	mesh_instance.material_override = material
+	#var material = StandardMaterial3D.new()
+	#material.albedo_color = Color(1, 0, 0)  # Устанавливаем красный цвет
+	#mesh_instance.material_override = material
 
 
 func unhighlight():
 	var mesh_instance = $CardMesh/FrontMesh
-	var material = StandardMaterial3D.new()
-	material.albedo_color = Color(1, 1, 1)  # Устанавливаем красный цвет
-	mesh_instance.material_override = material
+	#var material = StandardMaterial3D.new()
+	#material.albedo_color = Color(1, 1, 1)  # Устанавливаем красный цвет
+	#mesh_instance.material_override = material
 
 
 func set_anim_pos(x, y):

@@ -1,8 +1,8 @@
+res://scenes/card3d/Card3D.tscn
 res://scenes/game/Game.tscn
 res://scenes/field/Field.tscn
-res://scenes/card3d/Card3D.tscn
+res://scenes/card3d/card_3d.gd
+res://scripts/data_classes/card/card_data.gd
 res://scenes/game/game.gd
-res://scenes/game/field_enemy.gd
+res://scripts/utils/Random.gd
 res://scenes/game/Field_controller.gd
-res://scenes/hand/hand.gd
-res://scenes/field/field.gd

@@ -7,7 +7,9 @@ var hand_circle = CircleLayoutLogic.new(hand_radius)  # Класс круга "�
 var card3d_scene: PackedScene = preload("res://scenes/card3d/Card3D.tscn") #  Запакованная сцена карты
 
 var hand_identity = Identity.Identity.NULL
-	
+
+var is_from_dic : bool = false
+
 func _process(delta: float) -> void:
 	if selected_card != null and selected_card.is_drag and hand_identity == Identity.Identity.PLAYER:
 		var pos: Vector3 = Global.CAMERA.get_look_cords()
@@ -34,7 +36,7 @@ func _set_identity(indentity : int) :
 
 func dropped_card(card: Card3D):
 	if (hand_identity == Identity.Identity.PLAYER):
-		if card.over_field and card.over_field.field_identity == Identity.Identity.PLAYER:
+		if card.over_field and card.over_field.field_identity == Identity.Identity.PLAYER and card.over_field.can_drop == true:
 			var field = card.over_field
 			remove_card(card)
 			field.add_card(card)
@@ -99,7 +101,8 @@ func recalculate_all_card_position(coords):
 	
 func add_card(new_card3d: Card3D):
 	super.add_card(new_card3d)
-	
+	if(is_from_dic == true):
+		new_card3d._set_random_card_from_dic()
 	new_card3d.card_id = Global.RANDOM.generate_id()
 	new_card3d.set_card_name(str(new_card3d.card_id))
 	

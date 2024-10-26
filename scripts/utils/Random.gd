@@ -15,7 +15,7 @@ static func generate_random_string(lenght : int) -> String:
 
 func generate_id() -> String:
 	randomize()
-	while true:
+	while true:		
 		var new_id = generate_random_string(current_lenght)
 		if new_id not in existing_ids:
 			existing_ids.append(new_id)

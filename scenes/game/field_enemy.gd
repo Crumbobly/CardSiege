@@ -11,6 +11,9 @@ func _ready() -> void:
 	f1.field_identity = Identity.Identity.ENEMY
 	f2.field_identity = Identity.Identity.ENEMY
 	f3.field_identity = Identity.Identity.ENEMY
+	f1.can_drop = true
+	
+	
 func set_hand(_hand : Hand):
 	hand = _hand
 	f1.hand = hand

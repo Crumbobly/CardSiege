@@ -12,6 +12,7 @@ func _ready() -> void:
 	f1.field_identity = Identity.Identity.PLAYER
 	f2.field_identity = Identity.Identity.PLAYER
 	f3.field_identity = Identity.Identity.PLAYER
+	f3.can_drop = true
 func set_hand(_hand : Hand):
 	hand = _hand
 	f1.hand = hand
@@ -34,5 +35,3 @@ func _set_identity(indentity : int) :
 			
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	print(hand.hand_identity)
