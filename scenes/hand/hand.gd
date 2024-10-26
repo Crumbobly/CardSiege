@@ -6,9 +6,10 @@ var hand_radius = 11.5
 var hand_circle = CircleLayoutLogic.new(hand_radius)  # Класс круга "руки"
 var card3d_scene: PackedScene = preload("res://scenes/card3d/Card3D.tscn") #  Запакованная сцена карты
 
+var hand_identity = Identity.Identity.NULL
 	
 func _process(delta: float) -> void:
-	if selected_card != null and selected_card.is_drag:
+	if selected_card != null and selected_card.is_drag and hand_identity == Identity.Identity.PLAYER:
 		var pos: Vector3 = Global.CAMERA.get_look_cords()
 		selected_card.follow(pos)
 
@@ -17,26 +18,36 @@ func _process(delta: float) -> void:
 
 
 func dragged_card(card: Card3D):
-	card.stop_all_tween_animations()
-	set_process(true)  # Включаем _process для следования карты
+	if (hand_identity == Identity.Identity.PLAYER):
+		card.stop_all_tween_animations()
+		set_process(true)  # Включаем _process для следования карты
+
+func _set_identity(indentity : int) :
+	if(indentity == Identity.Identity.PLAYER):
+		hand_identity = Identity.Identity.PLAYER
+	if(indentity == Identity.Identity.ENEMY):
+		hand_identity = Identity.Identity.ENEMY
+	if(indentity == Identity.Identity.NULL):
+		hand_identity = Identity.Identity.NULL
+	
 
 
 func dropped_card(card: Card3D):
-	
-	if card.over_field:
-		var field = card.over_field
-		remove_card(card)
-		field.add_card(card)
-		return
-	
-	if selected_card:
-		var selected_card_index = card_collection.find(selected_card)
-		var coords = hand_circle.move_apart(card_count, selected_card_index)
-		recalculate_all_card_position(coords)
-	
-	else:
-		var coords = _get_cards_distribution()
-		recalculate_all_card_position(coords)
+	if (hand_identity == Identity.Identity.PLAYER):
+		if card.over_field and card.over_field.field_identity == Identity.Identity.PLAYER:
+			var field = card.over_field
+			remove_card(card)
+			field.add_card(card)
+			return
+		
+		if selected_card:
+			var selected_card_index = card_collection.find(selected_card)
+			var coords = hand_circle.move_apart(card_count, selected_card_index)
+			recalculate_all_card_position(coords)
+		
+		else:
+			var coords = _get_cards_distribution()
+			recalculate_all_card_position(coords)
 
 
 func _get_cards_distribution():
@@ -103,57 +114,59 @@ func remove_card(card: Card3D):
 
 	
 func card_selected(card: Card3D):
-	# При перетаскивании карты она selected пока не будет отпущена игроком. Значит мы не можем сделать новой select
-	if selected_card and selected_card.is_drag:
-		return
-		
-	selected_card_z = card.position.z  
-	card.position.z = 0.1  # Выносим карту на передний план
-	selected_card = card  # переопределяем selected_card
-	super.card_selected(card)
+	if (hand_identity == Identity.Identity.PLAYER):
+		# При перетаскивании карты она selected пока не будет отпущена игроком. Значит мы не можем сделать новой select
+		if selected_card and selected_card.is_drag:
+			return
+			
+		selected_card_z = card.position.z  
+		card.position.z = 0.1  # Выносим карту на передний план
+		selected_card = card  # переопределяем selected_card
+		super.card_selected(card)
 
-	var selected_card_index = card_collection.find(selected_card)
-	var coords = hand_circle.move_apart(card_count, selected_card_index)
-	recalculate_all_card_position(coords)
+		var selected_card_index = card_collection.find(selected_card)
+		var coords = hand_circle.move_apart(card_count, selected_card_index)
+		recalculate_all_card_position(coords)
 
 
 func card_unselected(card: Card3D):
-	# При перетаскивании карты она selected пока не будет отпущена игроком. Значит мы не можем сделать unselect
-	if selected_card and selected_card.is_drag:
-		return
-	
-	card.position.z = selected_card_z  # Возвращаем карту на своё место в руке (по оси Z)
-	selected_card_z = 0 
-	super.card_unselected(card)
+	if (hand_identity == Identity.Identity.PLAYER):
+		# При перетаскивании карты она selected пока не будет отпущена игроком. Значит мы не можем сделать unselect
+		if selected_card and selected_card.is_drag:
+			return
+		
+		card.position.z = selected_card_z  # Возвращаем карту на своё место в руке (по оси Z)
+		selected_card_z = 0 
+		super.card_unselected(card)
 
 
 func card_highlight(card: Card3D):
-	
-	#if card.is_drag:
-		#return
+	if (hand_identity == Identity.Identity.PLAYER):	
+		#if card.is_drag:
+			#return
+			
+		super.card_highlight(card)
+		card.is_highlight = true
 		
-	super.card_highlight(card)
-	card.is_highlight = true
-	
-	var tween = create_tween().set_parallel(true)
-	card.my_tween_list.add_tween(tween)
-	tween.set_ease(Tween.EASE_OUT)
-	tween.tween_property(card, "scale", Vector3(1.2, 1.2, 1.2) , card.hightlight_daration)
-	tween.tween_property(card, "rotation_degrees", Vector3(0, 0, 0) , card.rotate_duration)
-	tween.tween_property(card, "position:y", card.pos_in_hand_y + card.hightlight_height + card.height_offset, card.pos_duration)
+		var tween = create_tween().set_parallel(true)
+		card.my_tween_list.add_tween(tween)
+		tween.set_ease(Tween.EASE_OUT)
+		tween.tween_property(card, "scale", Vector3(1.2, 1.2, 1.2) , card.hightlight_daration)
+		tween.tween_property(card, "rotation_degrees", Vector3(0, 0, 0) , card.rotate_duration)
+		tween.tween_property(card, "position:y", card.pos_in_hand_y + card.hightlight_height + card.height_offset, card.pos_duration)
 
 
 func card_unhighlight(card: Card3D):
-	
-	#if card.is_drag:
-		#return
-	
-	super.card_unhighlight(card)
-	card.is_highlight = false
-	
-	var tween = create_tween().set_parallel(true)
-	card.my_tween_list.add_tween(tween)
-	tween.set_ease(Tween.EASE_OUT)
-	tween.tween_property(card, "scale", Vector3(1, 1, 1) , card.hightlight_daration)
-	tween.tween_property(card, "rotation_degrees", card.angle_in_hand , card.rotate_duration)
-	tween.tween_property(card, "position:y", card.pos_in_hand_y , card.pos_duration)
+	if (hand_identity == Identity.Identity.PLAYER):	
+		#if card.is_drag:
+			#return
+		
+		super.card_unhighlight(card)
+		card.is_highlight = false
+		
+		var tween = create_tween().set_parallel(true)
+		card.my_tween_list.add_tween(tween)
+		tween.set_ease(Tween.EASE_OUT)
+		tween.tween_property(card, "scale", Vector3(1, 1, 1) , card.hightlight_daration)
+		tween.tween_property(card, "rotation_degrees", card.angle_in_hand , card.rotate_duration)
+		tween.tween_property(card, "position:y", card.pos_in_hand_y , card.pos_duration)

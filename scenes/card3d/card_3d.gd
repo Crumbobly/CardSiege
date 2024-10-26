@@ -4,6 +4,10 @@ class_name Card3D extends Node3D
 @onready var raycast: RayCast3D = $RayCast3D
 
 
+var card_ready : bool = false #Доступна ли карта для хода
+var card_identity = Identity.Identity.NULL #Однозначная индификация карты
+
+
 var is_highlight: bool = false  # подсвечена ли карта 
 var is_drag = false  # перетаскивается ли карта
 

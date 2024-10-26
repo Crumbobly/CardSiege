@@ -4,13 +4,14 @@ class_name Field
 
 @onready var collision_shape = $Area3D/CollisionShape3D
 @onready var shape: BoxShape3D = $Area3D/CollisionShape3D.shape
-@onready var hand =  $"../../Hand"
+@onready var hand : Hand
 
 var circle_layut = CircleLayoutLogic.new(11.5)
 var line_layoyt = LineLayoutLogic.new()
 var card_size : float = .7
 var curr_coords
 
+var field_identity = Identity.Identity.NULL
 
 func _ready() -> void:
 	super._ready()
@@ -22,26 +23,27 @@ func precalculate_all_card_position():
 	
 	
 func move_for_fall(hand_selected_card: Card3D):
-	var coords = _get_cards_distribution()
-	
-	if(coords != null):
+	if (field_identity == Identity.Identity.PLAYER):
+		var coords = _get_cards_distribution()
 		
-		adjust_coords_pos(coords)
-		
-		for i in len(coords):
-			var card : Card3D = card_collection[i]
-			if(coords[i] <= hand_selected_card.over_field_coord_x):
-				coords[i] -= 2
-			if(coords[i] >= hand_selected_card.over_field_coord_x):
-				coords[i] += 2
-		
-		if coords != curr_coords:
+		if(coords != null):
+			
+			adjust_coords_pos(coords)
+			
 			for i in len(coords):
 				var card : Card3D = card_collection[i]
-				var _move_tween : Tween = create_tween().set_ease(Tween.EASE_OUT).set_parallel(true)
-				_move_tween.tween_property(card, "position:x", coords[i], 0.2)
+				if(coords[i] <= hand_selected_card.over_field_coord_x):
+					coords[i] -= 2
+				if(coords[i] >= hand_selected_card.over_field_coord_x):
+					coords[i] += 2
+			
+			if coords != curr_coords:
+				for i in len(coords):
+					var card : Card3D = card_collection[i]
+					var _move_tween : Tween = create_tween().set_ease(Tween.EASE_OUT).set_parallel(true)
+					_move_tween.tween_property(card, "position:x", coords[i], 0.2)
 
-		curr_coords = coords
+			curr_coords = coords
 
 
 func recalculate_all_card_position(coords):

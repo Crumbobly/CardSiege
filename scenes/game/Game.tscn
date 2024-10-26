@@ -1,11 +1,15 @@
-[gd_scene load_steps=9 format=3 uid="uid://cniph4cpvwp1l"]
+[gd_scene load_steps=13 format=3 uid="uid://cniph4cpvwp1l"]
 
 [ext_resource type="Script" path="res://scenes/game/game.gd" id="1_80nip"]
 [ext_resource type="Script" path="res://scenes/camera/camera_3d.gd" id="2_j6ls0"]
 [ext_resource type="Texture2D" uid="uid://b2tqo0h7q2iss" path="res://assets/images/table/table.jpeg" id="3_vlvvu"]
+[ext_resource type="Script" path="res://scenes/game/enemy.gd" id="4_j6l07"]
 [ext_resource type="PackedScene" uid="uid://cibohmqty0itj" path="res://scenes/hand/Hand.tscn" id="4_li3pq"]
+[ext_resource type="Script" path="res://scenes/game/player.gd" id="5_3e0qw"]
 [ext_resource type="PackedScene" uid="uid://drpdagfyti14n" path="res://scenes/field/Field.tscn" id="6_7xakm"]
 [ext_resource type="PackedScene" uid="uid://cuas81b84wajc" path="res://scenes/card_preview/CardPreview.tscn" id="6_c3nlu"]
+[ext_resource type="Script" path="res://scenes/game/Field_controller.gd" id="6_kl76m"]
+[ext_resource type="Script" path="res://scenes/game/field_enemy.gd" id="8_kvmrq"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_snble"]
 
@@ -14,6 +18,7 @@ albedo_texture = ExtResource("3_vlvvu")
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_80nip")
+cards_count_start = 3
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 5)
@@ -34,7 +39,16 @@ shadow_enabled = true
 shadow_opacity = 0.4
 shadow_blur = 5.0
 
-[node name="Hand" parent="." instance=ExtResource("4_li3pq")]
+[node name="Enemy" type="Node3D" parent="."]
+script = ExtResource("4_j6l07")
+
+[node name="EnemyHand" parent="Enemy" instance=ExtResource("4_li3pq")]
+transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 0, 23.4993, 0)
+
+[node name="Player" type="Node3D" parent="."]
+script = ExtResource("5_3e0qw")
+
+[node name="Hand" parent="Player" instance=ExtResource("4_li3pq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
 
 [node name="2D" type="Node3D" parent="."]
@@ -52,44 +66,52 @@ grow_vertical = 2
 
 [node name="SubViewport" type="SubViewport" parent="2D/SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(100, 100)
+size = Vector2i(612, 592)
 render_target_update_mode = 4
 
 [node name="BoxContainer" type="BoxContainer" parent="2D/SubViewportContainer/SubViewport"]
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Button" type="Button" parent="2D/SubViewportContainer/SubViewport/BoxContainer"]
+[node name="AddCard" type="Button" parent="2D/SubViewportContainer/SubViewport/BoxContainer"]
 layout_mode = 2
 text = "add"
 
-[node name="Button2" type="Button" parent="2D/SubViewportContainer/SubViewport/BoxContainer"]
+[node name="DelCard" type="Button" parent="2D/SubViewportContainer/SubViewport/BoxContainer"]
 layout_mode = 2
 text = "del"
+
+[node name="CheckButton" type="CheckButton" parent="2D/SubViewportContainer/SubViewport/BoxContainer"]
+layout_mode = 2
 
 [node name="CardPreview" parent="." instance=ExtResource("6_c3nlu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.25978, 9.068, -0.500688)
 
-[node name="Node3D" type="Node3D" parent="."]
+[node name="FieldEnemy" type="Node3D" parent="."]
+script = ExtResource("8_kvmrq")
+
+[node name="Field" parent="FieldEnemy" instance=ExtResource("6_7xakm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.3554, -0.999)
+
+[node name="Field2" parent="FieldEnemy" instance=ExtResource("6_7xakm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.97466, -0.999)
+
+[node name="Field3" parent="FieldEnemy" instance=ExtResource("6_7xakm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.59531, -0.999)
+
+[node name="FieldPlayer" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.999)
+script = ExtResource("6_kl76m")
 
-[node name="Field" parent="Node3D" instance=ExtResource("6_7xakm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.3554, 0)
-
-[node name="Field2" parent="Node3D" instance=ExtResource("6_7xakm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.97466, 0)
-
-[node name="Field3" parent="Node3D" instance=ExtResource("6_7xakm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.59531, 0)
-
-[node name="Field4" parent="Node3D" instance=ExtResource("6_7xakm")]
+[node name="Field4" parent="FieldPlayer" instance=ExtResource("6_7xakm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.22562, 0)
 
-[node name="Field5" parent="Node3D" instance=ExtResource("6_7xakm")]
+[node name="Field5" parent="FieldPlayer" instance=ExtResource("6_7xakm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.79416, 0)
 
-[node name="Field6" parent="Node3D" instance=ExtResource("6_7xakm")]
+[node name="Field6" parent="FieldPlayer" instance=ExtResource("6_7xakm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.38012, 0)
 
-[connection signal="pressed" from="2D/SubViewportContainer/SubViewport/BoxContainer/Button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="2D/SubViewportContainer/SubViewport/BoxContainer/Button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="2D/SubViewportContainer/SubViewport/BoxContainer/AddCard" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="2D/SubViewportContainer/SubViewport/BoxContainer/DelCard" to="." method="_on_button_2_pressed"]
+[connection signal="toggled" from="2D/SubViewportContainer/SubViewport/BoxContainer/CheckButton" to="." method="_on_check_button_toggled"]
