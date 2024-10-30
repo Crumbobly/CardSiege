@@ -14,7 +14,6 @@ func _on_online_game_btn_pressed() -> void:
 	get_tree().change_scene_to_packed(game)
 
 
-
 func _on_del_write_pressed() -> void:
 	if(textbox.text == ""):
 		pass

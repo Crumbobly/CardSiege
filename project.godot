@@ -20,12 +20,13 @@ config/icon="res://icon.svg"
 Global="*res://global/global.gd"
 Events="*res://scripts/Events.gd"
 Server="*res://server/server.gd"
-NetworkManager="*res://server/network_manager.gd"
+NetworkManager="*res://server/utils/network_manager.gd"
 
 [display]
 
-window/size/viewport_width=1900
-window/size/viewport_height=1060
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/mode=2
 
 [dotnet]
 

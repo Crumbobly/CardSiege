@@ -1,53 +1,63 @@
 extends Node2D
 
-var is_login: bool = true
-var login: String
-var password: String
-@onready var timer: Timer = $Timer
+var reg_log_switch: bool = true
+var login_string: String
+var password_string: String
 var timer_end: bool = false
 
+@onready var timer: Timer = $Timer
 @onready var login_field = $LoginField
 @onready var password_field = $PasswordField
+@onready var error_lbl = $ErrorLbl
 
 
 func _ready() -> void:
-	$Unsec.visible = false
-	$UnsecLog.visible = false
-	timer.timeout.connect(timeout)
-	Server.join_server()
+	DisplayServer.window_set_title("Вход")
 	NetworkManager.register_scene("Auth", self)
+	Server.join_server()
+
+	error_lbl.visible = false
+	timer.timeout.connect(timeout)
+
 
 func _on_log_reg_check_btn_button_up() -> void:
-	is_login = false
-	$Unsec.visible = false
-	$UnsecLog.visible = false
+	reg_log_switch = false
+
 
 func _on_login_field_text_changed() -> void:
-	login = login_field.text
+	hide_error()
+	login_string = login_field.text
+
 
 func _on_password_field_text_changed() -> void:
-	password = password_field.text
+	hide_error()
+	password_string = password_field.text
+
 
 func _on_auth_btn_pressed() -> void:
 	timer_end = false
 	timer.set_wait_time(10)
 	timer.start()
-	Server.auth(login, password, is_login)
+	if reg_log_switch:
+		Server.login(login_string, password_string)
+	else:
+		Server.register(login_string, password_string)
+	
 
-func uncorrect_data(type):
-	if(type == 0):
-		$UnsecLog.visible = true
-	else:
-		$UnsecLog.visible = false
-	if(type == 1):
-		$Unsec.visible = true
-	else:
-		$Unsec.visible = false
+func show_error():
+	error_lbl.visible = true
+
+
+func hide_error():
+	error_lbl.visible = false
+
+
 func timeout():
 	server_not_here()
 	timer_end = true
 	
-func server_here():
+
+func server_here(my_login: String):
 
 	if timer_end:
 		return
@@ -55,6 +65,8 @@ func server_here():
 	timer.stop()
 	var scene: PackedScene = load("res://scenes/lobby/lobby.tscn")
 	get_tree().change_scene_to_packed(scene)
+	DisplayServer.window_set_title(my_login)
+	
 
 func server_not_here():
 

@@ -9,70 +9,62 @@ font_color = Color(1, 0.294118, 0, 1)
 script = ExtResource("1_fw18t")
 
 [node name="AuthBtn" type="Button" parent="."]
-offset_left = 500.0
-offset_top = 805.0
-offset_right = 1453.0
-offset_bottom = 908.0
+offset_left = 514.0
+offset_top = 633.0
+offset_right = 1467.0
+offset_bottom = 736.0
 text = "Вход"
 
 [node name="LoginField" type="TextEdit" parent="."]
-offset_left = 489.0
-offset_top = 114.0
-offset_right = 1429.0
-offset_bottom = 205.0
+offset_left = 523.0
+offset_top = 176.0
+offset_right = 1463.0
+offset_bottom = 267.0
 
 [node name="PasswordField" type="TextEdit" parent="."]
-offset_left = 485.0
-offset_top = 233.0
-offset_right = 1429.0
-offset_bottom = 324.0
+offset_left = 519.0
+offset_top = 295.0
+offset_right = 1463.0
+offset_bottom = 386.0
 
-[node name="Label" type="Label" parent="."]
-offset_left = 367.0
-offset_top = 133.0
-offset_right = 489.0
-offset_bottom = 175.0
+[node name="LoginLbl" type="Label" parent="."]
+offset_left = 401.0
+offset_top = 195.0
+offset_right = 523.0
+offset_bottom = 237.0
 text = "Логин"
 
-[node name="Label2" type="Label" parent="."]
-offset_left = 367.0
-offset_top = 259.0
-offset_right = 494.0
-offset_bottom = 322.0
+[node name="RegLbl" type="Label" parent="."]
+offset_left = 401.0
+offset_top = 321.0
+offset_right = 528.0
+offset_bottom = 384.0
 text = "Пароль"
 
-[node name="LogRegCheckBtn" type="CheckButton" parent="."]
-offset_left = 476.0
-offset_top = 328.0
-offset_right = 533.0
-offset_bottom = 405.0
+[node name="LogRegSwitchBtn" type="CheckButton" parent="."]
+offset_left = 510.0
+offset_top = 390.0
+offset_right = 567.0
+offset_bottom = 467.0
 
-[node name="Label3" type="Label" parent="."]
-offset_left = 551.0
-offset_top = 354.0
-offset_right = 869.0
-offset_bottom = 417.0
+[node name="LogRegSwitchLbl" type="Label" parent="."]
+offset_left = 585.0
+offset_top = 416.0
+offset_right = 903.0
+offset_bottom = 479.0
 text = "Регстрация"
 
 [node name="Timer" type="Timer" parent="."]
 
-[node name="Unsec" type="Label" parent="."]
-offset_left = 483.0
-offset_top = 327.0
-offset_right = 631.0
-offset_bottom = 350.0
-text = "Неверный пароль"
-label_settings = SubResource("LabelSettings_hrndq")
-
-[node name="UnsecLog" type="Label" parent="."]
-offset_left = 494.0
-offset_top = 203.0
-offset_right = 631.0
-offset_bottom = 226.0
-text = "Неверный логин"
+[node name="ErrorLbl" type="Label" parent="."]
+offset_left = 528.0
+offset_top = 265.0
+offset_right = 763.0
+offset_bottom = 288.0
+text = "Неверный логин или пароль"
 label_settings = SubResource("LabelSettings_hrndq")
 
 [connection signal="pressed" from="AuthBtn" to="." method="_on_auth_btn_pressed"]
 [connection signal="text_changed" from="LoginField" to="." method="_on_login_field_text_changed"]
 [connection signal="text_changed" from="PasswordField" to="." method="_on_password_field_text_changed"]
-[connection signal="button_up" from="LogRegCheckBtn" to="." method="_on_log_reg_check_btn_button_up"]
+[connection signal="button_up" from="LogRegSwitchBtn" to="." method="_on_log_reg_check_btn_button_up"]
