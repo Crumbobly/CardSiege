@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://5oay32d4he3k"]
+
+[node name="NoConnection" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+offset_left = 849.0
+offset_top = 363.0
+offset_right = 1076.0
+offset_bottom = 498.0
+text = "Нет соеденения с сервером"

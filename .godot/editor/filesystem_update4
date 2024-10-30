@@ -1,7 +1,5 @@
-res://scenes/game/Game.tscn
-res://scenes/field/Field.tscn
-res://scenes/card3d/Card3D.tscn
-res://scenes/field/field.gd
-res://scenes/hand/hand.gd
-res://Events.gd
-res://scenes/card3d/card_3d.gd
+res://scenes/auth/auth.tscn
+res://server/server.gd
+res://scenes/lobby/lobby.tscn
+res://scenes/lobby/lobby.gd
+res://scenes/auth/auth.gd

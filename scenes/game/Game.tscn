@@ -43,29 +43,33 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 1715.0
-offset_top = 930.0
-offset_right = 427.0
-offset_bottom = 462.0
+offset_left = 1603.0
+offset_top = 921.0
+offset_right = 315.0
+offset_bottom = 453.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="SubViewport" type="SubViewport" parent="2D/SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(100, 100)
+size = Vector2i(500, 100)
 render_target_update_mode = 4
 
 [node name="BoxContainer" type="BoxContainer" parent="2D/SubViewportContainer/SubViewport"]
 offset_right = 40.0
 offset_bottom = 40.0
 
+[node name="Label" type="Label" parent="2D/SubViewportContainer/SubViewport/BoxContainer"]
+layout_mode = 2
+text = "Hand"
+
 [node name="Button" type="Button" parent="2D/SubViewportContainer/SubViewport/BoxContainer"]
 layout_mode = 2
-text = "add"
+text = "add card"
 
 [node name="Button2" type="Button" parent="2D/SubViewportContainer/SubViewport/BoxContainer"]
 layout_mode = 2
-text = "del"
+text = "del card"
 
 [node name="CardPreview" parent="." instance=ExtResource("6_c3nlu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.25978, 9.068, -0.500688)

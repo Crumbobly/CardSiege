@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Игра"
-run/main_scene="res://scenes/game/Game.tscn"
+run/main_scene="res://scenes/auth/auth.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -19,6 +19,8 @@ config/icon="res://icon.svg"
 
 Global="*res://global/global.gd"
 Events="*res://scripts/Events.gd"
+Server="*res://server/server.gd"
+NetworkManager="*res://server/network_manager.gd"
 
 [display]
 
