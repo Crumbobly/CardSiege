@@ -4,20 +4,24 @@ extends Node
 var client = ENetMultiplayerPeer.new()
 
 @rpc("authority")
-func handle_request(scene_name: String, function_name: String, args: Array):
-	NetworkManager.handle_request(scene_name, function_name, args)
+func handle_request(request_dict: Dictionary):
+	var request = Request.from_dict(request_dict)
+	NetworkManager.handle_request(request)
 
 func join_server():
-	client.create_client("127.0.0.1", 12345)	
+	client.create_client("79.174.95.155", 12345)	
 	multiplayer.multiplayer_peer = client
-###############
+###############a
 
-func send_message_to_server(message: String):
-	rpc_id(1, "handle_request", "Server", "client_chat_callback", [multiplayer.get_unique_id(), message])
 
-func login(login: String, password: String):
-	rpc_id(1, "handle_request", "Auth", "login", [multiplayer.get_unique_id(), login, password])
-
-func register(login: String, password: String):
-	rpc_id(1, "handle_request", "Auth", "register", [multiplayer.get_unique_id(), login, password])
+func ping(callback_class: String, callback_func: String):
+	var request = Request.new(\
+		"Server", \
+		"pong", \
+		[multiplayer.get_unique_id(), Time.get_unix_time_from_system(), callback_class, callback_func]
+	)
+	Server.rpc_on_server(request)
 	
+	
+func rpc_on_server(request: Request):
+	rpc_id(1, "handle_request", request.to_dict())
