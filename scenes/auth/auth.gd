@@ -38,13 +38,18 @@ func _on_auth_btn_pressed() -> void:
 	timer_end = false
 	timer.set_wait_time(10)
 	timer.start()
-	if reg_log_switch:
-		Server.login(login_string, password_string)
-	else:
-		Server.register(login_string, password_string)
 	
+	var request_func = "login" if reg_log_switch else "register"
+	var request = Request.new(\
+		"Auth", \
+		request_func, \
+		[multiplayer.get_unique_id(), login_string, password_string]\
+	)
+	Server.rpc_on_server(request)
+
 
 func show_error():
+	timer.stop()
 	error_lbl.visible = true
 
 

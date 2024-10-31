@@ -59,23 +59,37 @@ layout_mode = 2
 text = "Выход"
 
 [node name="DelWrite" type="Button" parent="2D/SubViewportContainer/SubViewport"]
-offset_top = 300.0
+offset_top = 330.0
 offset_right = 1600.0
-offset_bottom = 308.0
+offset_bottom = 361.0
 text = "Написать"
 
 [node name="DelText" type="TextEdit" parent="2D/SubViewportContainer/SubViewport"]
 custom_minimum_size = Vector2(900, 50)
-offset_top = 350.0
+offset_top = 370.0
 offset_right = 900.0
-offset_bottom = 400.0
+offset_bottom = 420.0
 
 [node name="DelChat" type="RichTextLabel" parent="2D/SubViewportContainer/SubViewport"]
 custom_minimum_size = Vector2(900, 500)
-offset_top = 450.0
-offset_right = 50.0
-offset_bottom = 500.0
+offset_top = 460.0
+offset_right = 900.0
+offset_bottom = 960.0
 text = "ЧАТ"
+
+[node name="PingBtn" type="Button" parent="2D/SubViewportContainer/SubViewport"]
+offset_top = 270.0
+offset_right = 1600.0
+offset_bottom = 320.0
+text = "Ping"
+
+[node name="PingLbl" type="Label" parent="2D/SubViewportContainer/SubViewport"]
+offset_left = 10.0
+offset_top = 280.0
+offset_right = 50.0
+offset_bottom = 303.0
+text = "---"
 
 [connection signal="pressed" from="2D/SubViewportContainer/SubViewport/VBoxContainer/OnlineGameBtn" to="." method="_on_online_game_btn_pressed"]
 [connection signal="pressed" from="2D/SubViewportContainer/SubViewport/DelWrite" to="." method="_on_del_write_pressed"]
+[connection signal="pressed" from="2D/SubViewportContainer/SubViewport/PingBtn" to="." method="_on_ping_btn_pressed"]
