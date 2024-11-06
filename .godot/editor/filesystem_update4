@@ -1,5 +1,6 @@
 res://scenes/auth/auth.tscn
-res://server/server.gd
-res://scenes/lobby/lobby.tscn
-res://scenes/lobby/lobby.gd
 res://scenes/auth/auth.gd
+res://scenes/game/Game.tscn
+res://scenes/game/2d/Game_2d.tscn
+res://scenes/lobby/2d_lobby.gd
+res://scenes/game/game.gd
