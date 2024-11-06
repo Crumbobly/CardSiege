@@ -1,7 +1,7 @@
 extends Node2D
 
 var showed = false
-var enemy_id: int = -1111111111
+var enemy_id: int
 
 @onready var start_pos_x = self.global_position.x
 @onready var message_box = $Chat/MessageBox
