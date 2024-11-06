@@ -2,16 +2,18 @@ extends Node
 
 ############## НЕ ТРОГАТЬ
 var client = ENetMultiplayerPeer.new()
+var request_handler = RequestHandler.new()
 
 @rpc("authority")
 func handle_request(request_dict: Dictionary):
 	var request = Request.from_dict(request_dict)
-	NetworkManager.handle_request(request)
+	request_handler.handle_request(request)
+
 
 func join_server():
-	client.create_client("79.174.95.155", 12345)	
+	client.create_client("127.0.0.1", 12345)	
 	multiplayer.multiplayer_peer = client
-###############a
+###############
 
 
 func ping(callback_class: String, callback_func: String):

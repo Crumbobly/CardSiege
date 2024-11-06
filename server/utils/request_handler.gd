@@ -1,4 +1,5 @@
-extends Node
+extends Object
+class_name RequestHandler
 
 var scene_references = {}
 

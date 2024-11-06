@@ -1,10 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://dskli4uliyqqb"]
+[gd_scene load_steps=5 format=3 uid="uid://dskli4uliyqqb"]
 
-[ext_resource type="Script" path="res://scenes/lobby/lobby.gd" id="1_03e5x"]
+[ext_resource type="Script" path="res://scenes/lobby/lobby.gd" id="1_dqf75"]
 [ext_resource type="Script" path="res://scenes/camera/camera_3d.gd" id="2_ti8xh"]
+[ext_resource type="PackedScene" uid="uid://dte3s0txrh8b5" path="res://scenes/lobby/2d_lobby.tscn" id="3_ws36n"]
+[ext_resource type="PackedScene" uid="uid://cniph4cpvwp1l" path="res://scenes/game/Game.tscn" id="4_ch2e4"]
 
 [node name="Lobby" type="Node3D"]
-script = ExtResource("1_03e5x")
+script = ExtResource("1_dqf75")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 5)
@@ -30,66 +32,5 @@ handle_input_locally = false
 size = Vector2i(1600, 900)
 render_target_update_mode = 4
 
-[node name="VBoxContainer" type="VBoxContainer" parent="2D/SubViewportContainer/SubViewport"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="DeskBuildBtn" type="Button" parent="2D/SubViewportContainer/SubViewport/VBoxContainer"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-text = "Настройки колоды
-"
-
-[node name="SingleGameBtn" type="Button" parent="2D/SubViewportContainer/SubViewport/VBoxContainer"]
-custom_minimum_size = Vector2(50, 50)
-layout_mode = 2
-text = "Одиночная игра"
-
-[node name="OnlineGameBtn" type="Button" parent="2D/SubViewportContainer/SubViewport/VBoxContainer"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-text = "Сетевая игра"
-
-[node name="ExitBtn" type="Button" parent="2D/SubViewportContainer/SubViewport/VBoxContainer"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-text = "Выход"
-
-[node name="DelWrite" type="Button" parent="2D/SubViewportContainer/SubViewport"]
-offset_top = 330.0
-offset_right = 1600.0
-offset_bottom = 361.0
-text = "Написать"
-
-[node name="DelText" type="TextEdit" parent="2D/SubViewportContainer/SubViewport"]
-custom_minimum_size = Vector2(900, 50)
-offset_top = 370.0
-offset_right = 900.0
-offset_bottom = 420.0
-
-[node name="DelChat" type="RichTextLabel" parent="2D/SubViewportContainer/SubViewport"]
-custom_minimum_size = Vector2(900, 500)
-offset_top = 460.0
-offset_right = 900.0
-offset_bottom = 960.0
-text = "ЧАТ"
-
-[node name="PingBtn" type="Button" parent="2D/SubViewportContainer/SubViewport"]
-offset_top = 270.0
-offset_right = 1600.0
-offset_bottom = 320.0
-text = "Ping"
-
-[node name="PingLbl" type="Label" parent="2D/SubViewportContainer/SubViewport"]
-offset_left = 10.0
-offset_top = 280.0
-offset_right = 50.0
-offset_bottom = 303.0
-text = "---"
-
-[connection signal="pressed" from="2D/SubViewportContainer/SubViewport/VBoxContainer/OnlineGameBtn" to="." method="_on_online_game_btn_pressed"]
-[connection signal="pressed" from="2D/SubViewportContainer/SubViewport/DelWrite" to="." method="_on_del_write_pressed"]
-[connection signal="pressed" from="2D/SubViewportContainer/SubViewport/PingBtn" to="." method="_on_ping_btn_pressed"]
+[node name="2dLobby" parent="2D/SubViewportContainer/SubViewport" instance=ExtResource("3_ws36n")]
+game = ExtResource("4_ch2e4")

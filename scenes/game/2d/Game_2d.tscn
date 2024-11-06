@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://dwqro157xwiwg"]
+
+[ext_resource type="Script" path="res://scenes/game/2d/game_2d.gd" id="1_d1b8r"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_sljqt"]
+
+[node name="Game2D" type="Node2D"]
+script = ExtResource("1_d1b8r")
+
+[node name="Chat" type="Node2D" parent="."]
+
+[node name="Button2" type="Button" parent="Chat"]
+offset_left = -53.0
+offset_top = 472.0
+offset_right = 60.0
+offset_bottom = 630.0
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Chat"]
+self_modulate = Color(0.136826, 0.136826, 0.136826, 1)
+position = Vector2(-387.406, 540.747)
+rotation = 3.14159
+scale = Vector2(773.811, -1082.49)
+mesh = SubResource("QuadMesh_sljqt")
+
+[node name="SendMessageBtn" type="Button" parent="Chat"]
+offset_left = -749.0
+offset_top = 950.0
+offset_right = -624.0
+offset_bottom = 998.0
+text = "Отправить"
+
+[node name="MessageBox" type="TextEdit" parent="Chat"]
+offset_left = -611.0
+offset_top = 953.0
+offset_right = -35.0
+offset_bottom = 1002.0
+
+[node name="ChatLbl" type="RichTextLabel" parent="Chat"]
+offset_left = -750.0
+offset_top = 46.0
+offset_right = -39.0
+offset_bottom = 940.0
+
+[connection signal="pressed" from="Chat/Button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="Chat/SendMessageBtn" to="." method="_on_send_message_btn_pressed"]

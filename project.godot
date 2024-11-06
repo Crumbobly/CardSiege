@@ -20,7 +20,6 @@ config/icon="res://icon.svg"
 Global="*res://global/global.gd"
 Events="*res://scripts/Events.gd"
 Server="*res://server/server.gd"
-NetworkManager="*res://server/utils/network_manager.gd"
 
 [display]
 

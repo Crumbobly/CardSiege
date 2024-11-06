@@ -13,7 +13,7 @@ var timer_end: bool = false
 
 func _ready() -> void:
 	DisplayServer.window_set_title("Вход")
-	NetworkManager.register_scene("Auth", self)
+	Server.request_handler.register_scene("Auth", self)
 	Server.join_server()
 
 	error_lbl.visible = false

@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://cniph4cpvwp1l"]
+[gd_scene load_steps=10 format=3 uid="uid://cniph4cpvwp1l"]
 
 [ext_resource type="Script" path="res://scenes/game/game.gd" id="1_80nip"]
 [ext_resource type="Script" path="res://scenes/camera/camera_3d.gd" id="2_j6ls0"]
 [ext_resource type="Texture2D" uid="uid://b2tqo0h7q2iss" path="res://assets/images/table/table.jpeg" id="3_vlvvu"]
 [ext_resource type="PackedScene" uid="uid://cibohmqty0itj" path="res://scenes/hand/Hand.tscn" id="4_li3pq"]
+[ext_resource type="PackedScene" uid="uid://dwqro157xwiwg" path="res://scenes/game/2d/Game_2d.tscn" id="5_m3lri"]
 [ext_resource type="PackedScene" uid="uid://drpdagfyti14n" path="res://scenes/field/Field.tscn" id="6_7xakm"]
 [ext_resource type="PackedScene" uid="uid://cuas81b84wajc" path="res://scenes/card_preview/CardPreview.tscn" id="6_c3nlu"]
 
@@ -43,33 +44,32 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 1603.0
-offset_top = 921.0
-offset_right = 315.0
-offset_bottom = 453.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="SubViewport" type="SubViewport" parent="2D/SubViewportContainer"]
+transparent_bg = true
 handle_input_locally = false
-size = Vector2i(500, 100)
+size = Vector2i(1920, 1080)
 render_target_update_mode = 4
 
-[node name="BoxContainer" type="BoxContainer" parent="2D/SubViewportContainer/SubViewport"]
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="Game2D" parent="2D/SubViewportContainer/SubViewport" instance=ExtResource("5_m3lri")]
 
-[node name="Label" type="Label" parent="2D/SubViewportContainer/SubViewport/BoxContainer"]
-layout_mode = 2
-text = "Hand"
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="2D"]
+offset_left = 1759.0
+offset_top = 931.0
+offset_right = 2271.0
+offset_bottom = 1443.0
 
-[node name="Button" type="Button" parent="2D/SubViewportContainer/SubViewport/BoxContainer"]
-layout_mode = 2
-text = "add card"
+[node name="SubViewport" type="SubViewport" parent="2D/SubViewportContainer2"]
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 4
 
-[node name="Button2" type="Button" parent="2D/SubViewportContainer/SubViewport/BoxContainer"]
-layout_mode = 2
-text = "del card"
+[node name="Button" type="Button" parent="2D/SubViewportContainer2/SubViewport"]
+offset_right = 8.0
+offset_bottom = 8.0
+text = "123"
 
 [node name="CardPreview" parent="." instance=ExtResource("6_c3nlu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.25978, 9.068, -0.500688)
@@ -95,5 +95,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.79416, 0)
 [node name="Field6" parent="Node3D" instance=ExtResource("6_7xakm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.38012, 0)
 
-[connection signal="pressed" from="2D/SubViewportContainer/SubViewport/BoxContainer/Button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="2D/SubViewportContainer/SubViewport/BoxContainer/Button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="2D/SubViewportContainer2/SubViewport/Button" to="." method="_on_button_pressed"]
