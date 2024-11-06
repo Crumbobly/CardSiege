@@ -16,26 +16,32 @@ func _ready() -> void:
 	Server.request_handler.register_scene("Auth", self)
 	Server.join_server()
 
-	error_lbl.visible = false
 	timer.timeout.connect(timeout)
 
 
+func set_error_lbl_text(msg: String):
+	error_lbl.text = msg
+	timer.stop()
+	error_lbl.visible = true
+	
+	
 func _on_log_reg_check_btn_button_up() -> void:
 	reg_log_switch = false
 
 
 func _on_login_field_text_changed() -> void:
-	hide_error()
+	error_lbl.visible = false
 	login_string = login_field.text
 
 
 func _on_password_field_text_changed() -> void:
-	hide_error()
+	error_lbl.visible = false
 	password_string = password_field.text
 
 
 func _on_auth_btn_pressed() -> void:
 	timer_end = false
+	error_lbl.visible = false
 	timer.set_wait_time(10)
 	timer.start()
 	
@@ -46,15 +52,6 @@ func _on_auth_btn_pressed() -> void:
 		[multiplayer.get_unique_id(), login_string, password_string]\
 	)
 	Server.rpc_on_server(request)
-
-
-func show_error():
-	timer.stop()
-	error_lbl.visible = true
-
-
-func hide_error():
-	error_lbl.visible = false
 
 
 func timeout():

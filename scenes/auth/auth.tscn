@@ -57,11 +57,11 @@ text = "Регстрация"
 [node name="Timer" type="Timer" parent="."]
 
 [node name="ErrorLbl" type="Label" parent="."]
+visible = false
 offset_left = 528.0
 offset_top = 265.0
 offset_right = 763.0
 offset_bottom = 288.0
-text = "Неверный логин или пароль"
 label_settings = SubResource("LabelSettings_hrndq")
 
 [connection signal="pressed" from="AuthBtn" to="." method="_on_auth_btn_pressed"]

@@ -1,6 +1,8 @@
 extends Node2D
 
 @export var game = preload("res://scenes/game/Game.tscn")
+@onready var ping_lbl = $PingLbl
+
 
 func _ready() -> void:
 	Server.request_handler.register_scene("Lobby", self)
@@ -8,7 +10,7 @@ func _ready() -> void:
 	
 func set_ping(request_time):
 	var whole_ping = round((Time.get_unix_time_from_system() - request_time) * 1000)
-	$PingLbl.text = str(whole_ping) + " ms"
+	ping_lbl.text = str(whole_ping) + " ms"
 
 	
 func _on_ping_btn_pressed() -> void:
