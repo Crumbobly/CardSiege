@@ -1,11 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://cniph4cpvwp1l"]
+[gd_scene load_steps=11 format=3 uid="uid://cniph4cpvwp1l"]
 
 [ext_resource type="Script" path="res://scenes/game/game.gd" id="1_80nip"]
 [ext_resource type="Script" path="res://scenes/camera/camera_3d.gd" id="2_j6ls0"]
 [ext_resource type="Texture2D" uid="uid://b2tqo0h7q2iss" path="res://assets/images/table/table.jpeg" id="3_vlvvu"]
-[ext_resource type="PackedScene" uid="uid://cibohmqty0itj" path="res://scenes/hand/Hand.tscn" id="4_li3pq"]
+[ext_resource type="PackedScene" uid="uid://cibohmqty0itj" path="res://scenes/card_layout/hand/Hand.tscn" id="4_li3pq"]
 [ext_resource type="PackedScene" uid="uid://dwqro157xwiwg" path="res://scenes/game/2d/Game_2d.tscn" id="5_m3lri"]
-[ext_resource type="PackedScene" uid="uid://drpdagfyti14n" path="res://scenes/field/Field.tscn" id="6_7xakm"]
+[ext_resource type="PackedScene" uid="uid://dp5qs4y0ju4ca" path="res://scenes/card_layout/fake_hand/FakeHand.tscn" id="5_wl8xj"]
+[ext_resource type="PackedScene" uid="uid://drpdagfyti14n" path="res://scenes/card_layout/field/Field.tscn" id="6_7xakm"]
 [ext_resource type="PackedScene" uid="uid://cuas81b84wajc" path="res://scenes/card_preview/CardPreview.tscn" id="6_c3nlu"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_snble"]
@@ -30,13 +31,17 @@ mesh = SubResource("PlaneMesh_snble")
 surface_material_override/0 = SubResource("StandardMaterial3D_c3t0a")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.977666, 0.210165, 0, -0.210165, 0.977666, 0, 15.6818, 31.9317)
+transform = Transform3D(1, 0, 0, 0, 0.998325, 0.0578606, 0, -0.0578606, 0.998325, 0, 12, 50)
 shadow_enabled = true
-shadow_opacity = 0.4
-shadow_blur = 5.0
+shadow_bias = 0.0
+shadow_opacity = 0.5
+shadow_blur = 0.0
 
 [node name="Hand" parent="." instance=ExtResource("4_li3pq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
+
+[node name="FakeHand" parent="." instance=ExtResource("5_wl8xj")]
+transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 0, 22.9575, 0)
 
 [node name="2D" type="Node3D" parent="."]
 
@@ -55,21 +60,42 @@ render_target_update_mode = 4
 
 [node name="Game2D" parent="2D/SubViewportContainer/SubViewport" instance=ExtResource("5_m3lri")]
 
-[node name="SubViewportContainer2" type="SubViewportContainer" parent="2D"]
-offset_left = 1759.0
-offset_top = 931.0
-offset_right = 2271.0
-offset_bottom = 1443.0
+[node name="ToolMenu" type="SubViewportContainer" parent="2D"]
+offset_left = 1579.0
+offset_top = 910.0
+offset_right = 2091.0
+offset_bottom = 1422.0
 
-[node name="SubViewport" type="SubViewport" parent="2D/SubViewportContainer2"]
+[node name="SubViewport" type="SubViewport" parent="2D/ToolMenu"]
 transparent_bg = true
 handle_input_locally = false
 render_target_update_mode = 4
 
-[node name="Button" type="Button" parent="2D/SubViewportContainer2/SubViewport"]
-offset_right = 8.0
-offset_bottom = 8.0
-text = "123"
+[node name="VBoxContainer" type="VBoxContainer" parent="2D/ToolMenu/SubViewport"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="2D/ToolMenu/SubViewport/VBoxContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="2D/ToolMenu/SubViewport/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "addCard1"
+
+[node name="Button2" type="Button" parent="2D/ToolMenu/SubViewport/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "addCard2"
+
+[node name="Button3" type="Button" parent="2D/ToolMenu/SubViewport/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "rmCard1"
+
+[node name="Button4" type="Button" parent="2D/ToolMenu/SubViewport/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "rmCard2"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="2D/ToolMenu/SubViewport/VBoxContainer"]
+layout_mode = 2
 
 [node name="CardPreview" parent="." instance=ExtResource("6_c3nlu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.25978, 9.068, -0.500688)
@@ -95,4 +121,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.79416, 0)
 [node name="Field6" parent="Node3D" instance=ExtResource("6_7xakm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.38012, 0)
 
-[connection signal="pressed" from="2D/SubViewportContainer2/SubViewport/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="2D/ToolMenu/SubViewport/VBoxContainer/HBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="2D/ToolMenu/SubViewport/VBoxContainer/HBoxContainer/Button2" to="." method="_on_button_2_pressed"]

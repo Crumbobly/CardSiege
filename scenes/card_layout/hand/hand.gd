@@ -2,9 +2,7 @@ class_name Hand
 extends CardLayout
 
 var hand_radius = 11.5
-
 var hand_circle = CircleLayoutLogic.new(hand_radius)  # Класс круга "руки"
-var card3d_scene: PackedScene = preload("res://scenes/card3d/Card3D.tscn") #  Запакованная сцена карты
 
 	
 func _process(delta: float) -> void:

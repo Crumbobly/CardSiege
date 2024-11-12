@@ -7,7 +7,6 @@ func register_scene(scene_name: String, scene_ref: Node) -> void:
 	scene_references[scene_name] = scene_ref
 
 func handle_request(request: Request):
-	
 	var scene_name = request.scene_class_name
 	var function_name = request.func_name
 	var args = request.args

@@ -14,8 +14,6 @@ var timer_end: bool = false
 func _ready() -> void:
 	DisplayServer.window_set_title("Вход")
 	Server.request_handler.register_scene("Auth", self)
-	Server.join_server()
-
 	timer.timeout.connect(timeout)
 
 
@@ -24,10 +22,10 @@ func set_error_lbl_text(msg: String):
 	timer.stop()
 	error_lbl.visible = true
 	
-	
-func _on_log_reg_check_btn_button_up() -> void:
-	reg_log_switch = false
 
+func _on_log_reg_switch_btn_pressed() -> void:
+	reg_log_switch = !reg_log_switch
+	
 
 func _on_login_field_text_changed() -> void:
 	error_lbl.visible = false
@@ -45,13 +43,14 @@ func _on_auth_btn_pressed() -> void:
 	timer.set_wait_time(10)
 	timer.start()
 	
+	var password_hash = password_string.sha1_text()
 	var request_func = "login" if reg_log_switch else "register"
 	var request = Request.new(\
 		"Auth", \
 		request_func, \
-		[multiplayer.get_unique_id(), login_string, password_string]\
+		[login_string, password_hash]\
 	)
-	Server.rpc_on_server(request)
+	Server.send_request(request)
 
 
 func timeout():

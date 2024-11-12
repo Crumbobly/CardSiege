@@ -67,4 +67,4 @@ label_settings = SubResource("LabelSettings_hrndq")
 [connection signal="pressed" from="AuthBtn" to="." method="_on_auth_btn_pressed"]
 [connection signal="text_changed" from="LoginField" to="." method="_on_login_field_text_changed"]
 [connection signal="text_changed" from="PasswordField" to="." method="_on_password_field_text_changed"]
-[connection signal="button_up" from="LogRegSwitchBtn" to="." method="_on_log_reg_check_btn_button_up"]
+[connection signal="pressed" from="LogRegSwitchBtn" to="." method="_on_log_reg_switch_btn_pressed"]

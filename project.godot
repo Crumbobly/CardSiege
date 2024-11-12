@@ -18,7 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Global="*res://global/global.gd"
-Events="*res://scripts/Events.gd"
+Events="res://scripts/Events.gd"
 Server="*res://server/server.gd"
 
 [display]
@@ -35,3 +35,5 @@ project/assembly_name="Н"
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+lights_and_shadows/directional_shadow/soft_shadow_filter_quality=5
+lights_and_shadows/directional_shadow/soft_shadow_filter_quality.mobile=2

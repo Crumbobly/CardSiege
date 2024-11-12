@@ -1,29 +1,37 @@
 extends Node
 
-############## НЕ ТРОГАТЬ
-var client = ENetMultiplayerPeer.new()
 var request_handler = RequestHandler.new()
-
-@rpc("authority")
-func handle_request(request_dict: Dictionary):
-	var request = Request.from_dict(request_dict)
-	request_handler.handle_request(request)
+var websocket_url = "127.0.0.1:12345"
+var socket = WebSocketPeer.new()
 
 
-func join_server():
-	client.create_client("127.0.0.1", 12345)	
-	multiplayer.multiplayer_peer = client
-###############
+func _ready():
+	var err = socket.connect_to_url(websocket_url)
+	if err != OK:
+		print("Ошибка подключения")
+		set_process(false)
 
-
-func ping(callback_class: String, callback_func: String):
-	var request = Request.new(\
-		"Server", \
-		"pong", \
-		[multiplayer.get_unique_id(), Time.get_unix_time_from_system(), callback_class, callback_func]
-	)
-	Server.rpc_on_server(request)
 	
-	
-func rpc_on_server(request: Request):
-	rpc_id(1, "handle_request", request.to_dict())
+func _process(_delta):
+	socket.poll()
+
+	var state = socket.get_ready_state()
+
+	if state == WebSocketPeer.STATE_OPEN:
+		while socket.get_available_packet_count():
+			var packet = socket.get_packet().get_string_from_utf8()
+			var json_result = JSON.parse_string(packet) 
+			var request = Request.from_dict(json_result)
+			request_handler.handle_request(request)
+
+	elif state == WebSocketPeer.STATE_CLOSING:
+		pass
+
+	elif state == WebSocketPeer.STATE_CLOSED:
+		var code = socket.get_close_code()
+		print("Соеденение закрыто с ошибкой: %d. Clean: %s" % [code, code != -1])
+		set_process(false)
+		
+
+func send_request(request: Request):
+	socket.send_text(JSON.stringify(request.to_dict()))
