@@ -1,18 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dskli4uliyqqb"]
+[gd_scene load_steps=3 format=3 uid="uid://dskli4uliyqqb"]
 
 [ext_resource type="Script" path="res://scenes/lobby/lobby.gd" id="1_dqf75"]
-[ext_resource type="Script" path="res://scenes/camera/camera_3d.gd" id="2_ti8xh"]
 [ext_resource type="PackedScene" uid="uid://dte3s0txrh8b5" path="res://scenes/lobby/2d_lobby.tscn" id="3_ws36n"]
-[ext_resource type="PackedScene" uid="uid://cniph4cpvwp1l" path="res://scenes/game/Game.tscn" id="4_ch2e4"]
 
 [node name="Lobby" type="Node3D"]
 script = ExtResource("1_dqf75")
-
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 5)
-current = true
-fov = 90.0
-script = ExtResource("2_ti8xh")
 
 [node name="2D" type="Node3D" parent="."]
 
@@ -20,17 +12,13 @@ script = ExtResource("2_ti8xh")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 143.0
-offset_top = 74.0
-offset_right = -94.0
-offset_bottom = -71.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="SubViewport" type="SubViewport" parent="2D/SubViewportContainer"]
+transparent_bg = true
 handle_input_locally = false
-size = Vector2i(1600, 900)
+size = Vector2i(1920, 1080)
 render_target_update_mode = 4
 
 [node name="2dLobby" parent="2D/SubViewportContainer/SubViewport" instance=ExtResource("3_ws36n")]
-game = ExtResource("4_ch2e4")

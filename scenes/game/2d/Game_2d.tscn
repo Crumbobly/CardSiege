@@ -1,159 +1,54 @@
-[gd_scene load_steps=6 format=3 uid="uid://dwqro157xwiwg"]
+[gd_scene load_steps=3 format=3 uid="uid://dwqro157xwiwg"]
 
 [ext_resource type="Script" path="res://scenes/game/2d/game_2d.gd" id="1_d1b8r"]
+[ext_resource type="PackedScene" uid="uid://c4u0nwj7hlpww" path="res://scenes/game/2d/chat/chat.tscn" id="2_7ly1l"]
 
-[sub_resource type="QuadMesh" id="QuadMesh_sljqt"]
-
-[sub_resource type="Animation" id="Animation_g7m5l"]
-resource_name = "EnemyIsAnimation"
-length = 6.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0.0333333, 1.06667, 5, 6),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(600, -300), Vector2(600, 300), Vector2(600, 300), Vector2(600, -300)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("EnemyIsLbl:self_modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 2.03333, 3.96667, 6),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("EnemyNameLbl:self_modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(1.03333, 2, 3.93333, 5.03333),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_5317d"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(600, -300)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("EnemyIsLbl:self_modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("EnemyNameLbl:self_modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_engxw"]
-_data = {
-"EnemyIsAnimation": SubResource("Animation_g7m5l"),
-"RESET": SubResource("Animation_5317d")
-}
-
-[node name="Game2D" type="Node2D"]
+[node name="Game2D" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_d1b8r")
 
-[node name="Chat" type="Node2D" parent="."]
+[node name="Chat" parent="." instance=ExtResource("2_7ly1l")]
+layout_mode = 1
 
-[node name="Button2" type="Button" parent="Chat"]
-offset_left = -53.0
-offset_top = 472.0
-offset_right = 60.0
-offset_bottom = 630.0
-
-[node name="MeshInstance2D" type="MeshInstance2D" parent="Chat"]
-self_modulate = Color(0.136826, 0.136826, 0.136826, 1)
-position = Vector2(-387.406, 540.747)
-rotation = 3.14159
-scale = Vector2(773.811, -1082.49)
-mesh = SubResource("QuadMesh_sljqt")
-
-[node name="SendMessageBtn" type="Button" parent="Chat"]
-offset_left = -749.0
-offset_top = 950.0
-offset_right = -624.0
-offset_bottom = 998.0
-text = "Отправить"
-
-[node name="MessageBox" type="TextEdit" parent="Chat"]
-offset_left = -611.0
-offset_top = 953.0
-offset_right = -35.0
-offset_bottom = 1002.0
-
-[node name="ChatLbl" type="RichTextLabel" parent="Chat"]
-offset_left = -750.0
-offset_top = 46.0
-offset_right = -39.0
-offset_bottom = 940.0
-
-[node name="EnemyIs" type="Node2D" parent="."]
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="EnemyIs"]
-root_node = NodePath("../Node2D")
-libraries = {
-"": SubResource("AnimationLibrary_engxw")
-}
-
-[node name="Node2D" type="Node2D" parent="EnemyIs"]
-position = Vector2(600, -300)
-
-[node name="EnemyIsLbl" type="Label" parent="EnemyIs/Node2D"]
+[node name="Panel" type="Panel" parent="."]
 self_modulate = Color(1, 1, 1, 0)
-offset_left = 100.0
-offset_right = 700.0
-offset_bottom = 90.0
-theme_override_font_sizes/font_size = 64
-text = "Ваш противник: "
-horizontal_alignment = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
-[node name="EnemyNameLbl" type="Label" parent="EnemyIs/Node2D"]
-self_modulate = Color(1, 1, 1, 0)
-offset_top = 100.0
-offset_right = 800.0
-offset_bottom = 190.0
-theme_override_font_sizes/font_size = 64
-text = "ИМЯ_ОПОНЕНТА"
-horizontal_alignment = 1
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
-[connection signal="pressed" from="Chat/Button2" to="." method="_on_button_2_pressed"]
-[connection signal="pressed" from="Chat/SendMessageBtn" to="." method="_on_send_message_btn_pressed"]
+[node name="TmpData" type="Control" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="Panel/VBoxContainer/TmpData"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -96.0
+offset_top = -5.0
+offset_right = -1.0
+offset_bottom = 18.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "Противник:"

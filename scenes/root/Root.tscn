@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://br8q07pgsrhpj"]
+
+[ext_resource type="Script" path="res://scenes/root/root.gd" id="1_v8hwa"]
+[ext_resource type="Script" path="res://scenes/camera/camera_3d.gd" id="1_vpp14"]
+[ext_resource type="PackedScene" uid="uid://b1h6s0bfwn4bh" path="res://scenes/root/table/wooden_table.tscn" id="2_pctnr"]
+[ext_resource type="PackedScene" uid="uid://bv2q0fopnbbl3" path="res://scenes/settings/Settings_2D.tscn" id="4_0er7x"]
+[ext_resource type="PackedScene" uid="uid://cniph4cpvwp1l" path="res://scenes/game/3d/Game.tscn" id="5_nt5hb"]
+
+[node name="Root" type="Node3D"]
+script = ExtResource("1_v8hwa")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.982935, -0.183951, 0, 0.183951, 0.982935, 0, 0.731943, 0)
+fov = 90.0
+near = 0.01
+far = 5.0
+script = ExtResource("1_vpp14")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.980216, 0, -0.197931, 0, 1, 0, 0.197931, 0, 0.980216, -1.5, 1, 5)
+light_energy = 0.8
+shadow_enabled = true
+shadow_opacity = 0.5
+directional_shadow_max_distance = 10.0
+sky_mode = 1
+
+[node name="Wooden Table" parent="." instance=ExtResource("2_pctnr")]
+transform = Transform3D(1.91069e-16, -4.37114e-09, -0.1, -0.1, -4.37114e-09, 2.64698e-23, -4.37114e-09, 0.1, -4.37114e-09, 0, 1, -2.40244)
+
+[node name="OnlyDebug" type="Node3D" parent="."]
+
+[node name="Game" parent="OnlyDebug" instance=ExtResource("5_nt5hb")]
+
+[node name="Settings" type="Node3D" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Settings"]
+visible = false
+
+[node name="Settings2d" parent="Settings/CanvasLayer" instance=ExtResource("4_0er7x")]

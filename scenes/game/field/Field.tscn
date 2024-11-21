@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://w0bslguh2md0"]
+
+[ext_resource type="PackedScene" uid="uid://drpdagfyti14n" path="res://scenes/game/field/FieldRow.tscn" id="1_47fnh"]
+
+[node name="Field" type="Node3D"]
+
+[node name="EnemyFieldRowLong" parent="." instance=ExtResource("1_47fnh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+
+[node name="EnemyFieldRowMiddle" parent="." instance=ExtResource("1_47fnh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88, 0)
+
+[node name="EnemyFieldRowNear" parent="." instance=ExtResource("1_47fnh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.66, 0)
+
+[node name="MyFieldRowNear" parent="." instance=ExtResource("1_47fnh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.44, 0)
+
+[node name="MyFieldRowMiddle" parent="." instance=ExtResource("1_47fnh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.22, 0)
+
+[node name="MyFieldRowLong" parent="." instance=ExtResource("1_47fnh")]

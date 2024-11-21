@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://gke3a2vkvmlj"]
+
+[ext_resource type="PackedScene" uid="uid://drug6ejc3ppoi" path="res://assets/3d_models/library.fbx" id="1_ojdiv"]
+
+[node name="Library" type="Node3D"]
+
+[node name="library" parent="." instance=ExtResource("1_ojdiv")]

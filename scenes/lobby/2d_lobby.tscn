@@ -2,57 +2,90 @@
 
 [ext_resource type="Script" path="res://scenes/lobby/2d_lobby.gd" id="1_1tdhn"]
 
-[node name="2dLobby" type="Node2D"]
+[node name="2dLobby" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_1tdhn")
 
-[node name="PingBtn" type="Button" parent="."]
-offset_top = 270.0
-offset_right = 1600.0
-offset_bottom = 320.0
-text = "Ping"
+[node name="Panel" type="Panel" parent="."]
+self_modulate = Color(0, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="PingLbl" type="Label" parent="."]
-offset_left = 10.0
-offset_top = 280.0
-offset_right = 50.0
-offset_bottom = 303.0
-text = "---"
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -138.0
+offset_top = -167.5
+offset_right = 138.0
+offset_bottom = 167.5
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="DeskBuildBtn" type="Button" parent="."]
-custom_minimum_size = Vector2(0, 50)
-offset_left = 725.0
-offset_top = 27.0
-offset_right = 887.0
-offset_bottom = 77.0
+[node name="DeskBuildBtn" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
 disabled = true
-text = "Настройки колоды
-"
+text = "Колоды"
+metadata/_edit_use_anchors_ = true
 
-[node name="SingleGameBtn" type="Button" parent="."]
-custom_minimum_size = Vector2(50, 50)
-offset_left = 723.0
-offset_top = 84.0
-offset_right = 885.0
-offset_bottom = 134.0
+[node name="SingleGameBtn" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
 disabled = true
 text = "Одиночная игра"
+metadata/_edit_use_anchors_ = true
 
-[node name="OnlineGameBtn" type="Button" parent="."]
-custom_minimum_size = Vector2(0, 50)
-offset_left = 725.0
-offset_top = 141.0
-offset_right = 887.0
-offset_bottom = 191.0
+[node name="OnlineGameBtn" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
 text = "Сетевая игра"
+metadata/_edit_use_anchors_ = true
 
-[node name="ExitBtn" type="Button" parent="."]
-custom_minimum_size = Vector2(0, 50)
-offset_left = 729.0
-offset_top = 203.0
-offset_right = 891.0
-offset_bottom = 253.0
-disabled = true
+[node name="ExitBtn" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
 text = "Выход"
+metadata/_edit_use_anchors_ = true
 
-[connection signal="pressed" from="PingBtn" to="." method="_on_ping_btn_pressed"]
-[connection signal="pressed" from="OnlineGameBtn" to="." method="_on_online_game_btn_pressed"]
+[node name="HSeparator" type="HSeparator" parent="Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="PingBtn" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Ping"
+metadata/_edit_use_anchors_ = true
+
+[node name="PingLbl" type="Label" parent="Panel/VBoxContainer/PingBtn"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -138.0
+offset_top = -26.5
+offset_right = -92.0
+offset_bottom = 40.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 48
+text = "---"
+
+[connection signal="pressed" from="Panel/VBoxContainer/OnlineGameBtn" to="." method="_on_online_game_btn_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/ExitBtn" to="." method="_on_exit_btn_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/PingBtn" to="." method="_on_ping_btn_pressed"]

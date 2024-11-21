@@ -3,14 +3,10 @@ class_name LineLayoutLogic
 
 
 
-
-
-
-
-func distribute_points_with_max_distance(n: int,  collision_shape : CollisionShape3D, step: float = 1.0,):
+func distribute_points_with_max_distance(n: int,  collision_shape : CollisionShape3D, step=0.2):
 	if n <= 0:
 		return []
-	var offcet = 0.6
+		
 	var corners = _get_collider_corner(collision_shape)
 	var left = corners[0].x
 	var right = corners[1].x
@@ -19,28 +15,23 @@ func distribute_points_with_max_distance(n: int,  collision_shape : CollisionSha
 	
 	# Центр отрезка
 	var start = (left + right) / 2
-	
-	points.append(start)
-	# Распределение точек
-	if(n<2):
-		offcet *= 0.75
-	
-	for i in range(1,n):
-		if(i % 2 != 0):
-			if(points.has(start)):
-				points.remove_at(points.find(start))
-			points.append(start + (offcet * i))
-			points.append(start - (offcet * i))
-		else :
-			if(!points.has(start)):
-				points.append(start)
+
+	if n % 2 == 0:
+		for i in range(n / 2):
+			points.append(start + step * i + step / 2)
+			points.append(start - step * i - step / 2)
+	else:
+		points.append(start)
+		for i in range((n - 1) / 2):
+			points.append(start + step * i + step)
+			points.append(start - step * i - step)
+
 	
 	# Сортировка точек по возрастанию координат
 	points.sort()
 	
 	return points
-
-
+	
 
 
 func _get_collider_corner(collision_shape):

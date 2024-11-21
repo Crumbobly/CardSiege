@@ -1,70 +1,122 @@
-[gd_scene load_steps=3 format=3 uid="uid://xq2roq4p4af7"]
+[gd_scene load_steps=5 format=3 uid="uid://xq2roq4p4af7"]
 
 [ext_resource type="Script" path="res://scenes/auth/auth.gd" id="1_fw18t"]
+[ext_resource type="LabelSettings" uid="uid://bk6t2kox2aphu" path="res://assets/ui_settings/fonts/middle_font.tres" id="2_ijnnx"]
+[ext_resource type="Theme" uid="uid://dx3iptsvd0lkb" path="res://assets/ui_settings/btn_themes/btn_theme1.tres" id="3_j3nsn"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_hrndq"]
 font_color = Color(1, 0.294118, 0, 1)
 
-[node name="Auth" type="Node2D"]
+[node name="Auth" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_fw18t")
-
-[node name="AuthBtn" type="Button" parent="."]
-offset_left = 514.0
-offset_top = 633.0
-offset_right = 1467.0
-offset_bottom = 736.0
-text = "Вход"
-
-[node name="LoginField" type="TextEdit" parent="."]
-offset_left = 523.0
-offset_top = 176.0
-offset_right = 1463.0
-offset_bottom = 267.0
-
-[node name="PasswordField" type="TextEdit" parent="."]
-offset_left = 519.0
-offset_top = 295.0
-offset_right = 1463.0
-offset_bottom = 386.0
-
-[node name="LoginLbl" type="Label" parent="."]
-offset_left = 401.0
-offset_top = 195.0
-offset_right = 523.0
-offset_bottom = 237.0
-text = "Логин"
-
-[node name="RegLbl" type="Label" parent="."]
-offset_left = 401.0
-offset_top = 321.0
-offset_right = 528.0
-offset_bottom = 384.0
-text = "Пароль"
-
-[node name="LogRegSwitchBtn" type="CheckButton" parent="."]
-offset_left = 510.0
-offset_top = 390.0
-offset_right = 567.0
-offset_bottom = 467.0
-
-[node name="LogRegSwitchLbl" type="Label" parent="."]
-offset_left = 585.0
-offset_top = 416.0
-offset_right = 903.0
-offset_bottom = 479.0
-text = "Регстрация"
 
 [node name="Timer" type="Timer" parent="."]
 
-[node name="ErrorLbl" type="Label" parent="."]
-visible = false
-offset_left = 528.0
-offset_top = 265.0
-offset_right = 763.0
-offset_bottom = 288.0
+[node name="Control" type="Panel" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer"]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="LoginLbl" type="Label" parent="Control/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Логин:"
+label_settings = ExtResource("2_ijnnx")
+
+[node name="LoginField" type="TextEdit" parent="Control/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="RegLbl" type="Label" parent="Control/MarginContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Пароль:"
+label_settings = ExtResource("2_ijnnx")
+
+[node name="PasswordField" type="TextEdit" parent="Control/MarginContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+
+[node name="BoxContainer" type="BoxContainer" parent="Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="ErrorLbl" type="Label" parent="Control/MarginContainer/VBoxContainer/BoxContainer"]
+layout_mode = 2
 label_settings = SubResource("LabelSettings_hrndq")
 
-[connection signal="pressed" from="AuthBtn" to="." method="_on_auth_btn_pressed"]
-[connection signal="text_changed" from="LoginField" to="." method="_on_login_field_text_changed"]
-[connection signal="text_changed" from="PasswordField" to="." method="_on_password_field_text_changed"]
-[connection signal="pressed" from="LogRegSwitchBtn" to="." method="_on_log_reg_switch_btn_pressed"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="LogRegSwitchBtn" type="CheckButton" parent="Control/MarginContainer/VBoxContainer/HBoxContainer3"]
+texture_filter = 2
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+
+[node name="LogRegSwitchLbl" type="Label" parent="Control/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Регстрация"
+
+[node name="AuthBtn" type="Button" parent="Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_j3nsn")
+text = "Вход"
+
+[node name="SettingsBtn" type="Button" parent="Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Настройки"
+
+[node name="ExitBtn" type="Button" parent="Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Выход"
+
+[connection signal="text_changed" from="Control/MarginContainer/VBoxContainer/HBoxContainer/LoginField" to="." method="_on_login_field_text_changed"]
+[connection signal="text_changed" from="Control/MarginContainer/VBoxContainer/HBoxContainer2/PasswordField" to="." method="_on_password_field_text_changed"]
+[connection signal="pressed" from="Control/MarginContainer/VBoxContainer/HBoxContainer3/LogRegSwitchBtn" to="." method="_on_log_reg_switch_btn_pressed"]
+[connection signal="pressed" from="Control/MarginContainer/VBoxContainer/AuthBtn" to="." method="_on_auth_btn_pressed"]
+[connection signal="pressed" from="Control/MarginContainer/VBoxContainer/SettingsBtn" to="." method="_on_settings_btn_pressed"]
+[connection signal="pressed" from="Control/MarginContainer/VBoxContainer/ExitBtn" to="." method="_on_exit_btn_pressed"]

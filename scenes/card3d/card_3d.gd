@@ -13,14 +13,14 @@ var my_tween_list: MyTweenList = MyTweenList.new() # Список активны
 const pos_duration : float = .2
 const rotate_duration : float = .2
 const hightlight_daration : float = .2
-const hightlight_height = 1.5  # высота подьёма выбранной карты (можно сделать глобальной)
+const hightlight_height = .3  # высота подьёма выбранной карты (можно сделать глобальной)
 
 
 # hand properties
 var height_offset: float = 0.0 # велечина на которую нужно дополнительно поднять карту учитывая её позицию на "круге" руки. (Карты расположенные правее будут ниже)
 var angle_in_hand = Vector3(0, 0, 0)  # угол карты в руке в момент её добавления. Нужен чтобы мы смогли вернуть карту в исходную позицию.
 var pos_in_hand_y: float   # координаты карты в руке в момент её добавления. Нужены чтобы мы смогли вернуть карту в исходную позицию.
-var over_field: Field = null
+var over_field: FieldRow = null
 var over_field_coord_x: float = INF
 
 
@@ -84,7 +84,7 @@ func stop_all_tween_animations():
 	my_tween_list.kill_all() # Останавливаем все анимации которые проиходят в данный момент
 
 	if my_tween_list_lenght > 0: # Если такие анимации есть, то после их прерывания необходимо привести их в конечное состояние. Перетаскиваемая карта - selected. А значит hightlight.
-		self.set_scale(Vector3(1.2, 1.2, 1.2)) # Делаем карту подсвеченной
+		self.set_scale(Vector3(0.2, 0.2, 0.2)) # Делаем карту подсвеченной
 		self.set_rotation_degrees(Vector3(0, 0, 0))
 		self.set_position(Vector3(self.position[0], pos_in_hand_y + hightlight_height + height_offset, self.position[2]))
 	
@@ -98,6 +98,7 @@ func _on_static_body_3d_mouse_exited() -> void:
 
 
 func _on_area_3d_input_event(camera: Node, event: InputEvent, event_position: Vector3, normal: Vector3, shape_idx: int) -> void:
+
 	if event is InputEventMouseButton:
 
 		if event.button_index == MOUSE_BUTTON_LEFT:
@@ -115,8 +116,6 @@ func _on_area_3d_input_event(camera: Node, event: InputEvent, event_position: Ve
 			Global.CARD_PREVIEW.add_card_preview(self)
 
 
-
-var del = 0
 # Возвращает объект Field если карта над ним находиться, иначе null
 func set_card_overfield() -> void:
 	if raycast.is_colliding():
@@ -128,7 +127,7 @@ func set_card_overfield() -> void:
 			over_field = null
 			over_field_coord_x = INF
 		
-		if collider_parent is Field:
+		if collider_parent is FieldRow:
 			var collision_point = raycast.get_collision_point()
 			over_field = collider_parent
 			over_field_coord_x = over_field.to_local(collision_point).x

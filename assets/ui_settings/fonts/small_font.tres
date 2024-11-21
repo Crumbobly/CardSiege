@@ -1,0 +1,8 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://bky2dhmhmiiec"]
+
+[ext_resource type="Script" path="res://assets/ui_settings/fonts/small_font.gd" id="1_3jreo"]
+
+[resource]
+font_size = 32
+script = ExtResource("1_3jreo")
+dynamic_font_size = 32

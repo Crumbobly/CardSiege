@@ -1,0 +1,60 @@
+[gd_scene load_steps=9 format=3 uid="uid://cniph4cpvwp1l"]
+
+[ext_resource type="Script" path="res://scenes/game/3d/game.gd" id="1_80nip"]
+[ext_resource type="PackedScene" uid="uid://cibohmqty0itj" path="res://scenes/game/hand/Hand.tscn" id="4_li3pq"]
+[ext_resource type="PackedScene" uid="uid://dwqro157xwiwg" path="res://scenes/game/2d/Game_2d.tscn" id="5_m3lri"]
+[ext_resource type="PackedScene" uid="uid://dp5qs4y0ju4ca" path="res://scenes/game/fake_hand/FakeHand.tscn" id="5_wl8xj"]
+[ext_resource type="PackedScene" uid="uid://w0bslguh2md0" path="res://scenes/game/field/Field.tscn" id="6_7xakm"]
+[ext_resource type="PackedScene" uid="uid://cuas81b84wajc" path="res://scenes/game/card_preview/CardPreview.tscn" id="6_c3nlu"]
+[ext_resource type="PackedScene" uid="uid://cef4r8gvajqpr" path="res://scenes/game/2d/Tool_menu.tscn" id="7_21epr"]
+[ext_resource type="PackedScene" uid="uid://gke3a2vkvmlj" path="res://scenes/game/library/Library.tscn" id="10_uftp5"]
+
+[node name="Game" type="Node3D"]
+script = ExtResource("1_80nip")
+
+[node name="Hand" parent="." instance=ExtResource("4_li3pq")]
+transform = Transform3D(1, 0, 0, 0, 0.982935, -0.183951, 0, 0.183951, 0.982935, 0, -1.31657, -1.25265)
+
+[node name="FakeHand" parent="." instance=ExtResource("5_wl8xj")]
+transform = Transform3D(-1, 8.74228e-08, 0, -8.69439e-08, -0.994522, 0.104528, 9.13817e-09, 0.104528, 0.994522, 0, 3.5523, -1.08641)
+
+[node name="2D" type="Node3D" parent="."]
+
+[node name="Game2D" type="SubViewportContainer" parent="2D"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="2D/Game2D"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1920, 1200)
+render_target_update_mode = 4
+
+[node name="ToolMenu2" parent="2D/Game2D/SubViewport" instance=ExtResource("7_21epr")]
+
+[node name="Game2D" parent="2D/Game2D/SubViewport" instance=ExtResource("5_m3lri")]
+
+[node name="CardPreview" parent="." instance=ExtResource("6_c3nlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.32527, 1.4979, -0.9)
+
+[node name="Field" parent="." instance=ExtResource("6_7xakm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55951, -0.999)
+
+[node name="Library" parent="." instance=ExtResource("10_uftp5")]
+transform = Transform3D(0.03, 0, 0, 0, -1.31134e-09, -0.03, 0, 0.03, -1.31134e-09, 1.13689, 0.591597, -1.02903)
+
+[node name="Library4" parent="." instance=ExtResource("10_uftp5")]
+transform = Transform3D(0.03, 0, 0, 0, -1.31134e-09, -0.03, 0, 0.03, -1.31134e-09, 1.14208, 0.911911, -1.03735)
+
+[node name="Library2" parent="." instance=ExtResource("10_uftp5")]
+transform = Transform3D(-0.03, 2.62268e-09, -1.31134e-09, -1.31134e-09, 5.73206e-17, 0.03, 2.62268e-09, 0.03, 5.73206e-17, 1.15965, 1.35268, -1.0215)
+
+[node name="Library3" parent="." instance=ExtResource("10_uftp5")]
+transform = Transform3D(-0.03, 2.62268e-09, -1.31134e-09, -1.31134e-09, 5.73206e-17, 0.03, 2.62268e-09, 0.03, 5.73206e-17, 1.16763, 1.6921, -1.04414)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.08933, 0.831129)

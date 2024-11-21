@@ -3,8 +3,9 @@
 [node name="NoConnection" type="Node2D"]
 
 [node name="Label" type="Label" parent="."]
-offset_left = 849.0
-offset_top = 363.0
-offset_right = 1076.0
-offset_bottom = 498.0
+offset_left = 1460.0
+offset_top = 615.0
+offset_right = 2357.0
+offset_bottom = 750.0
+theme_override_font_sizes/font_size = 64
 text = "Нет соеденения с сервером"
