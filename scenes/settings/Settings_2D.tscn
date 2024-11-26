@@ -1,11 +1,15 @@
 [gd_scene load_steps=5 format=3 uid="uid://bv2q0fopnbbl3"]
 
 [ext_resource type="Script" path="res://scenes/settings/settings_2d.gd" id="1_bj5ye"]
-[ext_resource type="LabelSettings" uid="uid://bk6t2kox2aphu" path="res://assets/ui_settings/fonts/middle_font.tres" id="2_5855q"]
+[ext_resource type="Script" path="res://scenes/settings/canvas.gd" id="1_dkw4u"]
 [ext_resource type="Script" path="res://scenes/settings/resolution_opt_btn.gd" id="2_auqhs"]
 [ext_resource type="Script" path="res://scenes/settings/window_mode_opt_btn.gd" id="2_j13nk"]
 
-[node name="Settings2d" type="Control"]
+[node name="SettingsCanvas" type="CanvasLayer"]
+visible = false
+script = ExtResource("1_dkw4u")
+
+[node name="Settings2d" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,7 +18,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_bj5ye")
 
-[node name="Control" type="Panel" parent="."]
+[node name="Control" type="Panel" parent="Settings2d"]
 self_modulate = Color(0, 0, 0, 1)
 layout_mode = 1
 anchors_preset = 15
@@ -23,7 +27,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings2d/Control"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -31,17 +35,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Settings2d/Control/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="Control/HBoxContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="Settings2d/Control/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Настройки"
-label_settings = ExtResource("2_5855q")
 horizontal_alignment = 1
 
-[node name="WindowModeOptBtn" type="OptionButton" parent="Control/HBoxContainer/VBoxContainer"]
+[node name="WindowModeOptBtn" type="OptionButton" parent="Settings2d/Control/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(400, 75)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -49,7 +52,7 @@ size_flags_vertical = 4
 flat = true
 script = ExtResource("2_j13nk")
 
-[node name="ResolutionOptBtn" type="OptionButton" parent="Control/HBoxContainer/VBoxContainer"]
+[node name="ResolutionOptBtn" type="OptionButton" parent="Settings2d/Control/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(400, 75)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -57,12 +60,11 @@ size_flags_vertical = 4
 flat = true
 script = ExtResource("2_auqhs")
 
-[node name="RestartLbl" type="Label" parent="Control/HBoxContainer/VBoxContainer"]
+[node name="RestartLbl" type="Label" parent="Settings2d/Control/HBoxContainer/VBoxContainer"]
 visible = false
 texture_filter = 1
 layout_mode = 2
 text = "Нужно перезагрузить "
-label_settings = ExtResource("2_5855q")
 horizontal_alignment = 1
 
-[connection signal="item_selected" from="Control/HBoxContainer/VBoxContainer/ResolutionOptBtn" to="." method="_on_resolution_opt_btn_item_selected"]
+[connection signal="item_selected" from="Settings2d/Control/HBoxContainer/VBoxContainer/ResolutionOptBtn" to="Settings2d" method="_on_resolution_opt_btn_item_selected"]

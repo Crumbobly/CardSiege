@@ -25,8 +25,9 @@ func _on_online_game_btn_pressed() -> void:
 
 func start_online_game(my_id, game_dict: Dictionary):
 	var game_instance: Game = game.instantiate()
-	get_tree().root.get_node("Root").change_scene(game_instance)
 	game_instance.set_data(my_id, game_dict)
+	get_tree().root.add_child(game_instance)
+	call_deferred("queue_free")
 		
 
 func _on_exit_btn_pressed() -> void:

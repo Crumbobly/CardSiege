@@ -1,7 +1,0 @@
-[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://bk6t2kox2aphu"]
-
-[ext_resource type="Script" path="res://assets/ui_settings/fonts/middle_font.gd" id="1_h5nhs"]
-
-[resource]
-script = ExtResource("1_h5nhs")
-dynamic_font_size = 32

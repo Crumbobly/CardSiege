@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://b2nt2jw4v2fy2"]
+
+[ext_resource type="PackedScene" uid="uid://dh1b7hwtetm87" path="res://assets/3d_models/tmp/model3/model.dae" id="1_i06oo"]
+[ext_resource type="Texture2D" uid="uid://c2233ayjfojrm" path="res://assets/3d_models/tmp/model3/textures/Book_02_albedo.jpg" id="2_ngjei"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u2g0w"]
+albedo_texture = ExtResource("2_ngjei")
+
+[node name="Book" instance=ExtResource("1_i06oo")]
+
+[node name="Book_02_low" parent="." index="0"]
+transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 25, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_u2g0w")

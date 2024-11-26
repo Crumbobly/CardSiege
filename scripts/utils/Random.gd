@@ -1,9 +1,11 @@
 extends Resource
 class_name Random
 
+
 var existing_ids = [] 
 const char_pool = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
 var current_lenght = 5
+
 
 
 static func generate_random_string(lenght : int) -> String:

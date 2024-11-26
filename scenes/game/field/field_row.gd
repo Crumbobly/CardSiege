@@ -8,7 +8,6 @@ class_name FieldRow
 var line_layoyt = LineLayoutLogic.new()
 var curr_coords
 
-
 	
 func precalculate_all_card_position():
 	var coords = _get_cards_distribution()
@@ -48,7 +47,7 @@ func recalculate_all_card_position(coords):
 		var move_tween : Tween = create_tween().set_ease(Tween.EASE_OUT).set_parallel(true)
 		var card: Card3D = card_collection[index]
 		move_tween.tween_property(card, "position:x", coords[index], 0.2)
-		card.global_position.y = self.global_position.y
+		card.global_position.z = self.global_position.z
 		scale_tween.tween_property(card, "scale", Vector3(0.07, 0.07, 0.07), 0.2)
 
 	curr_coords = coords

@@ -1,0 +1,32 @@
+[gd_scene load_steps=8 format=3 uid="uid://cbjj45qnmr5gm"]
+
+[ext_resource type="PackedScene" uid="uid://cq8k80sv5shv5" path="res://assets/3d_models/tmp/model4/Sord low.fbx" id="1_2c6an"]
+[ext_resource type="Texture2D" uid="uid://ce2044j8a3s0l" path="res://assets/3d_models/tmp/model4/Sord_Metal_Roughness.png" id="2_6p51o"]
+[ext_resource type="Texture2D" uid="uid://cfxn7ujdkd3g4" path="res://assets/3d_models/tmp/model4/Sord_Metal_BaseColor.png" id="3_w1f8y"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pdojj"]
+albedo_texture = ExtResource("2_6p51o")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eu5o6"]
+albedo_texture = ExtResource("2_6p51o")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f3y6a"]
+albedo_texture = ExtResource("3_w1f8y")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aex2g"]
+albedo_texture = ExtResource("2_6p51o")
+
+[node name="Sord low" instance=ExtResource("1_2c6an")]
+transform = Transform3D(11, 0, 0, 0, 11, 0, 0, 0, 11, 0, 0, 0)
+
+[node name="Blade_low" parent="Sord_low" index="0"]
+material_override = SubResource("StandardMaterial3D_pdojj")
+
+[node name="Hilt_low" parent="Sord_low" index="1"]
+material_override = SubResource("StandardMaterial3D_eu5o6")
+
+[node name="Grip_low" parent="Sord_low" index="2"]
+material_override = SubResource("StandardMaterial3D_f3y6a")
+
+[node name="Pommel_low" parent="Sord_low" index="3"]
+material_override = SubResource("StandardMaterial3D_aex2g")

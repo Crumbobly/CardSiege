@@ -1,12 +1,7 @@
 class_name Camera extends Camera3D
 
 
-"""
-table - наш стол. В момент написания этого коментария его нормаль (0, 0, 1), а смещение -0.9
-В случае изменения этих параметров - изменить их здесь
-"""
-# TODO(" Подумать как сделать это автоматически ")
-@onready var table = Plane(Vector3(0, 0, 1), -0.9)
+@onready var table = Plane(Vector3(0, 1, 0), 2.59)
 
 var camera = null
 

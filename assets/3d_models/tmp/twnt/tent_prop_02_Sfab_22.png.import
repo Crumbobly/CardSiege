@@ -1,0 +1,38 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://hcgxxmmxf753"
+path.s3tc="res://.godot/imported/tent_prop_02_Sfab_22.png-b2eb9daef91cfede9502a21bd5b098fe.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "3b101eca36998dbbce3d33d23c28b506"
+}
+
+[deps]
+
+source_file="res://assets/3d_models/tmp/twnt/tent_prop_02_Sfab_22.png"
+dest_files=["res://.godot/imported/tent_prop_02_Sfab_22.png-b2eb9daef91cfede9502a21bd5b098fe.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=1
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=1
+roughness/src_normal="res://assets/3d_models/tmp/twnt/tent_prop_02_Sfab_22.png"
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

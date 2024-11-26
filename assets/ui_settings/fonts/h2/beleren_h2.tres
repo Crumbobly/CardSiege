@@ -1,0 +1,28 @@
+[gd_resource type="FontFile" load_steps=2 format=3 uid="uid://cjbq4otdnici1"]
+
+[ext_resource type="Script" path="res://assets/ui_settings/fonts/h2/beleren_h2.gd" id="1_4rny6"]
+
+[resource]
+resource_local_to_scene = true
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/66/0/ascent = 0.0
+cache/0/66/0/descent = 0.0
+cache/0/66/0/underline_position = 0.0
+cache/0/66/0/underline_thickness = 0.0
+cache/0/66/0/scale = 1.0
+cache/0/99/0/ascent = 0.0
+cache/0/99/0/descent = 0.0
+cache/0/99/0/underline_position = 0.0
+cache/0/99/0/underline_thickness = 0.0
+cache/0/99/0/scale = 1.0
+cache/0/24/0/ascent = 0.0
+cache/0/24/0/descent = 0.0
+cache/0/24/0/underline_position = 0.0
+cache/0/24/0/underline_thickness = 0.0
+cache/0/24/0/scale = 1.0
+script = ExtResource("1_4rny6")
+font_path = "res://assets/fonts/Beleren Small Caps.ttf"

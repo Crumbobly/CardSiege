@@ -5,7 +5,6 @@ var scene_class_name: String
 var func_name: String
 var args: Array = []
 
-# При изменении этого файла = изменить его на сервере
 
 func _init(scene_class_name: String, func_name: String, args: Array) -> void:
 	self.scene_class_name = scene_class_name

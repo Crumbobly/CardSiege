@@ -46,6 +46,7 @@ func follow(pos):
 	set_card_overfield()
 	self.global_position.x = pos[0]
 	self.global_position.y = pos[1]
+	self.global_position.z = pos[2]
 
 
 func highlight():
