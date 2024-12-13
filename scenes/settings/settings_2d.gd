@@ -15,4 +15,4 @@ func _set_curr_mode_index():
 	
 
 func _on_resolution_opt_btn_item_selected(index: int) -> void:
-	$Control/HBoxContainer/VBoxContainer/RestartLbl.visible = true
+	$Control/VBox/Control/MarginContainer/VBoxContainer/RestartLbl.visible = true

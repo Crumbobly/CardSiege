@@ -19,6 +19,8 @@ config/icon="res://icon.svg"
 
 Global="*res://global/global.gd"
 Server="*res://server/server.gd"
+Settings2d="*res://scenes/settings/Settings_2D.tscn"
+FontManager="*res://scenes/components/font_manager/font_manager.gd"
 
 [display]
 

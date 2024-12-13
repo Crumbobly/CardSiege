@@ -1,21 +1,14 @@
-[gd_scene load_steps=34 format=3 uid="uid://xq2roq4p4af7"]
+[gd_scene load_steps=14 format=3 uid="uid://xq2roq4p4af7"]
 
 [ext_resource type="Script" path="res://scenes/auth_2d/auth_2d.gd" id="1_fw18t"]
-[ext_resource type="PackedScene" uid="uid://bv2q0fopnbbl3" path="res://scenes/settings/Settings_2D.tscn" id="2_q7fsq"]
-[ext_resource type="Texture2D" uid="uid://vobfjhnksbc8" path="res://assets/images/backgrounds/bg3.jpg" id="2_r6sj3"]
-[ext_resource type="Script" path="res://scenes/auth_2d/sprite_2d.gd" id="3_dbscd"]
-[ext_resource type="Theme" uid="uid://dx3iptsvd0lkb" path="res://assets/ui_settings/btn_themes/btn_theme1.tres" id="3_j3nsn"]
+[ext_resource type="Script" path="res://scenes/auth_2d/texture_rect.gd" id="2_wj11j"]
 [ext_resource type="Script" path="res://scenes/auth_2d/margin_container.gd" id="4_xkoby"]
-[ext_resource type="FontFile" uid="uid://cccr10mu5lft4" path="res://assets/ui_settings/fonts/h0/beleren_h0.tres" id="5_0k7mg"]
-[ext_resource type="FontFile" uid="uid://cx0tcgrjffasp" path="res://assets/ui_settings/fonts/h3/beleren_h3.tres" id="6_1lehh"]
-[ext_resource type="FontFile" uid="uid://bj3dioah2ib75" path="res://assets/ui_settings/fonts/h5/beleren_h5.tres" id="6_3165b"]
-[ext_resource type="Script" path="res://scenes/auth_2d/latin_num_field.gd" id="7_jcddr"]
-[ext_resource type="Script" path="res://scenes/auth_2d/password_hide_btn.gd" id="8_qylqh"]
-[ext_resource type="FontFile" uid="uid://dcxw5nhqxqnv5" path="res://assets/ui_settings/fonts/h1/beleren_h1.tres" id="9_2lbso"]
-[ext_resource type="FontFile" uid="uid://cjbq4otdnici1" path="res://assets/ui_settings/fonts/h2/beleren_h2.tres" id="10_0wgtc"]
-[ext_resource type="Script" path="res://scenes/auth_2d/loading_gif.gd" id="11_duvmb"]
-[ext_resource type="FontFile" uid="uid://g4xu2e6lwfsr" path="res://assets/ui_settings/fonts/h4/beleren_h4.tres" id="12_l4k2b"]
-[ext_resource type="FontFile" uid="uid://fmjairjn22hr" path="res://assets/ui_settings/fonts/h6/beleren_h6.tres" id="13_m053b"]
+[ext_resource type="Script" path="res://scenes/components/font_manager/font_objects/font_label.gd" id="7_3wjyj"]
+[ext_resource type="Script" path="res://scenes/components/font_manager/font_objects/font_link_button.gd" id="7_6phtb"]
+[ext_resource type="Texture2D" uid="uid://ruikdb8bns4w" path="res://assets/images/gifs/loading_gif.svg" id="7_126rl"]
+[ext_resource type="Script" path="res://scenes/auth_2d/load_gif_control.gd" id="7_o2r5u"]
+[ext_resource type="PackedScene" uid="uid://c6i7oq3g0k1xl" path="res://scenes/components/my_line_edit/my_line_edit.tscn" id="8_xxgpo"]
+[ext_resource type="PackedScene" uid="uid://y5tg56yncqcn" path="res://scenes/components/my_btn1/my_btn1.tscn" id="10_wlmjw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tvxmr"]
 bg_color = Color(0.0235294, 0.0235294, 0.0235294, 0.941176)
@@ -24,56 +17,42 @@ corner_radius_top_right = 25
 corner_radius_bottom_right = 25
 corner_radius_bottom_left = 25
 
-[sub_resource type="LabelSettings" id="LabelSettings_4g1v5"]
-font = ExtResource("5_0k7mg")
-
 [sub_resource type="Animation" id="Animation_vvmdx"]
-length = 0.001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LoadingGif:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
 
 [sub_resource type="Animation" id="Animation_y7nbu"]
 resource_name = "loading_gif"
 loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LoadingGif:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nm7o3"]
 _data = {
 "RESET": SubResource("Animation_vvmdx"),
 "loading_gif": SubResource("Animation_y7nbu")
 }
-
-[sub_resource type="LabelSettings" id="LabelSettings_0jv85"]
-font = ExtResource("6_3165b")
-
-[sub_resource type="GDScript" id="GDScript_ipfii"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_0dfgg"]
-font = ExtResource("6_3165b")
-script = SubResource("GDScript_ipfii")
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pnhka"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_hrndq"]
-font_color = Color(1, 0.294118, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_wjgf6"]
-font = ExtResource("5_0k7mg")
-
-[sub_resource type="LabelSettings" id="LabelSettings_wm86m"]
-font = ExtResource("9_2lbso")
-
-[sub_resource type="LabelSettings" id="LabelSettings_qwids"]
-font = ExtResource("10_0wgtc")
-
-[sub_resource type="LabelSettings" id="LabelSettings_3ivgb"]
-font = ExtResource("6_1lehh")
-
-[sub_resource type="LabelSettings" id="LabelSettings_sqdj8"]
-font = ExtResource("12_l4k2b")
-
-[sub_resource type="LabelSettings" id="LabelSettings_1a03q"]
-font = ExtResource("6_3165b")
-
-[sub_resource type="LabelSettings" id="LabelSettings_7m1ag"]
-font = ExtResource("13_m053b")
 
 [node name="Auth" type="Control"]
 layout_mode = 3
@@ -94,11 +73,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Sprite2D" type="Sprite2D" parent="Background"]
-visible = false
-position = Vector2(40, 76)
-texture = ExtResource("2_r6sj3")
-script = ExtResource("3_dbscd")
+[node name="TextureRect" type="TextureRect" parent="Background"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 3
+script = ExtResource("2_wj11j")
 
 [node name="Timer" type="Timer" parent="Background"]
 
@@ -128,6 +111,20 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_tvxmr")
 
+[node name="LoadGifControl" type="Control" parent="Control/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("7_o2r5u")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Control/MarginContainer/LoadGifControl"]
+libraries = {
+"": SubResource("AnimationLibrary_nm7o3")
+}
+
+[node name="LoadingGif" type="Sprite2D" parent="Control/MarginContainer/LoadGifControl"]
+texture = ExtResource("7_126rl")
+
 [node name="MarginContainer" type="MarginContainer" parent="Control/MarginContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 50
@@ -138,258 +135,169 @@ theme_override_constants/margin_bottom = 50
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/MarginContainer/MarginContainer/VBoxContainer"]
+[node name="GameNameLbl" type="Label" parent="Control/MarginContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Card's 
 Siege"
-label_settings = SubResource("LabelSettings_4g1v5")
 horizontal_alignment = 1
 vertical_alignment = 1
+script = ExtResource("7_3wjyj")
+custom_font_size = 96
+custom_font = "Optimus"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer/MarginContainer/VBoxContainer"]
+[node name="AuthBox" type="VBoxContainer" parent="Control/MarginContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 2
+size_flags_vertical = 10
 
-[node name="Control" type="Control" parent="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="LoginBox" type="GridContainer" parent="Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox"]
+layout_mode = 2
+theme_override_constants/h_separation = 25
+theme_override_constants/v_separation = 25
+columns = 2
+
+[node name="LoginLbl" type="Label" parent="Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox/LoginBox"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Login:"
+script = ExtResource("7_3wjyj")
+custom_font = "Optimus"
+
+[node name="LoginField" parent="Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox/LoginBox" instance=ExtResource("8_xxgpo")]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_font_size = 24
+custom_font = "NotoSans"
+max_lenght = 20
+
+[node name="RegLbl" type="Label" parent="Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox/LoginBox"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Password:"
+script = ExtResource("7_3wjyj")
+custom_font = "Optimus"
+
+[node name="PasswordField" parent="Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox/LoginBox" instance=ExtResource("8_xxgpo")]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_font_size = 24
+custom_font = "NotoSans"
+secret = true
+max_lenght = 40
+icon_visible = true
+
+[node name="RegBox" type="GridContainer" parent="Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox"]
+visible = false
+layout_mode = 2
+theme_override_constants/h_separation = 25
+theme_override_constants/v_separation = 25
+columns = 2
+
+[node name="LoginLbl" type="Label" parent="Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox/RegBox"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Login:"
+script = ExtResource("7_3wjyj")
+custom_font = "Optimus"
+
+[node name="LoginField" parent="Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox/RegBox" instance=ExtResource("8_xxgpo")]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_font_size = 24
+custom_font = "NotoSans"
+max_lenght = 20
+
+[node name="RegLbl" type="Label" parent="Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox/RegBox"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Password:"
+script = ExtResource("7_3wjyj")
+custom_font = "Optimus"
+
+[node name="PasswordField" parent="Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox/RegBox" instance=ExtResource("8_xxgpo")]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_font_size = 24
+custom_font = "NotoSans"
+secret = true
+max_lenght = 40
+icon_visible = true
+
+[node name="RegLbl2" type="Label" parent="Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox/RegBox"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+text = "Repeat:"
+script = ExtResource("7_3wjyj")
+custom_font = "Optimus"
+
+[node name="RepeatPasswordField" parent="Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox/RegBox" instance=ExtResource("8_xxgpo")]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_font_size = 24
+custom_font = "NotoSans"
+secret = true
+max_lenght = 40
+icon_visible = true
+
+[node name="Control" type="Control" parent="Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="LogRegLbl" type="LinkButton" parent="Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "No accaunt?"
+script = ExtResource("7_6phtb")
+custom_font_size = 18
+custom_font = "NotoSans"
+
+[node name="HSeparator" type="HSeparator" parent="Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="ErrorLbl" type="Label" parent="Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(1, 0.218046, 0.0950127, 1)
+horizontal_alignment = 1
+autowrap_mode = 3
+script = ExtResource("7_3wjyj")
+custom_font_size = 16
+custom_font = "NotoSans"
+
+[node name="BtnBox" type="VBoxContainer" parent="Control/MarginContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+
+[node name="AuthBtn" parent="Control/MarginContainer/MarginContainer/VBoxContainer/BtnBox" instance=ExtResource("10_wlmjw")]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 4
+init_text = "Login"
+custom_font_size = 48
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/Control"]
-libraries = {
-"": SubResource("AnimationLibrary_nm7o3")
-}
-
-[node name="LoadingGif" type="Sprite2D" parent="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/Control"]
-script = ExtResource("11_duvmb")
-
-[node name="LoginBox" type="VBoxContainer" parent="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="SettingsBtn" parent="Control/MarginContainer/MarginContainer/VBoxContainer/BtnBox" instance=ExtResource("10_wlmjw")]
 layout_mode = 2
+size_flags_horizontal = 4
+init_text = "Settings"
+custom_font_size = 48
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/LoginBox"]
+[node name="AboutUsBtn" parent="Control/MarginContainer/MarginContainer/VBoxContainer/BtnBox" instance=ExtResource("10_wlmjw")]
+modulate = Color(1, 1, 1, 0.521569)
 layout_mode = 2
-theme_override_constants/separation = 0
+size_flags_horizontal = 4
+init_text = "Abous Us"
+custom_font_size = 48
 
-[node name="LoginLbl" type="Label" parent="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/LoginBox/HBoxContainer"]
-custom_minimum_size = Vector2(125, 0)
+[node name="ExitBtn" parent="Control/MarginContainer/MarginContainer/VBoxContainer/BtnBox" instance=ExtResource("10_wlmjw")]
 layout_mode = 2
-size_flags_horizontal = 0
-text = "Login:"
-label_settings = SubResource("LabelSettings_0jv85")
+size_flags_horizontal = 4
+init_text = "Exit"
+custom_font_size = 48
 
-[node name="LoginField" type="LineEdit" parent="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/LoginBox/HBoxContainer"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_fonts/font = ExtResource("6_3165b")
-max_length = 25
-script = ExtResource("7_jcddr")
-
-[node name="Control" type="Control" parent="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/LoginBox/HBoxContainer"]
-custom_minimum_size = Vector2(50, 50)
-layout_mode = 2
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/LoginBox"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="RegLbl" type="Label" parent="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/LoginBox/HBoxContainer2"]
-custom_minimum_size = Vector2(125, 0)
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "Password:"
-label_settings = SubResource("LabelSettings_0dfgg")
-
-[node name="PasswordField" type="LineEdit" parent="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/LoginBox/HBoxContainer2"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-size_flags_horizontal = 3
-max_length = 50
-secret = true
-secret_character = "*"
-script = ExtResource("7_jcddr")
-
-[node name="Button" type="Button" parent="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/LoginBox/HBoxContainer2"]
-custom_minimum_size = Vector2(50, 50)
-layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxEmpty_pnhka")
-flat = true
-icon_alignment = 1
-script = ExtResource("8_qylqh")
-
-[node name="RegBox" type="VBoxContainer" parent="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer"]
-visible = false
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/RegBox"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="LoginLbl" type="Label" parent="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/RegBox/HBoxContainer"]
-custom_minimum_size = Vector2(125, 0)
-layout_mode = 2
-size_flags_horizontal = 0
-text = "Login:"
-label_settings = SubResource("LabelSettings_0jv85")
-
-[node name="LoginField" type="LineEdit" parent="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/RegBox/HBoxContainer"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-size_flags_horizontal = 3
-max_length = 25
-script = ExtResource("7_jcddr")
-
-[node name="Control" type="Control" parent="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/RegBox/HBoxContainer"]
-custom_minimum_size = Vector2(50, 50)
-layout_mode = 2
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/RegBox"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="RegLbl" type="Label" parent="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/RegBox/HBoxContainer2"]
-custom_minimum_size = Vector2(125, 0)
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "Password:"
-label_settings = SubResource("LabelSettings_0dfgg")
-
-[node name="PasswordField" type="LineEdit" parent="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/RegBox/HBoxContainer2"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-size_flags_horizontal = 3
-max_length = 50
-secret = true
-secret_character = "*"
-script = ExtResource("7_jcddr")
-
-[node name="Button" type="Button" parent="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/RegBox/HBoxContainer2"]
-custom_minimum_size = Vector2(50, 50)
-layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxEmpty_pnhka")
-flat = true
-icon_alignment = 1
-script = ExtResource("8_qylqh")
-
-[node name="HBoxContainer3" type="HBoxContainer" parent="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/RegBox"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="RegLbl" type="Label" parent="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/RegBox/HBoxContainer3"]
-custom_minimum_size = Vector2(125, 0)
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "Repeat:"
-label_settings = SubResource("LabelSettings_0dfgg")
-
-[node name="RepeatPasswordField" type="LineEdit" parent="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/RegBox/HBoxContainer3"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-size_flags_horizontal = 3
-max_length = 50
-secret = true
-secret_character = "*"
-script = ExtResource("7_jcddr")
-
-[node name="Button" type="Button" parent="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/RegBox/HBoxContainer3"]
-custom_minimum_size = Vector2(50, 50)
-layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxEmpty_pnhka")
-flat = true
-icon_alignment = 1
-script = ExtResource("8_qylqh")
-
-[node name="LogRegLbl" type="LinkButton" parent="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-text = "No accaunt?"
-
-[node name="HSeparator" type="HSeparator" parent="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-
-[node name="AuthBtn" type="Button" parent="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("3_j3nsn")
-text = "Вход"
-
-[node name="NoConnLbl" type="Label" parent="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer"]
-visible = false
-layout_mode = 2
-text = "No server connection"
-label_settings = SubResource("LabelSettings_hrndq")
-horizontal_alignment = 1
-autowrap_mode = 3
-
-[node name="ErrorLbl" type="Label" parent="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer"]
-layout_mode = 2
-label_settings = SubResource("LabelSettings_hrndq")
-horizontal_alignment = 1
-autowrap_mode = 3
-
-[node name="SettingsBtn" type="Button" parent="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "Настройки"
-
-[node name="ExitBtn" type="Button" parent="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "Выход"
-
-[node name="HTest" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_right = 478.0
-offset_bottom = 489.0
-
-[node name="Label" type="Label" parent="HTest"]
-layout_mode = 2
-text = "h0"
-label_settings = SubResource("LabelSettings_wjgf6")
-
-[node name="Label1" type="Label" parent="HTest"]
-layout_mode = 2
-text = "h1"
-label_settings = SubResource("LabelSettings_wm86m")
-
-[node name="Label2" type="Label" parent="HTest"]
-layout_mode = 2
-text = "h2"
-label_settings = SubResource("LabelSettings_qwids")
-
-[node name="Label3" type="Label" parent="HTest"]
-layout_mode = 2
-text = "h3"
-label_settings = SubResource("LabelSettings_3ivgb")
-
-[node name="Label4" type="Label" parent="HTest"]
-layout_mode = 2
-text = "h4"
-label_settings = SubResource("LabelSettings_sqdj8")
-
-[node name="Label5" type="Label" parent="HTest"]
-layout_mode = 2
-text = "h5"
-label_settings = SubResource("LabelSettings_1a03q")
-
-[node name="Label6" type="Label" parent="HTest"]
-layout_mode = 2
-text = "h6"
-label_settings = SubResource("LabelSettings_7m1ag")
-
-[node name="SettingsCanvas" parent="." instance=ExtResource("2_q7fsq")]
-
-[connection signal="mouse_entered" from="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/LoginBox/HBoxContainer2/Button" to="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/LoginBox/HBoxContainer2/Button" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/LoginBox/HBoxContainer2/Button" to="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/LoginBox/HBoxContainer2/Button" method="_on_mouse_exited"]
-[connection signal="pressed" from="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/LoginBox/HBoxContainer2/Button" to="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/LoginBox/HBoxContainer2/Button" method="_on_pressed"]
-[connection signal="mouse_entered" from="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/RegBox/HBoxContainer2/Button" to="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/RegBox/HBoxContainer2/Button" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/RegBox/HBoxContainer2/Button" to="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/RegBox/HBoxContainer2/Button" method="_on_mouse_exited"]
-[connection signal="pressed" from="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/RegBox/HBoxContainer2/Button" to="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/RegBox/HBoxContainer2/Button" method="_on_pressed"]
-[connection signal="mouse_entered" from="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/RegBox/HBoxContainer3/Button" to="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/RegBox/HBoxContainer3/Button" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/RegBox/HBoxContainer3/Button" to="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/RegBox/HBoxContainer3/Button" method="_on_mouse_exited"]
-[connection signal="pressed" from="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/RegBox/HBoxContainer3/Button" to="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/RegBox/HBoxContainer3/Button" method="_on_pressed"]
-[connection signal="pressed" from="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/LogRegLbl" to="." method="_on_log_reg_lbl_pressed"]
-[connection signal="pressed" from="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/AuthBtn" to="." method="_on_auth_btn_pressed"]
-[connection signal="pressed" from="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/SettingsBtn" to="." method="_on_settings_btn_pressed"]
-[connection signal="pressed" from="Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/ExitBtn" to="." method="_on_exit_btn_pressed"]
+[connection signal="pressed" from="Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox/LogRegLbl" to="." method="_on_log_reg_lbl_pressed"]
+[connection signal="pressed" from="Control/MarginContainer/MarginContainer/VBoxContainer/BtnBox/AuthBtn" to="." method="_on_auth_btn_pressed"]
+[connection signal="pressed" from="Control/MarginContainer/MarginContainer/VBoxContainer/BtnBox/SettingsBtn" to="." method="_on_settings_btn_pressed"]
+[connection signal="pressed" from="Control/MarginContainer/MarginContainer/VBoxContainer/BtnBox/ExitBtn" to="." method="_on_exit_btn_pressed"]

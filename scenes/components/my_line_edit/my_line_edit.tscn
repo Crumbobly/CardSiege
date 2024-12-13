@@ -1,0 +1,153 @@
+[gd_scene load_steps=12 format=3 uid="uid://c6i7oq3g0k1xl"]
+
+[ext_resource type="Script" path="res://scenes/components/my_line_edit/my_line_edit.gd" id="1_topww"]
+[ext_resource type="Script" path="res://scenes/components/my_line_edit/password_hide_btn.gd" id="3_sfe2j"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5biod"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0lfa2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8k2ry"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_34kyp"]
+
+[sub_resource type="Animation" id="Animation_lvljg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Line2D:default_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.639216, 0.639216, 0.639216, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_j3oqc"]
+resource_name = "error"
+length = 0.334
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Line2D:default_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.808137, 3.27289e-06, 7.70092e-07, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ul1ms"]
+resource_name = "line_change_color"
+length = 0.167
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Line2D:default_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.166667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.637843, 0.637843, 0.637843, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_21su7"]
+resource_name = "warning"
+length = 0.27
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2, 0.266667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-1, 0), Vector2(1, 0), Vector2(-1, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1i5w2"]
+_data = {
+"RESET": SubResource("Animation_lvljg"),
+"error": SubResource("Animation_j3oqc"),
+"line_change_color": SubResource("Animation_ul1ms"),
+"warning": SubResource("Animation_21su7")
+}
+
+[node name="MyLineEdit" type="Control"]
+layout_mode = 3
+anchor_left = 0.131
+anchor_top = 0.177
+anchor_right = 0.131
+anchor_bottom = 0.177
+offset_left = 0.320007
+offset_top = -0.440002
+offset_right = 323.32
+offset_bottom = 39.56
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_topww")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LineEdit" type="LineEdit" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/focus = SubResource("StyleBoxEmpty_5biod")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_0lfa2")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_8k2ry")
+max_length = 20
+
+[node name="Line2D" type="Line2D" parent="HBoxContainer/LineEdit"]
+texture_filter = 1
+width = 2.0
+default_color = Color(0.639216, 0.639216, 0.639216, 1)
+
+[node name="Button" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_34kyp")
+flat = true
+icon_alignment = 1
+script = ExtResource("3_sfe2j")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../HBoxContainer/LineEdit")
+libraries = {
+"": SubResource("AnimationLibrary_1i5w2")
+}
+
+[connection signal="focus_entered" from="HBoxContainer/LineEdit" to="." method="_on_line_edit_focus_entered"]
+[connection signal="focus_exited" from="HBoxContainer/LineEdit" to="." method="_on_line_edit_focus_exited"]
+[connection signal="resized" from="HBoxContainer/LineEdit" to="." method="_on_line_edit_resized"]
+[connection signal="text_change_rejected" from="HBoxContainer/LineEdit" to="." method="_on_line_edit_text_change_rejected"]
+[connection signal="text_changed" from="HBoxContainer/LineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="mouse_entered" from="HBoxContainer/Button" to="HBoxContainer/Button" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/Button" to="HBoxContainer/Button" method="_on_mouse_exited"]
+[connection signal="pressed" from="HBoxContainer/Button" to="HBoxContainer/Button" method="_on_pressed"]

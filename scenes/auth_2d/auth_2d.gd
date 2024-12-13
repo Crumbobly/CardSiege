@@ -9,20 +9,22 @@ var timer_end: bool = true
 
 # Узлы интерфейса
 @onready var timer: Timer = $Timer
-@onready var auth_btn = $Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/AuthBtn
-@onready var login_box = $Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/LoginBox
-@onready var reg_box = $Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/RegBox
-@onready var log_reg_switch = $Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/LogRegLbl
+@onready var load_gif_anim: LoadGifControl = $Control/MarginContainer/MarginContainer/VBoxContainer/LoadGifControl
 
-@onready var login_login_field = $Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/LoginBox/HBoxContainer/LoginField
-@onready var login_password_field = $Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/LoginBox/HBoxContainer2/PasswordField
+@onready var auth_btn: MyBtn = $Control/MarginContainer/MarginContainer/VBoxContainer/BtnBox/AuthBtn
+@onready var login_box: GridContainer = $Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox/LoginBox
+@onready var auth_box: VBoxContainer = $Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox
+@onready var reg_box: GridContainer = $Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox/RegBox
+@onready var log_reg_switch: LinkButton = $Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox/LogRegLbl
 
-@onready var reg_login_field = $Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/RegBox/HBoxContainer/LoginField
-@onready var reg1_password_field = $Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/RegBox/HBoxContainer2/PasswordField
-@onready var reg2_password_field = $Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/RegBox/HBoxContainer3/RepeatPasswordField
+@onready var login_login_field: MyLineEdit = $Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox/LoginBox/LoginField
+@onready var login_password_field: MyLineEdit = $Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox/LoginBox/PasswordField
 
-@onready var error_lbl = $Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/ErrorLbl
-@onready var no_conn_lbl = $Control/MarginContainer/MarginContainer/VBoxContainer/VBoxContainer/NoConnLbl
+@onready var reg_login_field: MyLineEdit = $Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox/RegBox/LoginField
+@onready var reg1_password_field: MyLineEdit = $Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox/RegBox/PasswordField
+@onready var reg2_password_field: MyLineEdit = $Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox/RegBox/RepeatPasswordField
+
+@onready var error_lbl: Label = $Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox/ErrorLbl
 
 
 # Инициализация
@@ -35,14 +37,23 @@ func _ready() -> void:
 func set_error_lbl_text(msg: String) -> void:
 	error_lbl.text = msg
 	timer.stop()
+	timer_end = true
 
 
-func switch_editable_field(editable: bool):
-	reg_login_field.editable = editable
-	reg1_password_field.editable = editable
-	reg2_password_field.editable = editable
-	login_login_field.editable = editable
-	login_password_field.editable = editable
+func enable_all_line_edit_field():
+	reg_login_field.enable_line_edit()
+	reg1_password_field.enable_line_edit()
+	reg2_password_field.enable_line_edit()
+	login_login_field.enable_line_edit()
+	login_password_field.enable_line_edit()
+	
+
+func disable_all_line_edit_field():
+	reg_login_field.disable_line_edit()
+	reg1_password_field.disable_line_edit()
+	reg2_password_field.disable_line_edit()
+	login_login_field.disable_line_edit()
+	login_password_field.disable_line_edit()
 	
 	
 # Обрабатывает нажатие кнопки авторизации
@@ -50,9 +61,8 @@ func _on_auth_btn_pressed() -> void:
 	if not timer_end:
 		return
 		
-	switch_editable_field(false)
 	reset_errors()
-	start_timer(2)  # Запуск таймера ожидания ответа
+	start_timer(2)
 
 	if is_login:
 		login()
@@ -62,53 +72,63 @@ func _on_auth_btn_pressed() -> void:
 
 # Логика входа
 func login() -> void:
+	
+	# Первичная валидация данных
 	if not login_login_field.validate() or not login_password_field.validate():
 		set_error_lbl_text("Login and password can only contain Latin letters and numbers")
 		return
-
+	
+	# Создание запроса
 	var request = Request.new("Auth", "login", [
-		login_login_field.text,
-		login_password_field.text.sha1_text()
+		login_login_field.get_text(),
+		login_password_field.get_text().sha1_text()
 	])
-	print("log")
+	
+	# Выключение редактирования полей и отправка запроса на сервер
+	disable_all_line_edit_field()
 	Server.send_request(request)
 
 
 # Логика регистрации
 func register() -> void:
-	print("reg")
+	
+	# Первичная валидация данных
 	if not reg_login_field.validate() or \
 	   not reg1_password_field.validate() or \
 	   not reg2_password_field.validate():
 		set_error_lbl_text("Login and password can only contain Latin letters and numbers")
 		return
 
-	if reg1_password_field.text != reg2_password_field.text:
+	if reg1_password_field.get_text() != reg2_password_field.get_text():
 		set_error_lbl_text("Passwords don't match")
 		return
-
+	
+	# Создание запроса
 	var request = Request.new("Auth", "register", [
-		reg_login_field.text,
-		reg1_password_field.text.sha1_text()
+		reg_login_field.get_text(),
+		reg1_password_field.get_text().sha1_text()
 	])
+	
+	# Выключение редактирования полей и отправка запроса на сервер
+	disable_all_line_edit_field()
 	Server.send_request(request)
 
 
 # Обрабатывает переключение между входом и регистрацией
 func _on_log_reg_lbl_pressed() -> void:
 	reset_errors()
+	
 	login_box.visible = !login_box.visible
 	reg_box.visible = !reg_box.visible
-
 	is_login = login_box.visible
+	
 	log_reg_switch.text = "No account?" if is_login else "Have account?"
-	auth_btn.text = "Login" if is_login else "Register"
+	auth_btn.set_text("Login" if is_login else "Register")
 
 
-# Сбрасывает ошибки и сообщения
+# Сбрасывает текст ошибки
 func reset_errors() -> void:
 	error_lbl.text = ""
-	no_conn_lbl.visible = false
 
 
 # Запускает таймер
@@ -120,7 +140,7 @@ func start_timer(timeout_seconds: float) -> void:
 
 # Таймаут ответа сервера
 func timeout() -> void:
-	switch_editable_field(true)
+	enable_all_line_edit_field()
 	server_not_here()
 	timer_end = true
 
@@ -134,7 +154,7 @@ func server_here(my_login: String) -> void:
 # Сервер недоступен
 func server_not_here() -> void:
 	timer.stop()
-	no_conn_lbl.visible = true
+	error_lbl.text = "No server connection"
 
 
 # Выход из игры
@@ -144,4 +164,4 @@ func _on_exit_btn_pressed() -> void:
 
 # Переход в настройки
 func _on_settings_btn_pressed() -> void:
-	get_node("SettingsCanvas").show_settings()
+	Settings2d.show_settings()

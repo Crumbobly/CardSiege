@@ -1,10 +1,15 @@
 extends CanvasLayer
 
-
-func _input(event: InputEvent) -> void:
-	if Input.is_action_just_pressed("open_settings"):
-		show_settings()
-
+var showed = false
 
 func show_settings():
-	self.visible = !self.visible
+	if showed:
+		$ShowSettingsAnim.play("hide")
+		showed = false
+	else:
+		$ShowSettingsAnim.play("show")
+		showed = true
+
+
+func _on_my_btn_2_pressed() -> void:
+	$Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages/AnimationPlayer.play("SwapPages")

@@ -1,7 +1,0 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://dx3iptsvd0lkb"]
-
-[ext_resource type="Script" path="res://assets/ui_settings/btn_themes/btn_theme1.gd" id="1_cescg"]
-
-[resource]
-default_font_size = 32
-script = ExtResource("1_cescg")
