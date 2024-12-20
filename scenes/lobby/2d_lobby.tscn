@@ -1,76 +1,79 @@
-[gd_scene load_steps=2 format=3 uid="uid://dte3s0txrh8b5"]
+[gd_scene load_steps=3 format=3 uid="uid://dte3s0txrh8b5"]
 
 [ext_resource type="Script" path="res://scenes/lobby/2d_lobby.gd" id="1_1tdhn"]
+[ext_resource type="Theme" uid="uid://cg0avmbi400e0" path="res://assets/themes/LobbyTheme.tres" id="2_am2ee"]
 
-[node name="2dLobby" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="2dLobby" type="Node" node_paths=PackedStringArray("DeckBuildBtn", "SingleGameBtn", "OnlineGameBtn", "ExitBtn", "PingBtn", "ping_lbl")]
 script = ExtResource("1_1tdhn")
+DeckBuildBtn = NodePath("CanvasLayer/PanelContainer/MainMargin/MainContainer/SubMargin/SubContainer/DeckBuildBtn")
+SingleGameBtn = NodePath("CanvasLayer/PanelContainer/MainMargin/MainContainer/SubMargin/SubContainer/SingleGameBtn")
+OnlineGameBtn = NodePath("CanvasLayer/PanelContainer/MainMargin/MainContainer/OnlineGameBtn")
+ExitBtn = NodePath("CanvasLayer/PanelContainer/MainMargin/MainContainer/SubMargin/SubContainer/ExitBtn")
+PingBtn = NodePath("CanvasLayer/PingBtn")
+ping_lbl = NodePath("CanvasLayer/PingBtn/PingLbl")
 
-[node name="Panel" type="Panel" parent="."]
-self_modulate = Color(0, 1, 1, 0)
-layout_mode = 1
-anchors_preset = 15
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
+anchors_preset = 10
 anchor_right = 1.0
-anchor_bottom = 1.0
+offset_right = -394.0
+offset_bottom = 91.0
 grow_horizontal = 2
-grow_vertical = 2
+theme = ExtResource("2_am2ee")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -138.0
-offset_top = -167.5
-offset_right = 138.0
-offset_bottom = 167.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="DeskBuildBtn" type="Button" parent="Panel/VBoxContainer"]
+[node name="MainMargin" type="MarginContainer" parent="CanvasLayer/PanelContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 32
-disabled = true
-text = "Колоды"
-metadata/_edit_use_anchors_ = true
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
 
-[node name="SingleGameBtn" type="Button" parent="Panel/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 32
-disabled = true
-text = "Одиночная игра"
-metadata/_edit_use_anchors_ = true
-
-[node name="OnlineGameBtn" type="Button" parent="Panel/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 32
-text = "Сетевая игра"
-metadata/_edit_use_anchors_ = true
-
-[node name="ExitBtn" type="Button" parent="Panel/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 32
-text = "Выход"
-metadata/_edit_use_anchors_ = true
-
-[node name="HSeparator" type="HSeparator" parent="Panel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 50)
+[node name="MainContainer" type="HBoxContainer" parent="CanvasLayer/PanelContainer/MainMargin"]
 layout_mode = 2
 
-[node name="PingBtn" type="Button" parent="Panel/VBoxContainer"]
+[node name="OnlineGameBtn" type="Button" parent="CanvasLayer/PanelContainer/MainMargin/MainContainer"]
 layout_mode = 2
+theme_type_variation = &"BigButton"
+text = "Network Multiplayer"
+
+[node name="SubMargin" type="MarginContainer" parent="CanvasLayer/PanelContainer/MainMargin/MainContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_bottom = 46
+
+[node name="SubContainer" type="HBoxContainer" parent="CanvasLayer/PanelContainer/MainMargin/MainContainer/SubMargin"]
+layout_mode = 2
+
+[node name="SingleGameBtn" type="Button" parent="CanvasLayer/PanelContainer/MainMargin/MainContainer/SubMargin/SubContainer"]
+layout_mode = 2
+text = "Single Player"
+
+[node name="DeckBuildBtn" type="Button" parent="CanvasLayer/PanelContainer/MainMargin/MainContainer/SubMargin/SubContainer"]
+layout_mode = 2
+text = "Deck Builder"
+
+[node name="OptionsBtn" type="Button" parent="CanvasLayer/PanelContainer/MainMargin/MainContainer/SubMargin/SubContainer"]
+layout_mode = 2
+text = "Options"
+
+[node name="ExitBtn" type="Button" parent="CanvasLayer/PanelContainer/MainMargin/MainContainer/SubMargin/SubContainer"]
+layout_mode = 2
+text = "Exit"
+
+[node name="PingBtn" type="Button" parent="CanvasLayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -352.0
+offset_top = 24.0
+offset_right = -76.0
+offset_bottom = 77.0
+grow_horizontal = 0
 theme_override_font_sizes/font_size = 32
 text = "Ping"
-metadata/_edit_use_anchors_ = true
 
-[node name="PingLbl" type="Label" parent="Panel/VBoxContainer/PingBtn"]
+[node name="PingLbl" type="Label" parent="CanvasLayer/PingBtn"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -85,7 +88,3 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 48
 text = "---"
-
-[connection signal="pressed" from="Panel/VBoxContainer/OnlineGameBtn" to="." method="_on_online_game_btn_pressed"]
-[connection signal="pressed" from="Panel/VBoxContainer/ExitBtn" to="." method="_on_exit_btn_pressed"]
-[connection signal="pressed" from="Panel/VBoxContainer/PingBtn" to="." method="_on_ping_btn_pressed"]
