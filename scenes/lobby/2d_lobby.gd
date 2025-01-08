@@ -1,7 +1,7 @@
 extends Node
 
 @export_group("Game Resources")
-@export var game = preload("res://scenes/game/3d/Game.tscn")
+@export var game = preload("res://scenes/game_root/game/3d/Game.tscn")
 
 @export_group("Buttons")
 @export var DeckBuildBtn : Button
