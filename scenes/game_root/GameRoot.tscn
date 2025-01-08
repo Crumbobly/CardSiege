@@ -1,0 +1,56 @@
+[gd_scene load_steps=10 format=3 uid="uid://br8q07pgsrhpj"]
+
+[ext_resource type="Script" path="res://scenes/game_root/game_root.gd" id="1_cwgf3"]
+[ext_resource type="Script" path="res://scenes/camera/camera_3d.gd" id="2_c2ovn"]
+[ext_resource type="PackedScene" uid="uid://b1h6s0bfwn4bh" path="res://scenes/enviroment/table/wooden_table.tscn" id="3_am6lm"]
+[ext_resource type="PackedScene" uid="uid://bnioh3ph3aaf4" path="res://assets/3d_models/tmp/model/model.dae" id="4_flwyj"]
+[ext_resource type="PackedScene" uid="uid://bnm1yqxgfrtty" path="res://assets/3d_models/tmp/model6/model.dae" id="5_gmd38"]
+[ext_resource type="PackedScene" uid="uid://dmcvijurw1c8v" path="res://assets/3d_models/tmp/model2/sketch.fbx" id="6_bys4d"]
+[ext_resource type="PackedScene" uid="uid://b2nt2jw4v2fy2" path="res://scenes/enviroment/book/book.tscn" id="7_1gg65"]
+[ext_resource type="PackedScene" uid="uid://cbjj45qnmr5gm" path="res://scenes/enviroment/sword/sword.tscn" id="8_oe6lo"]
+[ext_resource type="PackedScene" uid="uid://cniph4cpvwp1l" path="res://scenes/game_root/game/3d/Game.tscn" id="9_hfpmu"]
+
+[node name="GameRoot" type="Node3D"]
+script = ExtResource("1_cwgf3")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.140539, 0.990075, 0, -0.990075, 0.140539, 0, 3.4, -2.193)
+fov = 90.0
+near = 0.01
+far = 50.0
+script = ExtResource("2_c2ovn")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.849242, -0.120332, -0.514109, 0.527017, 0.252677, 0.811423, 0.0322629, -0.960039, 0.278001, -5.90131, 10.2682, 0)
+light_energy = 0.8
+shadow_enabled = true
+shadow_opacity = 0.5
+directional_shadow_max_distance = 10.0
+
+[node name="Wooden Table" parent="." instance=ExtResource("3_am6lm")]
+transform = Transform3D(-4.37114e-09, 0, -0.1885, 0, 0.1, 0, 0.1, 0, -8.23959e-09, 0.335334, 1, -2.40244)
+
+[node name="Enviroment" type="Node3D" parent="Wooden Table"]
+transform = Transform3D(4.54747e-13, -10, -4.37114e-07, -4.37114e-07, -4.37114e-07, 10, -5.30504, -1.42109e-14, -2.31891e-07, 10, 24.0244, 1.77896)
+
+[node name="model" parent="Wooden Table/Enviroment" instance=ExtResource("4_flwyj")]
+transform = Transform3D(1.7445, 0.0432451, 0.977169, 0.976313, -0.19858, -1.73418, 0.0595257, 1.98965, -0.194321, 1.68429, 2.21778, -4.46432)
+
+[node name="model3" parent="Wooden Table/Enviroment" instance=ExtResource("5_gmd38")]
+transform = Transform3D(0.005, 0, 0, 0, -2.18557e-10, -0.005, 0, 0.005, -2.18557e-10, 1.70336, 1.08453, -1.03006)
+
+[node name="sketch" parent="Wooden Table/Enviroment" instance=ExtResource("6_bys4d")]
+transform = Transform3D(0.806005, 8.00092e-08, 1.8304, 1.8304, -3.52316e-08, -0.806005, 0, 2, -8.74228e-08, -1.0202, 1.52277, -0.95724)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Wooden Table/Enviroment/sketch"]
+transform = Transform3D(0.5, 8.88178e-15, 0, -9.76997e-15, 0.5, 0, 3.88235e-22, -3.55271e-15, 0.5, -0.0817384, 0.058035, -0.233027)
+omni_range = 1.0
+
+[node name="Book" parent="Wooden Table/Enviroment" instance=ExtResource("7_1gg65")]
+transform = Transform3D(0.432857, -0.901463, -6.41949e-08, 0.901463, 0.432857, 1.46136e-08, 1.46136e-08, -6.41949e-08, 1, -1.85484, 1.12247, -0.991654)
+
+[node name="Sord low2" parent="Wooden Table/Enviroment" instance=ExtResource("8_oe6lo")]
+transform = Transform3D(-10.7979, 9.52816e-07, 2.0989, 2.0989, -9.17458e-08, 10.7979, 9.52816e-07, 11, -9.17458e-08, -1.348, 1.223, -1.112)
+
+[node name="Game" parent="." instance=ExtResource("9_hfpmu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.39455, -1.91937)

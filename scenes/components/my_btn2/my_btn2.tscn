@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://bov4jmvumw63m"]
 
-[ext_resource type="Script" path="res://scenes/components/font_manager/font_objects/font_button.gd" id="1_hlvlp"]
+[ext_resource type="FontFile" uid="uid://dgrjsqockyk8r" path="res://assets/fonts/noto-sans.regular.ttf" id="1_w04ev"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s7xq4"]
 
@@ -68,10 +68,10 @@ offset_bottom = 19.5
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("1_w04ev")
+theme_override_font_sizes/font_size = 16
 theme_override_styles/focus = SubResource("StyleBoxEmpty_s7xq4")
 theme_override_styles/hover = SubResource("StyleBoxFlat_3xelc")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_r58lu")
 theme_override_styles/normal = SubResource("StyleBoxFlat_iwcou")
 text = "Gameplay"
-script = ExtResource("1_hlvlp")
-custom_font = "Optimus"

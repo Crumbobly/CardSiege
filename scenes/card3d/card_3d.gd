@@ -114,7 +114,8 @@ func _on_area_3d_input_event(camera: Node, event: InputEvent, event_position: Ve
 				is_drag = false
 		
 		elif event.button_index == MOUSE_BUTTON_RIGHT:
-			Global.CARD_PREVIEW.add_card_preview(self)
+			pass
+			#Global.CARD_PREVIEW.add_card_preview(self)
 
 
 # Возвращает объект Field если карта над ним находиться, иначе null

@@ -1,14 +1,17 @@
-[gd_scene load_steps=19 format=3 uid="uid://bv2q0fopnbbl3"]
+[gd_scene load_steps=24 format=3 uid="uid://bv2q0fopnbbl3"]
 
-[ext_resource type="Script" path="res://scenes/settings/canvas.gd" id="1_dkw4u"]
+[ext_resource type="Script" path="res://scenes/settings/settings_canvas.gd" id="1_dkw4u"]
 [ext_resource type="Script" path="res://scenes/settings/resolution_opt_btn.gd" id="2_auqhs"]
 [ext_resource type="Script" path="res://scenes/settings/window_mode_opt_btn.gd" id="2_j13nk"]
 [ext_resource type="Script" path="res://scenes/settings/border.gd" id="3_h5k5p"]
 [ext_resource type="Texture2D" uid="uid://lswsqk4wktjl" path="res://assets/images/backgrounds/bg5.jpg" id="4_o5u7r"]
 [ext_resource type="Shader" path="res://assets/shaders/vignette.gdshader" id="4_q7ijj"]
-[ext_resource type="Script" path="res://scenes/components/font_manager/font_objects/font_label.gd" id="5_pl81f"]
+[ext_resource type="FontFile" uid="uid://bcyxr10dolpgy" path="res://assets/fonts/OptimusPrinceps.ttf" id="5_ivylt"]
+[ext_resource type="Script" path="res://scenes/settings/pages.gd" id="6_1tssd"]
 [ext_resource type="PackedScene" uid="uid://bov4jmvumw63m" path="res://scenes/components/my_btn2/my_btn2.tscn" id="6_fabp3"]
-[ext_resource type="Script" path="res://scenes/components/font_manager/font_objects/font_link_button.gd" id="10_6m82g"]
+[ext_resource type="Script" path="res://scenes/settings/button.gd" id="6_rf356"]
+[ext_resource type="Texture2D" uid="uid://dtkw85yxexvds" path="res://assets/images/icons/angle-left-solid-svgrepo-com.svg" id="7_1d1tb"]
+[ext_resource type="FontFile" uid="uid://dgrjsqockyk8r" path="res://assets/fonts/noto-sans.regular.ttf" id="7_tfpkt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ad87y"]
 bg_color = Color(0, 0, 0, 0.796078)
@@ -18,12 +21,168 @@ shader = ExtResource("4_q7ijj")
 shader_parameter/outerRadius = 1.0
 shader_parameter/MainAlpha = 1.0
 
+[sub_resource type="Animation" id="Animation_jfryv"]
+resource_name = "AudioPageAnim"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MainPage:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MainPage:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioPage:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AudioPage:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_4ol3v"]
+resource_name = "GameplayPageAnim"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MainPage:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MainPage:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GameplayPage:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("GameplayPage:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_gperr"]
+resource_name = "GraphicPageAnim"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MainPage:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("GraphicPage:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MainPage:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("GraphicPage:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
 [sub_resource type="Animation" id="Animation_bsme5"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("GraphicSettingsPage:visible")
+tracks/0/path = NodePath("GraphicPage:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -59,7 +218,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("GraphicSettingsPage:modulate")
+tracks/3/path = NodePath("GraphicPage:modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -68,63 +227,61 @@ tracks/3/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
-
-[sub_resource type="Animation" id="Animation_gperr"]
-resource_name = "SwapPages"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("MainPage:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("GraphicSettingsPage:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.1, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("MainPage:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("GameplayPage:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true, false]
+"values": [false]
 }
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("GraphicSettingsPage:visible")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("GameplayPage:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("AudioPage:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false, true]
+"values": [false]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("AudioPage:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_meht3"]
 _data = {
-"RESET": SubResource("Animation_bsme5"),
-"SwapPages": SubResource("Animation_gperr")
+"AudioPageAnim": SubResource("Animation_jfryv"),
+"GameplayPageAnim": SubResource("Animation_4ol3v"),
+"GraphicPageAnim": SubResource("Animation_gperr"),
+"RESET": SubResource("Animation_bsme5")
 }
 
 [sub_resource type="Animation" id="Animation_mvq1v"]
@@ -281,13 +438,30 @@ layout_mode = 2
 use_parent_material = true
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Header"]
+[node name="HorizontalBox" type="HBoxContainer" parent="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Header"]
 layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Control" type="Control" parent="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Header/HorizontalBox"]
+layout_mode = 2
+
+[node name="ReturnToMainPageSettingsBtn" type="Button" parent="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Header/HorizontalBox/Control"]
+self_modulate = Color(0.741385, 0.741385, 0.741385, 1)
+texture_filter = 2
+layout_mode = 1
+offset_right = 808.0
+offset_bottom = 808.0
+scale = Vector2(0.05, 0.05)
+icon = ExtResource("7_1d1tb")
+flat = true
+script = ExtResource("6_rf356")
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Header/HorizontalBox"]
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_fonts/font = ExtResource("5_ivylt")
+theme_override_font_sizes/font_size = 42
 text = "Settings"
-horizontal_alignment = 1
-script = ExtResource("5_pl81f")
-custom_font_size = 42
-custom_font = "Optimus"
 
 [node name="HSeparator" type="HSeparator" parent="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Header"]
 use_parent_material = true
@@ -297,6 +471,7 @@ layout_mode = 2
 use_parent_material = true
 layout_mode = 2
 size_flags_vertical = 3
+script = ExtResource("6_1tssd")
 
 [node name="MainPage" type="VBoxContainer" parent="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages"]
 use_parent_material = true
@@ -318,29 +493,23 @@ theme_override_constants/separation = 8
 [node name="GameplayBtn" parent="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages/MainPage/VBoxContainer" instance=ExtResource("6_fabp3")]
 layout_mode = 2
 size_flags_horizontal = 1
-custom_font_size = 18
-custom_font = "NotoSans"
 
 [node name="GraphicBtn" parent="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages/MainPage/VBoxContainer" instance=ExtResource("6_fabp3")]
 layout_mode = 2
 size_flags_horizontal = 1
 text = "Graphic"
-custom_font_size = 18
-custom_font = "NotoSans"
 
 [node name="AudioBtn" parent="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages/MainPage/VBoxContainer" instance=ExtResource("6_fabp3")]
 layout_mode = 2
 size_flags_horizontal = 1
 text = "Audio  
 "
-custom_font_size = 18
-custom_font = "NotoSans"
 
 [node name="Control" type="Control" parent="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages/MainPage/VBoxContainer"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 
-[node name="ExitBtn" parent="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages/MainPage/VBoxContainer" instance=ExtResource("6_fabp3")]
+[node name="ExitGameBtn" parent="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages/MainPage/VBoxContainer" instance=ExtResource("6_fabp3")]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_hover_color = Color(0.741176, 0.168627, 0, 1)
@@ -348,20 +517,37 @@ theme_override_colors/font_pressed_color = Color(0.837875, 0.195788, 0, 1)
 theme_override_colors/font_focus_color = Color(0.741176, 0.168627, 0, 1)
 theme_override_colors/font_color = Color(0.741176, 0.168627, 0, 1)
 text = "Exit Game"
-custom_font_size = 18
-custom_font = "NotoSans"
 
-[node name="LinkButton" type="LinkButton" parent="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages/MainPage/VBoxContainer"]
+[node name="ExitSettingsButton" type="LinkButton" parent="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages/MainPage/VBoxContainer"]
 self_modulate = Color(0.306923, 0.306923, 0.306923, 1)
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("7_tfpkt")
+theme_override_font_sizes/font_size = 12
 text = "Close settings"
 underline = 2
-script = ExtResource("10_6m82g")
-custom_font_size = 12
-custom_font = "NotoSans"
 
-[node name="GraphicSettingsPage" type="VBoxContainer" parent="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages"]
+[node name="GameplayPage" type="VBoxContainer" parent="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages/GameplayPage"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages/GameplayPage/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Not implemented
+"
+
+[node name="GraphicPage" type="VBoxContainer" parent="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages"]
 visible = false
 use_parent_material = true
 layout_mode = 1
@@ -373,7 +559,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="WindowModeOptBtn" type="OptionButton" parent="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages/GraphicSettingsPage"]
+[node name="WindowModeOptBtn" type="OptionButton" parent="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages/GraphicPage"]
 custom_minimum_size = Vector2(400, 75)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -381,7 +567,7 @@ size_flags_vertical = 4
 flat = true
 script = ExtResource("2_j13nk")
 
-[node name="ResolutionOptBtn" type="OptionButton" parent="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages/GraphicSettingsPage"]
+[node name="ResolutionOptBtn" type="OptionButton" parent="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages/GraphicPage"]
 custom_minimum_size = Vector2(400, 75)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -389,12 +575,32 @@ size_flags_vertical = 4
 flat = true
 script = ExtResource("2_auqhs")
 
-[node name="RestartLbl" type="Label" parent="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages/GraphicSettingsPage"]
+[node name="RestartLbl" type="Label" parent="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages/GraphicPage"]
 visible = false
 texture_filter = 1
 layout_mode = 2
 text = "Нужно перезагрузить "
 horizontal_alignment = 1
+
+[node name="AudioPage" type="VBoxContainer" parent="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages/AudioPage"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages/AudioPage/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Not implemented
+"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages"]
 libraries = {
@@ -415,9 +621,6 @@ size_flags_vertical = 4
 text = "Need Help?"
 underline = 1
 uri = "https://example.com/"
-script = ExtResource("10_6m82g")
-custom_font_size = 16
-custom_font = "NotoSans"
 
 [node name="LinkButton2" type="LinkButton" parent="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Footer"]
 modulate = Color(0.854902, 0.854902, 0.854902, 1)
@@ -427,9 +630,6 @@ size_flags_vertical = 4
 text = "Report Bug"
 underline = 1
 uri = "https://example.com/"
-script = ExtResource("10_6m82g")
-custom_font_size = 16
-custom_font = "NotoSans"
 
 [node name="Bottom" type="Control" parent="Panel/VBoxContainer"]
 layout_mode = 2
@@ -441,4 +641,11 @@ libraries = {
 "": SubResource("AnimationLibrary_4emc3")
 }
 
-[connection signal="pressed" from="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages/MainPage/VBoxContainer/GameplayBtn" to="." method="_on_my_btn_2_pressed"]
+[connection signal="mouse_entered" from="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Header/HorizontalBox/Control/ReturnToMainPageSettingsBtn" to="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Header/HorizontalBox/Control/ReturnToMainPageSettingsBtn" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Header/HorizontalBox/Control/ReturnToMainPageSettingsBtn" to="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Header/HorizontalBox/Control/ReturnToMainPageSettingsBtn" method="_on_mouse_exited"]
+[connection signal="pressed" from="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Header/HorizontalBox/Control/ReturnToMainPageSettingsBtn" to="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages" method="_on_return_to_main_page_settings_btn_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages/MainPage/VBoxContainer/GameplayBtn" to="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages" method="_on_gameplay_btn_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages/MainPage/VBoxContainer/GraphicBtn" to="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages" method="_on_graphic_btn_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages/MainPage/VBoxContainer/AudioBtn" to="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages" method="_on_audio_btn_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages/MainPage/VBoxContainer/ExitGameBtn" to="." method="_on_exit_game_btn_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages/MainPage/VBoxContainer/ExitSettingsButton" to="." method="_on_exit_settings_button_pressed"]

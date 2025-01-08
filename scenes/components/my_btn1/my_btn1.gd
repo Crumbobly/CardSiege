@@ -2,34 +2,13 @@ extends Control
 class_name MyBtn
 
 @export var init_text = "Text"
-@export_group("Custom Font Properties")
-@export var custom_font_size = 32
-@export_enum(
-	"NotoSans", 
-	"Gesture",
-	"Optimus",
-	"Platin") \
-	var custom_font: String
-
 @onready var lbl: RichTextLabel = $Label
-@onready var left_sprite: Sprite2D = $LeftSprite
-@onready var right_sprite: Sprite2D = $RightSprite
+
 
 signal pressed
 
-
 func _ready() -> void:
-	set_font()
 	set_text(init_text)
-	reset_sprites_positions()
-	reset_line()
-	# self.size[0] += left_sprite.get_rect().size[0] * left_scale_factor[0] * 2
-
-
-func set_font():
-	lbl.add_theme_font_override("normal_font", FontManager.get_font(custom_font))
-	lbl.add_theme_font_size_override("normal_font_size", FontManager.recalulate_size(custom_font_size))
-	reset_sprites_positions()
 	reset_line()
 
 
@@ -38,26 +17,7 @@ func set_text(new_text):
 	var font = lbl.get_theme_font("normal_font")
 	var text_size = font.get_string_size(new_text)
 	lbl.size = text_size 
-	reset_sprites_positions()
 	reset_line()
-
-
-func reset_sprites_positions():
-	var lbl_width = lbl.size[0]
-	var lbl_height = lbl.size[1]
-	
-	var left_scale_factor = Vector2(lbl_height, lbl_height) / left_sprite.texture.get_size()
-	left_sprite.scale = left_scale_factor / 1.2
-	left_sprite.position = lbl.position
-	left_sprite.position.y += lbl_height / 2
-	left_sprite.position.x -= left_sprite.texture.get_size()[0] * left_scale_factor[0] / 2
-	
-	var right_scale_factor = Vector2(lbl_height, lbl_height) / right_sprite.texture.get_size()
-	right_sprite.scale = right_scale_factor / 1.2
-	right_sprite.position = lbl.position
-	right_sprite.position.y += lbl_height / 2
-	right_sprite.position.x += lbl_width + \
-		right_sprite.texture.get_size()[0] * right_scale_factor[0] / 2
 
 
 func reset_line():

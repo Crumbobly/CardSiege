@@ -1,14 +1,6 @@
 extends Control
 class_name MyLineEdit
 
-@export_group("Custom Font Properties")
-@export var custom_font_size = 32
-@export_enum(
-	"NotoSans", 
-	"Gesture",
-	"Optimus",
-	"Platin") \
-	var custom_font: String
 
 @export_group("Line Edit Properties")
 @export var secret: bool = false
@@ -40,13 +32,7 @@ func _ready() -> void:
 	self.line_edit.secret = secret
 	self.line_edit.max_length = max_lenght
 	self.line_init()
-	set_font()
-
-
-func set_font():
-	line_edit.add_theme_font_override("font", FontManager.get_font(custom_font))
-	line_edit.add_theme_font_size_override("font_size", FontManager.recalulate_size(custom_font_size))
-
+	
 
 func icon_init():
 	if not self.icon_visible:

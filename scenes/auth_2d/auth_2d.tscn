@@ -1,12 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://xq2roq4p4af7"]
+[gd_scene load_steps=9 format=3 uid="uid://xq2roq4p4af7"]
 
 [ext_resource type="Script" path="res://scenes/auth_2d/auth_2d.gd" id="1_fw18t"]
-[ext_resource type="Script" path="res://scenes/auth_2d/texture_rect.gd" id="2_wj11j"]
+[ext_resource type="Texture2D" uid="uid://bhc63ncacfy3e" path="res://assets/images/backgrounds/bg2.jpg" id="2_ag1b3"]
+[ext_resource type="FontFile" uid="uid://bcyxr10dolpgy" path="res://assets/fonts/OptimusPrinceps.ttf" id="4_ds1la"]
 [ext_resource type="Script" path="res://scenes/auth_2d/margin_container.gd" id="4_xkoby"]
-[ext_resource type="Script" path="res://scenes/components/font_manager/font_objects/font_label.gd" id="7_3wjyj"]
-[ext_resource type="Script" path="res://scenes/components/font_manager/font_objects/font_link_button.gd" id="7_6phtb"]
-[ext_resource type="Texture2D" uid="uid://ruikdb8bns4w" path="res://assets/images/gifs/loading_gif.svg" id="7_126rl"]
-[ext_resource type="Script" path="res://scenes/auth_2d/load_gif_control.gd" id="7_o2r5u"]
+[ext_resource type="FontFile" uid="uid://dgrjsqockyk8r" path="res://assets/fonts/noto-sans.regular.ttf" id="7_45ek5"]
 [ext_resource type="PackedScene" uid="uid://c6i7oq3g0k1xl" path="res://scenes/components/my_line_edit/my_line_edit.tscn" id="8_xxgpo"]
 [ext_resource type="PackedScene" uid="uid://y5tg56yncqcn" path="res://scenes/components/my_btn1/my_btn1.tscn" id="10_wlmjw"]
 
@@ -16,43 +14,6 @@ corner_radius_top_left = 25
 corner_radius_top_right = 25
 corner_radius_bottom_right = 25
 corner_radius_bottom_left = 25
-
-[sub_resource type="Animation" id="Animation_vvmdx"]
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("LoadingGif:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-
-[sub_resource type="Animation" id="Animation_y7nbu"]
-resource_name = "loading_gif"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("LoadingGif:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 6.28319]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_nm7o3"]
-_data = {
-"RESET": SubResource("Animation_vvmdx"),
-"loading_gif": SubResource("Animation_y7nbu")
-}
 
 [node name="Auth" type="Control"]
 layout_mode = 3
@@ -80,10 +41,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-expand_mode = 3
-script = ExtResource("2_wj11j")
-
-[node name="Timer" type="Timer" parent="Background"]
+texture = ExtResource("2_ag1b3")
+expand_mode = 5
 
 [node name="Control" type="Panel" parent="."]
 self_modulate = Color(1, 1, 1, 0)
@@ -107,23 +66,7 @@ script = ExtResource("4_xkoby")
 
 [node name="Panel" type="Panel" parent="Control/MarginContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_tvxmr")
-
-[node name="LoadGifControl" type="Control" parent="Control/MarginContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-script = ExtResource("7_o2r5u")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Control/MarginContainer/LoadGifControl"]
-libraries = {
-"": SubResource("AnimationLibrary_nm7o3")
-}
-
-[node name="LoadingGif" type="Sprite2D" parent="Control/MarginContainer/LoadGifControl"]
-texture = ExtResource("7_126rl")
 
 [node name="MarginContainer" type="MarginContainer" parent="Control/MarginContainer"]
 layout_mode = 2
@@ -138,13 +81,12 @@ layout_mode = 2
 [node name="GameNameLbl" type="Label" parent="Control/MarginContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("4_ds1la")
+theme_override_font_sizes/font_size = 90
 text = "Card's 
 Siege"
 horizontal_alignment = 1
 vertical_alignment = 1
-script = ExtResource("7_3wjyj")
-custom_font_size = 96
-custom_font = "Optimus"
 
 [node name="AuthBox" type="VBoxContainer" parent="Control/MarginContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -157,32 +99,27 @@ theme_override_constants/v_separation = 25
 columns = 2
 
 [node name="LoginLbl" type="Label" parent="Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox/LoginBox"]
-custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("4_ds1la")
+theme_override_font_sizes/font_size = 32
 text = "Login:"
-script = ExtResource("7_3wjyj")
-custom_font = "Optimus"
 
 [node name="LoginField" parent="Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox/LoginBox" instance=ExtResource("8_xxgpo")]
 layout_mode = 2
 size_flags_horizontal = 3
-custom_font_size = 24
-custom_font = "NotoSans"
 max_lenght = 20
 
 [node name="RegLbl" type="Label" parent="Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox/LoginBox"]
-custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("4_ds1la")
+theme_override_font_sizes/font_size = 32
 text = "Password:"
-script = ExtResource("7_3wjyj")
-custom_font = "Optimus"
 
 [node name="PasswordField" parent="Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox/LoginBox" instance=ExtResource("8_xxgpo")]
 layout_mode = 2
 size_flags_horizontal = 3
-custom_font_size = 24
-custom_font = "NotoSans"
 secret = true
 max_lenght = 40
 icon_visible = true
@@ -195,32 +132,27 @@ theme_override_constants/v_separation = 25
 columns = 2
 
 [node name="LoginLbl" type="Label" parent="Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox/RegBox"]
-custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("4_ds1la")
+theme_override_font_sizes/font_size = 32
 text = "Login:"
-script = ExtResource("7_3wjyj")
-custom_font = "Optimus"
 
 [node name="LoginField" parent="Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox/RegBox" instance=ExtResource("8_xxgpo")]
 layout_mode = 2
 size_flags_horizontal = 3
-custom_font_size = 24
-custom_font = "NotoSans"
 max_lenght = 20
 
 [node name="RegLbl" type="Label" parent="Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox/RegBox"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_ds1la")
+theme_override_font_sizes/font_size = 32
 text = "Password:"
-script = ExtResource("7_3wjyj")
-custom_font = "Optimus"
 
 [node name="PasswordField" parent="Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox/RegBox" instance=ExtResource("8_xxgpo")]
 layout_mode = 2
 size_flags_horizontal = 3
-custom_font_size = 24
-custom_font = "NotoSans"
 secret = true
 max_lenght = 40
 icon_visible = true
@@ -228,15 +160,13 @@ icon_visible = true
 [node name="RegLbl2" type="Label" parent="Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox/RegBox"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_ds1la")
+theme_override_font_sizes/font_size = 32
 text = "Repeat:"
-script = ExtResource("7_3wjyj")
-custom_font = "Optimus"
 
 [node name="RepeatPasswordField" parent="Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox/RegBox" instance=ExtResource("8_xxgpo")]
 layout_mode = 2
 size_flags_horizontal = 3
-custom_font_size = 24
-custom_font = "NotoSans"
 secret = true
 max_lenght = 40
 icon_visible = true
@@ -249,10 +179,9 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
+theme_override_fonts/font = ExtResource("7_45ek5")
+theme_override_font_sizes/font_size = 18
 text = "No accaunt?"
-script = ExtResource("7_6phtb")
-custom_font_size = 18
-custom_font = "NotoSans"
 
 [node name="HSeparator" type="HSeparator" parent="Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox"]
 layout_mode = 2
@@ -260,13 +189,10 @@ size_flags_vertical = 8
 
 [node name="ErrorLbl" type="Label" parent="Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox"]
 layout_mode = 2
-size_flags_vertical = 8
-theme_override_colors/font_color = Color(1, 0.218046, 0.0950127, 1)
+theme_override_colors/font_color = Color(0.717647, 0, 0, 1)
+theme_override_fonts/font = ExtResource("7_45ek5")
+theme_override_font_sizes/font_size = 16
 horizontal_alignment = 1
-autowrap_mode = 3
-script = ExtResource("7_3wjyj")
-custom_font_size = 16
-custom_font = "NotoSans"
 
 [node name="BtnBox" type="VBoxContainer" parent="Control/MarginContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -276,26 +202,22 @@ size_flags_vertical = 6
 layout_mode = 2
 size_flags_horizontal = 4
 init_text = "Login"
-custom_font_size = 48
 
 [node name="SettingsBtn" parent="Control/MarginContainer/MarginContainer/VBoxContainer/BtnBox" instance=ExtResource("10_wlmjw")]
 layout_mode = 2
 size_flags_horizontal = 4
 init_text = "Settings"
-custom_font_size = 48
 
 [node name="AboutUsBtn" parent="Control/MarginContainer/MarginContainer/VBoxContainer/BtnBox" instance=ExtResource("10_wlmjw")]
 modulate = Color(1, 1, 1, 0.521569)
 layout_mode = 2
 size_flags_horizontal = 4
 init_text = "Abous Us"
-custom_font_size = 48
 
 [node name="ExitBtn" parent="Control/MarginContainer/MarginContainer/VBoxContainer/BtnBox" instance=ExtResource("10_wlmjw")]
 layout_mode = 2
 size_flags_horizontal = 4
 init_text = "Exit"
-custom_font_size = 48
 
 [connection signal="pressed" from="Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox/LogRegLbl" to="." method="_on_log_reg_lbl_pressed"]
 [connection signal="pressed" from="Control/MarginContainer/MarginContainer/VBoxContainer/BtnBox/AuthBtn" to="." method="_on_auth_btn_pressed"]

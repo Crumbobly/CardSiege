@@ -9,7 +9,6 @@ var timer_end: bool = true
 
 # Узлы интерфейса
 @onready var timer: Timer = $Timer
-@onready var load_gif_anim: LoadGifControl = $Control/MarginContainer/MarginContainer/VBoxContainer/LoadGifControl
 
 @onready var auth_btn: MyBtn = $Control/MarginContainer/MarginContainer/VBoxContainer/BtnBox/AuthBtn
 @onready var login_box: GridContainer = $Control/MarginContainer/MarginContainer/VBoxContainer/AuthBox/LoginBox
@@ -38,7 +37,7 @@ func set_error_lbl_text(msg: String) -> void:
 	error_lbl.text = msg
 	timer.stop()
 	timer_end = true
-
+	enable_all_line_edit_field()
 
 func enable_all_line_edit_field():
 	reg_login_field.enable_line_edit()
@@ -159,7 +158,9 @@ func server_not_here() -> void:
 
 # Выход из игры
 func _on_exit_btn_pressed() -> void:
-	get_tree().quit()
+	var menu = preload("res://scenes/components/yes_no_menu/yes_no_menu.tscn").instantiate()
+	menu.accept.connect(get_tree().quit)
+	self.add_child(menu)
 
 
 # Переход в настройки

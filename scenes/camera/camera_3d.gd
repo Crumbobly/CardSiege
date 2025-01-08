@@ -5,6 +5,7 @@ class_name Camera extends Camera3D
 
 var camera = null
 
+
 func _ready() -> void:
 	camera = $"."
 	Global.CAMERA = camera

@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dp5qs4y0ju4ca"]
+
+[ext_resource type="Script" path="res://scenes/game_root/game/fake_hand/fake_hand.gd" id="1_jtsya"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_b3ihq"]
+radius = 1.5
+
+[node name="FakeHand" type="Node3D"]
+script = ExtResource("1_jtsya")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_b3ihq")

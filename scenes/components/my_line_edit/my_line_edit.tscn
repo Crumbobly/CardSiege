@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://c6i7oq3g0k1xl"]
+[gd_scene load_steps=13 format=3 uid="uid://c6i7oq3g0k1xl"]
 
 [ext_resource type="Script" path="res://scenes/components/my_line_edit/my_line_edit.gd" id="1_topww"]
+[ext_resource type="FontFile" uid="uid://dgrjsqockyk8r" path="res://assets/fonts/noto-sans.regular.ttf" id="2_q5y3n"]
 [ext_resource type="Script" path="res://scenes/components/my_line_edit/password_hide_btn.gd" id="3_sfe2j"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5biod"]
@@ -119,6 +120,8 @@ grow_vertical = 2
 [node name="LineEdit" type="LineEdit" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_q5y3n")
+theme_override_font_sizes/font_size = 24
 theme_override_styles/focus = SubResource("StyleBoxEmpty_5biod")
 theme_override_styles/read_only = SubResource("StyleBoxEmpty_0lfa2")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_8k2ry")
