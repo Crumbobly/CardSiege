@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://br8q07pgsrhpj"]
+[gd_scene load_steps=17 format=3 uid="uid://br8q07pgsrhpj"]
 
 [ext_resource type="Script" path="res://scenes/game_root/game_root.gd" id="1_cwgf3"]
 [ext_resource type="Script" path="res://scenes/camera/camera_3d.gd" id="2_c2ovn"]
@@ -8,7 +8,14 @@
 [ext_resource type="PackedScene" uid="uid://dmcvijurw1c8v" path="res://assets/3d_models/tmp/model2/sketch.fbx" id="6_bys4d"]
 [ext_resource type="PackedScene" uid="uid://b2nt2jw4v2fy2" path="res://scenes/enviroment/book/book.tscn" id="7_1gg65"]
 [ext_resource type="PackedScene" uid="uid://cbjj45qnmr5gm" path="res://scenes/enviroment/sword/sword.tscn" id="8_oe6lo"]
-[ext_resource type="PackedScene" uid="uid://cniph4cpvwp1l" path="res://scenes/game_root/game/3d/Game.tscn" id="9_hfpmu"]
+[ext_resource type="Script" path="res://scenes/game_root/game/3d/game.gd" id="9_cdnho"]
+[ext_resource type="PackedScene" uid="uid://cibohmqty0itj" path="res://scenes/game_root/game/hand/Hand.tscn" id="10_qxvr0"]
+[ext_resource type="PackedScene" uid="uid://dp5qs4y0ju4ca" path="res://scenes/game_root/game/fake_hand/FakeHand.tscn" id="11_y7wve"]
+[ext_resource type="PackedScene" uid="uid://cef4r8gvajqpr" path="res://scenes/game_root/game/2d/Tool_menu.tscn" id="12_6ra5f"]
+[ext_resource type="PackedScene" uid="uid://dwqro157xwiwg" path="res://scenes/game_root/game/2d/Game_2d.tscn" id="13_bq1ub"]
+[ext_resource type="PackedScene" uid="uid://cuas81b84wajc" path="res://scenes/game_root/game/card_preview/CardPreview.tscn" id="14_6oelj"]
+[ext_resource type="PackedScene" uid="uid://w0bslguh2md0" path="res://scenes/game_root/game/field/Field.tscn" id="15_i2qwy"]
+[ext_resource type="PackedScene" uid="uid://gke3a2vkvmlj" path="res://scenes/game_root/game/library/Library.tscn" id="16_v3niv"]
 
 [node name="GameRoot" type="Node3D"]
 script = ExtResource("1_cwgf3")
@@ -52,5 +59,51 @@ transform = Transform3D(0.432857, -0.901463, -6.41949e-08, 0.901463, 0.432857, 1
 [node name="Sord low2" parent="Wooden Table/Enviroment" instance=ExtResource("8_oe6lo")]
 transform = Transform3D(-10.7979, 9.52816e-07, 2.0989, 2.0989, -9.17458e-08, 10.7979, 9.52816e-07, 11, -9.17458e-08, -1.348, 1.223, -1.112)
 
-[node name="Game" parent="." instance=ExtResource("9_hfpmu")]
+[node name="Game" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.39455, -1.91937)
+script = ExtResource("9_cdnho")
+
+[node name="Hand" parent="Game" instance=ExtResource("10_qxvr0")]
+transform = Transform3D(1, 0, 4.37108e-08, -4.36369e-08, 0.0581383, 0.998308, -2.54124e-09, -0.998308, 0.0581383, 0, 0, 1.83089)
+
+[node name="FakeHand" parent="Game" instance=ExtResource("11_y7wve")]
+transform = Transform3D(-1, -8.73695e-08, 3.05101e-09, 3.55512e-10, 0.0308351, 0.999524, -8.74221e-08, 0.999524, -0.0308351, 0, 0, -3.09791)
+
+[node name="2D" type="Node3D" parent="Game"]
+visible = false
+
+[node name="Game2D" type="SubViewportContainer" parent="Game/2D"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="Game/2D/Game2D"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="ToolMenu2" parent="Game/2D/Game2D/SubViewport" instance=ExtResource("12_6ra5f")]
+
+[node name="Game2D" parent="Game/2D/Game2D/SubViewport" instance=ExtResource("13_bq1ub")]
+
+[node name="CardPreview" parent="Game" instance=ExtResource("14_6oelj")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 1.22007, 0.114777, -0.918949)
+
+[node name="Field" parent="Game" instance=ExtResource("15_i2qwy")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.0660077)
+
+[node name="Library" parent="Game" instance=ExtResource("16_v3niv")]
+transform = Transform3D(0.03, 0, 0, 0, 0.03, 0, 0, 0, 0.03, 1.137, 0, -0.0818859)
+
+[node name="Library4" parent="Game" instance=ExtResource("16_v3niv")]
+transform = Transform3D(0.03, 0, 0, 0, 0.03, 0, 0, 0, 0.03, 1.142, 0, -0.429886)
+
+[node name="Library2" parent="Game" instance=ExtResource("16_v3niv")]
+transform = Transform3D(0.03, 0, 0, 0, 0.03, 0, 0, 0, 0.03, 1.16, 0, -0.797886)
+
+[node name="Library3" parent="Game" instance=ExtResource("16_v3niv")]
+transform = Transform3D(0.03, 0, 0, 0, 0.03, 0, 0, 0, 0.03, 1.168, 0, -1.12689)
