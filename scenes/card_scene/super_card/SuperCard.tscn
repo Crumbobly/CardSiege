@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://crjo5ee3gli12"]
+
+[ext_resource type="Script" path="res://scenes/card_scene/super_card/super_card.gd" id="1_7c4f5"]
+
+[node name="SuperCard" type="Node2D"]
+script = ExtResource("1_7c4f5")

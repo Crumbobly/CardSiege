@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://cg1qrkpjtru6q"]
+
+[ext_resource type="Script" path="res://scenes/card_scene/monk_card/monk_card.gd" id="1_hbdra"]
+[ext_resource type="PackedScene" uid="uid://bxetw8sxyj4ba" path="res://scenes/card_scene/generic_card/generic_card.tscn" id="2_2g2ve"]
+[ext_resource type="PackedScene" uid="uid://bb86p8stfobj4" path="res://scenes/generic_nodes/states_node/states_node.tscn" id="3_08jnf"]
+[ext_resource type="Texture2D" uid="uid://dmdn6cnu4jqnu" path="res://assets/images/card/monk.jpg" id="3_s4kr1"]
+
+[node name="MonkCard" type="Node2D"]
+script = ExtResource("1_hbdra")
+
+[node name="GenericCard" parent="." instance=ExtResource("2_2g2ve")]
+mainImage = ExtResource("3_s4kr1")
+attack = 1
+health = 1
+nameStr = "Monk"
+description = "A swift card with an ability to strike first"
+
+[node name="StatesNode2D" parent="." instance=ExtResource("3_08jnf")]

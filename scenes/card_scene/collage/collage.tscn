@@ -1,0 +1,28 @@
+[gd_scene load_steps=7 format=3 uid="uid://d1yfvl7nhf6vx"]
+
+[ext_resource type="PackedScene" uid="uid://d2dcuawstcvva" path="res://scenes/card_scene/squire_card/squire_card.tscn" id="1_uld4s"]
+[ext_resource type="PackedScene" uid="uid://cfannbqaxcm6s" path="res://scenes/card_scene/knight_card/knight_card.tscn" id="2_wvb7r"]
+[ext_resource type="PackedScene" uid="uid://b6eudhhbovqe4" path="res://scenes/card_scene/black_knight_card/black_knight_card.tscn" id="3_v72ta"]
+[ext_resource type="PackedScene" uid="uid://6ihhptg47c1c" path="res://scenes/card_scene/lord_card/lord_card.tscn" id="4_4y6ql"]
+[ext_resource type="PackedScene" uid="uid://cg1qrkpjtru6q" path="res://scenes/card_scene/monk_card/monk_card.tscn" id="5_n3t7v"]
+[ext_resource type="PackedScene" uid="uid://c2caj56h47ayd" path="res://scenes/card_scene/sorceress_card/sorceress_card.tscn" id="6_4jbsc"]
+
+[node name="Collage" type="Node2D"]
+scale = Vector2(0.65, 0.65)
+
+[node name="SquireCard" parent="." instance=ExtResource("1_uld4s")]
+
+[node name="KnightCard" parent="." instance=ExtResource("2_wvb7r")]
+position = Vector2(342, 0)
+
+[node name="BlackKnightCard" parent="." instance=ExtResource("3_v72ta")]
+position = Vector2(684, 0)
+
+[node name="LordCard" parent="." instance=ExtResource("4_4y6ql")]
+position = Vector2(1026, 0)
+
+[node name="MonkCard" parent="." instance=ExtResource("5_n3t7v")]
+position = Vector2(0, 478)
+
+[node name="SorceressCard" parent="." instance=ExtResource("6_4jbsc")]
+position = Vector2(342, 478)

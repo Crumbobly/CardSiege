@@ -1,0 +1,148 @@
+[gd_scene load_steps=10 format=3 uid="uid://t8e14hmklo3g"]
+
+[ext_resource type="Theme" uid="uid://2oa7x8wqowjc" path="res://assets/themes/CardBuilderTheme.tres" id="1_f0r43"]
+[ext_resource type="Script" path="res://scenes/deck_builder/deck_builder.gd" id="1_sobsi"]
+[ext_resource type="Texture2D" uid="uid://cdls7tn8uiql8" path="res://assets/images/card/squire.jpg" id="2_qiwfi"]
+[ext_resource type="Texture2D" uid="uid://du26b4lp2uv73" path="res://assets/images/card/knight.jpg" id="3_agjas"]
+[ext_resource type="Texture2D" uid="uid://b7c84rbjayaml" path="res://assets/images/card/black_knight.jpg" id="4_1218g"]
+[ext_resource type="Texture2D" uid="uid://cjei57xascba6" path="res://assets/images/card/lord.jpg" id="5_xovb3"]
+[ext_resource type="Texture2D" uid="uid://dmdn6cnu4jqnu" path="res://assets/images/card/monk.jpg" id="6_ssakk"]
+[ext_resource type="Texture2D" uid="uid://48iomhyn7cm5" path="res://assets/images/card/sorceress.jpg" id="7_qflqe"]
+[ext_resource type="PackedScene" uid="uid://c4gdn0e1cg43p" path="res://scenes/generic_nodes/background_node/background_texture_rect.tscn" id="9_r2lgm"]
+
+[node name="DeckBuilder" type="Node2D" node_paths=PackedStringArray("addItemList", "countItemList", "exitBtn", "optionsBtn", "backBtn", "saveBtn")]
+script = ExtResource("1_sobsi")
+addItemList = NodePath("CanvasLayer/PanelContainer/HSplitContainer/AddItemList")
+countItemList = NodePath("CanvasLayer/PanelContainer/HSplitContainer/CountItemList")
+exitBtn = NodePath("CanvasLayer/PanelContainer/VSplitContainer/HSplitContainer/HSplitContainer/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/ExitBtn")
+optionsBtn = NodePath("CanvasLayer/PanelContainer/VSplitContainer/HSplitContainer/HSplitContainer/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/OptionsBtn")
+backBtn = NodePath("CanvasLayer/PanelContainer/VSplitContainer/HSplitContainer/HSplitContainer/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/BackBtn")
+saveBtn = NodePath("CanvasLayer/PanelContainer/VSplitContainer/HSplitContainer/HSplitContainer/MarginContainer/HBoxContainer/SaveBtn")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_f0r43")
+
+[node name="HSplitContainer" type="HSplitContainer" parent="CanvasLayer/PanelContainer"]
+layout_mode = 2
+split_offset = 925
+
+[node name="AddItemList" type="ItemList" parent="CanvasLayer/PanelContainer/HSplitContainer"]
+layout_mode = 2
+mouse_filter = 1
+allow_reselect = true
+allow_search = false
+item_count = 6
+max_columns = 4
+fixed_column_width = 223
+icon_mode = 0
+item_0/text = "Squire"
+item_0/icon = ExtResource("2_qiwfi")
+item_1/text = "Knight"
+item_1/icon = ExtResource("3_agjas")
+item_2/text = "Black Knight"
+item_2/icon = ExtResource("4_1218g")
+item_3/text = "Lord"
+item_3/icon = ExtResource("5_xovb3")
+item_4/text = "Monk"
+item_4/icon = ExtResource("6_ssakk")
+item_5/text = "Sorceress"
+item_5/icon = ExtResource("7_qflqe")
+
+[node name="CountItemList" type="ItemList" parent="CanvasLayer/PanelContainer/HSplitContainer"]
+layout_mode = 2
+mouse_filter = 1
+allow_reselect = true
+allow_search = false
+item_count = 6
+same_column_width = true
+fixed_icon_size = Vector2i(155, 100)
+item_0/text = "0"
+item_0/icon = ExtResource("2_qiwfi")
+item_1/text = "0"
+item_1/icon = ExtResource("3_agjas")
+item_2/text = "0"
+item_2/icon = ExtResource("4_1218g")
+item_3/text = "0"
+item_3/icon = ExtResource("5_xovb3")
+item_4/text = "0"
+item_4/icon = ExtResource("6_ssakk")
+item_5/text = "0"
+item_5/icon = ExtResource("7_qflqe")
+
+[node name="VSplitContainer" type="VSplitContainer" parent="CanvasLayer/PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+split_offset = 540
+dragger_visibility = 1
+
+[node name="Stub" type="Control" parent="CanvasLayer/PanelContainer/VSplitContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HSplitContainer" type="HSplitContainer" parent="CanvasLayer/PanelContainer/VSplitContainer"]
+layout_mode = 2
+mouse_filter = 2
+split_offset = 875
+dragger_visibility = 1
+
+[node name="HSplitContainer" type="HSplitContainer" parent="CanvasLayer/PanelContainer/VSplitContainer/HSplitContainer"]
+layout_mode = 2
+mouse_filter = 2
+split_offset = 100
+dragger_visibility = 1
+
+[node name="Stub" type="Control" parent="CanvasLayer/PanelContainer/VSplitContainer/HSplitContainer/HSplitContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PanelContainer/VSplitContainer/HSplitContainer/HSplitContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PanelContainer/VSplitContainer/HSplitContainer/HSplitContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PanelContainer/VSplitContainer/HSplitContainer/HSplitContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 45
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PanelContainer/VSplitContainer/HSplitContainer/HSplitContainer/MarginContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="ExitBtn" type="Button" parent="CanvasLayer/PanelContainer/VSplitContainer/HSplitContainer/HSplitContainer/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Exit
+"
+
+[node name="OptionsBtn" type="Button" parent="CanvasLayer/PanelContainer/VSplitContainer/HSplitContainer/HSplitContainer/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Options"
+
+[node name="BackBtn" type="Button" parent="CanvasLayer/PanelContainer/VSplitContainer/HSplitContainer/HSplitContainer/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Back to Lobby"
+
+[node name="CoolBtn" type="Button" parent="CanvasLayer/PanelContainer/VSplitContainer/HSplitContainer/HSplitContainer/MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Cool Button"
+
+[node name="SaveBtn" type="Button" parent="CanvasLayer/PanelContainer/VSplitContainer/HSplitContainer/HSplitContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"BigButton"
+text = "Save Card's Deck"
+
+[node name="Stub" type="Control" parent="CanvasLayer/PanelContainer/VSplitContainer/HSplitContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="BackgroundTextureRect" parent="CanvasLayer" instance=ExtResource("9_r2lgm")]
+dirAddon = "deckBuilderBackgrounds"

@@ -4,7 +4,6 @@ extends CanvasLayer
 @onready var pages = $Panel/VBoxContainer/Center/MarginContainer/PageWrapper/Pages
 var showed = false
 
-
 func show_settings():
 	if showed:
 		$ShowSettingsAnim.play("hide")
@@ -14,9 +13,12 @@ func show_settings():
 		$ShowSettingsAnim.play("show")
 		showed = true
 
-
 func _on_exit_settings_button_pressed() -> void:
 	show_settings()
 
 func _on_exit_game_btn_pressed() -> void:
 	get_tree().quit()
+
+func _on_pages_no_anim_found() -> void:
+	$ShowSettingsAnim.play("hide")
+	showed = false

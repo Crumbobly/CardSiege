@@ -1,11 +1,11 @@
-[gd_resource type="Theme" load_steps=12 format=3 uid="uid://cg0avmbi400e0"]
+[gd_resource type="Theme" load_steps=13 format=3 uid="uid://2oa7x8wqowjc"]
 
-[ext_resource type="FontFile" uid="uid://bvvmkjok4k0v8" path="res://assets/fonts/MPlantin.ttf" id="1_jtfb5"]
+[ext_resource type="FontFile" uid="uid://bvvmkjok4k0v8" path="res://assets/fonts/MPlantin.ttf" id="1_w427t"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uao0n"]
 content_margin_right = 20.0
 bg_color = Color(0.0952257, 0.243337, 0.494714, 0.666667)
-corner_radius_bottom_right = 46
+corner_radius_top_left = 45
 corner_detail = 1
 shadow_size = 2
 shadow_offset = Vector2(1.93, 1.93)
@@ -25,7 +25,7 @@ border_width_right = 3
 border_width_bottom = 3
 border_color = Color(0.864494, 0.829191, 1, 1)
 border_blend = true
-corner_radius_bottom_right = 46
+corner_radius_top_left = 45
 corner_detail = 1
 shadow_size = 2
 shadow_offset = Vector2(1.93, 1.93)
@@ -37,7 +37,7 @@ content_margin_top = 5.0
 content_margin_right = 20.0
 content_margin_bottom = 5.0
 bg_color = Color(0.396078, 0.596078, 0.933333, 0.666667)
-corner_radius_bottom_right = 46
+corner_radius_top_left = 45
 corner_detail = 1
 shadow_size = 2
 shadow_offset = Vector2(1.93, 1.93)
@@ -55,7 +55,7 @@ border_width_right = 5
 border_width_bottom = 5
 border_color = Color(0.759889, 0.895679, 0.988563, 1)
 border_blend = true
-corner_radius_bottom_right = 46
+corner_radius_top_left = 45
 corner_detail = 1
 anti_aliasing = false
 
@@ -108,6 +108,9 @@ border_color = Color(0.759889, 0.895679, 0.988563, 1)
 border_blend = true
 shadow_offset = Vector2(1.93, 1.93)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6wf1w"]
+bg_color = Color(0.78, 0.4758, 0.75465, 0.313726)
+
 [resource]
 BigButton/base_type = &"Button"
 BigButton/styles/disabled = SubResource("StyleBoxFlat_uao0n")
@@ -116,9 +119,11 @@ BigButton/styles/hover = SubResource("StyleBoxFlat_do2q5")
 BigButton/styles/normal = SubResource("StyleBoxFlat_f25hm")
 BigButton/styles/pressed = SubResource("StyleBoxFlat_en7fo")
 Button/font_sizes/font_size = 24
-Button/fonts/font = ExtResource("1_jtfb5")
+Button/fonts/font = ExtResource("1_w427t")
 Button/styles/disabled = SubResource("StyleBoxFlat_jxck7")
 Button/styles/focus = SubResource("StyleBoxEmpty_fhoto")
 Button/styles/hover = SubResource("StyleBoxFlat_v13b5")
 Button/styles/normal = SubResource("StyleBoxFlat_rj1ok")
 Button/styles/pressed = SubResource("StyleBoxFlat_nj1c3")
+ItemList/fonts/font = ExtResource("1_w427t")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_6wf1w")
