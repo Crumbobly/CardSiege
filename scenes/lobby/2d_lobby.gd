@@ -7,12 +7,14 @@ extends Node
 @export var DeckBuildBtn : Button
 @export var SingleGameBtn : Button
 @export var OnlineGameBtn : Button
+@export var SettingsBtn : Button
 @export var ExitBtn : Button
 @export var PingBtn : Button
 
 @export_group("Labels")
 @export var ping_lbl : Label
 
+var deck_builder_scene: PackedScene
 
 func _ready() -> void:
 	DeckBuildBtn.pressed.connect(_on_deck_build_btn_pressed)
@@ -20,10 +22,11 @@ func _ready() -> void:
 	OnlineGameBtn.pressed.connect(_on_online_game_btn_pressed)
 	ExitBtn.pressed.connect(_on_exit_btn_pressed)
 	PingBtn.pressed.connect(_on_ping_btn_pressed)
+	SettingsBtn.pressed.connect(_on_settings_btn_pressed)
 	
 	Server.request_handler.register_scene("Lobby", self)
 	
-
+	deck_builder_scene = load("res://scenes/deck_builder/deck_builder.tscn")
 
 func set_ping_lbl(request_time):
 	var whole_ping = round((Time.get_unix_time_from_system() - request_time) * 1000)
@@ -40,10 +43,13 @@ func _on_online_game_btn_pressed() -> void:
 	Server.send_request(request)
 	
 func _on_deck_build_btn_pressed() -> void:
-	pass
+	get_tree().change_scene_to_packed(deck_builder_scene)
 	
 func _on_single_game_btn_pressed() -> void:
 	pass
+	
+func _on_settings_btn_pressed() -> void:
+	Settings2d.show_settings()
 
 
 func start_online_game(my_id, game_dict: Dictionary):

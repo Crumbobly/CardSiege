@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://c2caj56h47ayd"]
+
+[ext_resource type="Script" path="res://scenes/card_scene/sorceress_card/sorceress_card.gd" id="1_xsmp4"]
+[ext_resource type="PackedScene" uid="uid://bxetw8sxyj4ba" path="res://scenes/card_scene/generic_card/generic_card.tscn" id="2_cycx3"]
+[ext_resource type="PackedScene" uid="uid://bb86p8stfobj4" path="res://scenes/generic_nodes/states_node/states_node.tscn" id="3_13eyd"]
+[ext_resource type="Texture2D" uid="uid://48iomhyn7cm5" path="res://assets/images/card/sorceress.jpg" id="3_gjibt"]
+
+[node name="SorceressCard" type="Node2D" groups=["sorceress"]]
+script = ExtResource("1_xsmp4")
+
+[node name="GenericCard" parent="." instance=ExtResource("2_cycx3")]
+mainImage = ExtResource("3_gjibt")
+img_bottom_margin = 300
+attack = 2
+health = 1
+nameStr = "Sorceress"
+description = "Powerful magician with extremly long attack range"
+
+[node name="StatesNode2D" parent="." instance=ExtResource("3_13eyd")]

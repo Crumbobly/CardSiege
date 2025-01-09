@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://b6eudhhbovqe4"]
+
+[ext_resource type="PackedScene" uid="uid://bxetw8sxyj4ba" path="res://scenes/card_scene/generic_card/generic_card.tscn" id="1_b6ire"]
+[ext_resource type="Script" path="res://scenes/card_scene/black_knight_card/black_knight_card.gd" id="1_ipnmm"]
+[ext_resource type="Texture2D" uid="uid://b7c84rbjayaml" path="res://assets/images/card/black_knight.jpg" id="2_2q0io"]
+[ext_resource type="PackedScene" uid="uid://bb86p8stfobj4" path="res://scenes/generic_nodes/states_node/states_node.tscn" id="2_iwxg3"]
+
+[node name="BlackKnightCard" type="Node2D"]
+script = ExtResource("1_ipnmm")
+
+[node name="GenericCard" parent="." instance=ExtResource("1_b6ire")]
+mainImage = ExtResource("2_2q0io")
+attack = 3
+health = 3
+nameStr = "Black Knight"
+description = "Elite Knight in shining Black Armor.
+As he roams the battlefield, the ones that are still alive will seek glory under his rule"
+
+[node name="StatesNode2D" parent="." instance=ExtResource("2_iwxg3")]

@@ -1,0 +1,156 @@
+[gd_scene load_steps=8 format=3 uid="uid://bxetw8sxyj4ba"]
+
+[ext_resource type="Script" path="res://scenes/card_scene/generic_card/generic_card.gd" id="1_iw2ly"]
+[ext_resource type="Texture2D" uid="uid://cquawarjqw2lw" path="res://assets/images/card/card_frame.png" id="1_t1eai"]
+[ext_resource type="Theme" uid="uid://cuhku26sphyvc" path="res://assets/themes/CardTheme.tres" id="2_srwq8"]
+[ext_resource type="Texture2D" uid="uid://cdls7tn8uiql8" path="res://assets/images/card/squire.jpg" id="3_wwwnd"]
+[ext_resource type="PackedScene" uid="uid://dmttjprtt3pv" path="res://scenes/generic_nodes/health_node/health_node_2d.tscn" id="5_v6oo3"]
+[ext_resource type="PackedScene" uid="uid://lxmmi6mb4g2e" path="res://scenes/generic_nodes/attack_node/attack_node_2d.tscn" id="6_17csx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gbv6j"]
+atlas = ExtResource("1_t1eai")
+region = Rect2(0, 443, 570, 354)
+
+[node name="GenericCard" type="Node2D" node_paths=PackedStringArray("imgTextureRect", "imgMarginContainer", "nameLabel", "atkLabel", "hpLabel", "descRichTextLabel", "healthNode", "attackNode")]
+position = Vector2(171, 239)
+scale = Vector2(0.6, 0.6)
+script = ExtResource("1_iw2ly")
+attack = 12
+health = 2
+description = "A very Generic Description of a very Generic Card of a very Generic Game"
+imgTextureRect = NodePath("Sprite2D/UIControl/ImgPanelContainer/ImgMarginContainer/ImgTextureRect")
+imgMarginContainer = NodePath("Sprite2D/UIControl/ImgPanelContainer/ImgMarginContainer")
+nameLabel = NodePath("Sprite2D/UIControl/TextPanelContainer/TextMarginContainer/VBoxContainer/NameMarginContainer/NameLabel")
+atkLabel = NodePath("Sprite2D/UIControl/TextPanelContainer/TextMarginContainer/VBoxContainer/StatsMarginContainer/StatsHBoxContainer/AtkLabel")
+hpLabel = NodePath("Sprite2D/UIControl/TextPanelContainer/TextMarginContainer/VBoxContainer/StatsMarginContainer/StatsHBoxContainer/HpLabel")
+descRichTextLabel = NodePath("Sprite2D/UIControl/TextPanelContainer/TextMarginContainer/VBoxContainer/DescMarginContainer3/DescRichTextLabel")
+healthNode = NodePath("HealthNode2D")
+attackNode = NodePath("AttackNode2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_t1eai")
+
+[node name="UIControl" type="Control" parent="Sprite2D"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -285.0
+offset_top = -398.5
+offset_right = -285.0
+offset_bottom = -398.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_srwq8")
+
+[node name="ImgPanelContainer" type="PanelContainer" parent="Sprite2D/UIControl"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ImgMarginContainer" type="MarginContainer" parent="Sprite2D/UIControl/ImgPanelContainer"]
+clip_contents = true
+layout_mode = 2
+theme_override_constants/margin_left = 42
+theme_override_constants/margin_top = 96
+theme_override_constants/margin_right = 44
+theme_override_constants/margin_bottom = 56
+
+[node name="ImgTextureRect" type="TextureRect" parent="Sprite2D/UIControl/ImgPanelContainer/ImgMarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("3_wwwnd")
+stretch_mode = 5
+
+[node name="CardBottomPanelContainer" type="PanelContainer" parent="Sprite2D/UIControl"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -354.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="CardBottomTextureRect" type="TextureRect" parent="Sprite2D/UIControl/CardBottomPanelContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_gbv6j")
+stretch_mode = 2
+
+[node name="TextPanelContainer" type="PanelContainer" parent="Sprite2D/UIControl"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_srwq8")
+
+[node name="TextMarginContainer" type="MarginContainer" parent="Sprite2D/UIControl/TextPanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 36
+theme_override_constants/margin_top = 39
+theme_override_constants/margin_right = 36
+theme_override_constants/margin_bottom = 54
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Sprite2D/UIControl/TextPanelContainer/TextMarginContainer"]
+layout_mode = 2
+
+[node name="StatsMarginContainer" type="MarginContainer" parent="Sprite2D/UIControl/TextPanelContainer/TextMarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 5
+
+[node name="StatsHBoxContainer" type="HBoxContainer" parent="Sprite2D/UIControl/TextPanelContainer/TextMarginContainer/VBoxContainer/StatsMarginContainer"]
+layout_mode = 2
+
+[node name="AtkNameLabel" type="Label" parent="Sprite2D/UIControl/TextPanelContainer/TextMarginContainer/VBoxContainer/StatsMarginContainer/StatsHBoxContainer"]
+layout_mode = 2
+text = "Attack:"
+
+[node name="AtkLabel" type="Label" parent="Sprite2D/UIControl/TextPanelContainer/TextMarginContainer/VBoxContainer/StatsMarginContainer/StatsHBoxContainer"]
+layout_mode = 2
+text = "0"
+text_direction = 1
+
+[node name="StubControl" type="Control" parent="Sprite2D/UIControl/TextPanelContainer/TextMarginContainer/VBoxContainer/StatsMarginContainer/StatsHBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HpLabel" type="Label" parent="Sprite2D/UIControl/TextPanelContainer/TextMarginContainer/VBoxContainer/StatsMarginContainer/StatsHBoxContainer"]
+layout_mode = 2
+text = "0"
+
+[node name="HpNameLabel" type="Label" parent="Sprite2D/UIControl/TextPanelContainer/TextMarginContainer/VBoxContainer/StatsMarginContainer/StatsHBoxContainer"]
+layout_mode = 2
+text = ":HP"
+
+[node name="NameMarginContainer" type="MarginContainer" parent="Sprite2D/UIControl/TextPanelContainer/TextMarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 370
+
+[node name="NameLabel" type="Label" parent="Sprite2D/UIControl/TextPanelContainer/TextMarginContainer/VBoxContainer/NameMarginContainer"]
+layout_mode = 2
+text = "Generic"
+horizontal_alignment = 1
+
+[node name="DescMarginContainer3" type="MarginContainer" parent="Sprite2D/UIControl/TextPanelContainer/TextMarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 14
+
+[node name="DescRichTextLabel" type="RichTextLabel" parent="Sprite2D/UIControl/TextPanelContainer/TextMarginContainer/VBoxContainer/DescMarginContainer3"]
+layout_mode = 2
+text = "A very Generic Description of a very Generic Card of a very Generic Game"
+fit_content = true
+scroll_active = false
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
+
+[node name="HealthNode2D" parent="." instance=ExtResource("5_v6oo3")]
+
+[node name="AttackNode2D" parent="." instance=ExtResource("6_17csx")]

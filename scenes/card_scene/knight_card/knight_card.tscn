@@ -1,0 +1,20 @@
+[gd_scene load_steps=6 format=3 uid="uid://cfannbqaxcm6s"]
+
+[ext_resource type="Script" path="res://scenes/card_scene/knight_card/knight_card.gd" id="1_svmw5"]
+[ext_resource type="PackedScene" uid="uid://bxetw8sxyj4ba" path="res://scenes/card_scene/generic_card/generic_card.tscn" id="2_khd8x"]
+[ext_resource type="Texture2D" uid="uid://du26b4lp2uv73" path="res://assets/images/card/knight.jpg" id="3_v0i5w"]
+[ext_resource type="PackedScene" uid="uid://bb86p8stfobj4" path="res://scenes/generic_nodes/states_node/states_node.tscn" id="4_adnjb"]
+[ext_resource type="PackedScene" uid="uid://ciateimhplqfs" path="res://scenes/generic_nodes/armor_node/armor_node.tscn" id="5_i33gq"]
+
+[node name="KnightCard" type="Node2D"]
+script = ExtResource("1_svmw5")
+
+[node name="GenericCard" parent="." instance=ExtResource("2_khd8x")]
+mainImage = ExtResource("3_v0i5w")
+attack = 2
+nameStr = "knight"
+description = "Knight with a heavy weaponry and a sturdy armor"
+
+[node name="StatesNode2D" parent="." instance=ExtResource("4_adnjb")]
+
+[node name="ArmorNode2D" parent="." instance=ExtResource("5_i33gq")]

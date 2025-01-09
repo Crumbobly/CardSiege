@@ -1,0 +1,22 @@
+[gd_scene load_steps=6 format=3 uid="uid://6ihhptg47c1c"]
+
+[ext_resource type="Script" path="res://scenes/card_scene/lord_card/lord_card.gd" id="1_sevmr"]
+[ext_resource type="PackedScene" uid="uid://bxetw8sxyj4ba" path="res://scenes/card_scene/generic_card/generic_card.tscn" id="2_1gvjf"]
+[ext_resource type="PackedScene" uid="uid://bb86p8stfobj4" path="res://scenes/generic_nodes/states_node/states_node.tscn" id="3_o3r3p"]
+[ext_resource type="Texture2D" uid="uid://cjei57xascba6" path="res://assets/images/card/lord.jpg" id="3_pi01m"]
+[ext_resource type="PackedScene" uid="uid://ciateimhplqfs" path="res://scenes/generic_nodes/armor_node/armor_node.tscn" id="4_x2ui6"]
+
+[node name="LordCard" type="Node2D"]
+script = ExtResource("1_sevmr")
+
+[node name="GenericCard" parent="." instance=ExtResource("2_1gvjf")]
+mainImage = ExtResource("3_pi01m")
+attack = 4
+health = 5
+nameStr = "Lord"
+description = "Long ago forgotten Lord of the Fallen Kingdom.
+Never fights alone."
+
+[node name="StatesNode2D" parent="." instance=ExtResource("3_o3r3p")]
+
+[node name="ArmorNode2D" parent="." instance=ExtResource("4_x2ui6")]

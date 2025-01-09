@@ -6,6 +6,7 @@ extends Control
 @onready var audio_page = $AudioPage
 @onready var anim_player = $AnimationPlayer
 
+signal no_anim_found
 
 func get_current_page():
 	if main_page.visible:
@@ -27,7 +28,7 @@ func return_to_main_page_anim():
 		3:
 			anim_player.play_backwards("AudioPageAnim")
 		_:
-			pass
+			no_anim_found.emit()
 
 func _on_gameplay_btn_pressed() -> void:
 	anim_player.play("GameplayPageAnim")

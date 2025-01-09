@@ -45,6 +45,10 @@ folder_colors={
 
 import/blender/enabled=false
 
+[global_group]
+
+sorceress=""
+
 [input]
 
 open_settings={

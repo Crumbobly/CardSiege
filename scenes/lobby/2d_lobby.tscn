@@ -1,69 +1,16 @@
-[gd_scene load_steps=9 format=3 uid="uid://dte3s0txrh8b5"]
+[gd_scene load_steps=5 format=3 uid="uid://dte3s0txrh8b5"]
 
 [ext_resource type="Script" path="res://scenes/lobby/2d_lobby.gd" id="1_1tdhn"]
 [ext_resource type="Theme" uid="uid://cg0avmbi400e0" path="res://assets/themes/LobbyTheme.tres" id="2_am2ee"]
 [ext_resource type="Script" path="res://scenes/lobby/sub_margin.gd" id="3_7i7m4"]
-[ext_resource type="Script" path="res://scenes/lobby/texture_rect.gd" id="4_deqht"]
+[ext_resource type="PackedScene" uid="uid://c4gdn0e1cg43p" path="res://scenes/generic_nodes/background_node/background_texture_rect.tscn" id="4_iw3gl"]
 
-[sub_resource type="Animation" id="Animation_tnvrq"]
-resource_name = "FadeToBlack"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("FadeColorRect:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_rv0nb"]
-resource_name = "FadeToNormal"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("FadeColorRect:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_jsb8l"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("FadeColorRect:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0, 0, 0, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_od20h"]
-_data = {
-"FadeToBlack": SubResource("Animation_tnvrq"),
-"FadeToNormal": SubResource("Animation_rv0nb"),
-"RESET": SubResource("Animation_jsb8l")
-}
-
-[node name="2dLobby" type="Node" node_paths=PackedStringArray("DeckBuildBtn", "SingleGameBtn", "OnlineGameBtn", "ExitBtn", "PingBtn", "ping_lbl")]
+[node name="2dLobby" type="Node" node_paths=PackedStringArray("DeckBuildBtn", "SingleGameBtn", "OnlineGameBtn", "SettingsBtn", "ExitBtn", "PingBtn", "ping_lbl")]
 script = ExtResource("1_1tdhn")
 DeckBuildBtn = NodePath("CanvasLayer/PanelContainer/MainMarginContainer/MainHBoxContainer/SubMarginContainer/SubHBoxContainer/DeckBuildBtn")
 SingleGameBtn = NodePath("CanvasLayer/PanelContainer/MainMarginContainer/MainHBoxContainer/SubMarginContainer/SubHBoxContainer/SingleGameBtn")
 OnlineGameBtn = NodePath("CanvasLayer/PanelContainer/MainMarginContainer/MainHBoxContainer/OnlineGameBtn")
+SettingsBtn = NodePath("CanvasLayer/PanelContainer/MainMarginContainer/MainHBoxContainer/SubMarginContainer/SubHBoxContainer/OptionsBtn")
 ExitBtn = NodePath("CanvasLayer/PanelContainer/MainMarginContainer/MainHBoxContainer/SubMarginContainer/SubHBoxContainer/ExitBtn")
 PingBtn = NodePath("CanvasLayer/PingBtn")
 ping_lbl = NodePath("CanvasLayer/PingBtn/PingLbl")
@@ -148,30 +95,5 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 48
 text = "---"
 
-[node name="BackgroundTextureRect" type="TextureRect" parent="CanvasLayer"]
-z_index = -1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-expand_mode = 1
-script = ExtResource("4_deqht")
-
-[node name="FadeColorRect" type="ColorRect" parent="CanvasLayer/BackgroundTextureRect"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(0, 0, 0, 0)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/BackgroundTextureRect"]
-libraries = {
-"": SubResource("AnimationLibrary_od20h")
-}
-
-[node name="FadeInTimer" type="Timer" parent="CanvasLayer/BackgroundTextureRect"]
+[node name="BackgroundTextureRect" parent="CanvasLayer" instance=ExtResource("4_iw3gl")]
+dirAddon = "lobbyBackgrounds"
