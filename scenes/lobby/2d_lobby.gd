@@ -1,7 +1,7 @@
 extends Node
 
 @export_group("Game Resources")
-@export var game = preload("res://scenes/game_root/game/3d/Game.tscn")
+@export var game_root = preload("res://scenes/game_root/GameRoot.tscn")
 
 @export_group("Buttons")
 @export var DeckBuildBtn : Button
@@ -53,9 +53,9 @@ func _on_settings_btn_pressed() -> void:
 
 
 func start_online_game(my_id, game_dict: Dictionary):
-	var game_instance: Game = game.instantiate()
-	game_instance.set_data(my_id, game_dict)
-	get_tree().root.add_child(game_instance)
+	var game_root_instance = game_root.instantiate()
+	get_tree().root.add_child(game_root_instance)
+	game_root_instance.set_data(my_id, game_dict)
 	call_deferred("queue_free")
 
 func _on_exit_btn_pressed() -> void:
